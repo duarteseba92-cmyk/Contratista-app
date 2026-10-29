@@ -35,8 +35,8 @@
         h2 { font-size: 1.1rem; margin-top: 0; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 8px; }
         
         label { display: block; margin-top: 12px; color: var(--text-muted); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; }
-        input, textarea { width: 100%; padding: 12px; margin-top: 6px; background: var(--bg-input); border: 1px solid var(--border); color: var(--text-main); border-radius: 8px; box-sizing: border-box; font-size: 1rem; outline: none; }
-        input:focus { border-color: var(--accent); }
+        input, select, textarea { width: 100%; padding: 12px; margin-top: 6px; background: var(--bg-input); border: 1px solid var(--border); color: var(--text-main); border-radius: 8px; box-sizing: border-box; font-size: 1rem; outline: none; }
+        input:focus, select:focus { border-color: var(--accent); }
 
         .grid-trabajos { display: grid; grid-template-columns: 1fr; gap: 8px; margin-top: 6px; }
         .trabajo-btn { background: var(--bg-input); border: 1px solid var(--border); color: var(--text-main); padding: 12px; text-align: left; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
@@ -115,24 +115,39 @@
     <!-- 2. CLIMATIZACIÓN / AIRES ACONDICIONADOS -->
     <div id="climatizacion" class="section">
         <div class="card">
-            <h2>❄️ Instalación de Aire Acondicionado</h2>
+            <h2>❄️ Instalación y Cálculo de Climatización</h2>
             <label>Cliente / Ubicación</label>
-            <input type="text" id="climaCliente" placeholder="Ej: Oficina Central">
+            <input type="text" id="climaCliente" placeholder="Ej: Dormitorio Principal">
 
-            <label>Capacidad del Equipo</label>
-            <div class="grid-trabajos">
-                <button type="button" class="trabajo-btn selected" onclick="seleccionarAire('2250', this)">❄️ 2.250 / 3.000 Frigorías (Split Estándar)</button>
-                <button type="button" class="trabajo-btn" onclick="seleccionarAire('4500', this)">❄️ 4.500 Frigorías</button>
-                <button type="button" class="trabajo-btn" onclick="seleccionarAire('6000', this)">❄️ 6.000 Frigorías en adelante</button>
+            <label>1. Calculadora Rápida de Frigorías (Opcional)</label>
+            <div style="display: flex; gap: 6px;">
+                <input type="number" id="climaLargo" placeholder="Largo (m)">
+                <input type="number" id="climaAncho" placeholder="Ancho (m)">
+                <input type="number" id="climaAlto" placeholder="Alto (m)" value="2.6">
             </div>
+
+            <label>2. Capacidad Seleccionada</label>
+            <div class="grid-trabajos">
+                <button type="button" class="trabajo-btn selected" onclick="seleccionarAire('2250', this)">❄️ 2.250 / 2.500 Frigorías</button>
+                <button type="button" class="trabajo-btn" onclick="seleccionarAire('3000', this)">❄️ 3.000 / 3.500 Frigorías</button>
+                <button type="button" class="trabajo-btn" onclick="seleccionarAire('4500', this)">❄️ 4.500 Frigorías</button>
+                <button type="button" class="trabajo-btn" onclick="seleccionarAire('6000', this)">❄️ 6.000 Frigorías</button>
+            </div>
+
+            <label>Tipo de Gas Refrigerante</label>
+            <select id="tipoGas">
+                <option value="R410A">R-410A (Ecoblend / Inverter)</option>
+                <option value="R32">R-32 (Alta Eficiencia)</option>
+                <option value="R22">R-22 (Equipos Tradicionales)</option>
+            </select>
 
             <label>Metros de Cañería Estimados</label>
             <input type="number" id="climaMetros" placeholder="Ej: 3 (metros)" value="3">
 
             <label>Mano de Obra de Instalación ($)</label>
-            <input type="number" id="climaMano" placeholder="Ej: 45000">
+            <input type="number" id="climaMano" placeholder="Ej: 50000">
 
-            <button class="btn btn-primary" style="margin-top: 14px;" onclick="calcularAire()">🚀 Calcular Materiales de Instalación</button>
+            <button class="btn btn-primary" style="margin-top: 14px;" onclick="calcularAire()">🚀 Calcular Cómputo Técnico</button>
 
             <div id="resultadoClima" class="resumen-box" style="display:none;"></div>
             
@@ -181,12 +196,10 @@
             <label>Monto ($)</label>
             <input type="number" id="finMonto" placeholder="Ej: 150000">
             <label>Tipo</label>
-            <div style="display: flex; gap: 10px; margin-top: 6px;">
-                <select id="finTipo" style="padding: 12px; background: var(--bg-input); border: 1px solid var(--border); color: var(--text-main); border-radius: 8px; width: 100%;">
-                    <option value="gasto">🔻 Gasto</option>
-                    <option value="ingreso">🟢 Ingreso / Cobro</option>
-                </select>
-            </div>
+            <select id="finTipo">
+                <option value="gasto">🔻 Gasto</option>
+                <option value="ingreso">🟢 Ingreso / Cobro</option>
+            </select>
             <button class="btn btn-primary" style="margin-top: 12px;" onclick="agregarMovimiento()">Registrar Operación</button>
         </div>
         <div class="card">
@@ -247,7 +260,6 @@
 
         function seleccionarTrabajo(tipo, btn) {
             trabajoSeleccionado = tipo;
-            // Buscar botones solo dentro del cotizador de obra
             const botones = document.querySelectorAll('#presupuesto .trabajo-btn');
             botones.forEach(b => b.classList.remove('selected'));
             btn.classList.add('selected');
@@ -311,16 +323,34 @@
 
         function calcularAire() {
             const cliente = document.getElementById('climaCliente').value || 'Cliente';
+            const largo = parseFloat(document.getElementById('climaLargo').value) || 0;
+            const ancho = parseFloat(document.getElementById('climaAncho').value) || 0;
+            const alto = parseFloat(document.getElementById('climaAlto').value) || 2.6;
             const metros = parseFloat(document.getElementById('climaMetros').value) || 3;
             const manoObra = parseFloat(document.getElementById('climaMano').value) || 0;
+            const tipoGas = document.getElementById('tipoGas').value;
 
             if (metros <= 0 || manoObra <= 0) return alert('Completa metros de cañería y mano de obra.');
 
-            let cañoAlta = "1/4\"";
-            let cañoBaja = aireSeleccionado === '6000' ? "1/2\" o 5/8\"" : "3/8\"";
-            let cableTaller = "4 x 1.5 mm²";
+            let sugerenciaFrigorias = "";
+            if (largo > 0 && ancho > 0) {
+                const m3 = largo * ancho * alto;
+                const frigNecesarias = Math.round(m3 * 50);
+                sugerenciaFrigorias = `\n📐 *Ambiente:* ${largo}x${ancho}m (${m3.toFixed(1)} m³)\n💡 *Frigorías sugeridas:* ~${frigNecesarias} Frig.\n--------------------------------`;
+            }
 
-            ultimoClimaTexto = `❄️ *PRESUPUESTO INSTALACIÓN AIRE*\n👤 *Cliente:* ${cliente}\n⚡ *Equipo:* ${aireSeleccionado} Frigorías\n--------------------------------\n📦 *Materiales (${metros} mts):*\n• Caño de Cobre Alta (${cañoAlta}): ${metros} mts\n• Caño de Cobre Baja (${cañoBaja}): ${metros} mts\n• Aislatubo / Aislación: ${metros} mts\n• Cable Taller Interconexión: ${metros + 1} mts\n• Manguera Desagüe Cristal: ${metros + 1} mts\n• Juego de Ménsulas y Tacos Goma\n--------------------------------\n💰 *Instalación Completa:* $${manoObra.toLocaleString()}`;
+            let cañoAlta = "1/4\"";
+            let cañoBaja = (aireSeleccionado === '4500' || aireSeleccionado === '6000') ? "1/2\" o 5/8\"" : "3/8\"";
+            let termicaRecomendada = (aireSeleccionado === '6000') ? "20A (Cable 4 mm²)" : "10A - 16A (Cable 2.5 mm²)";
+
+            let textoGasExtra = "";
+            if (metros > 3) {
+                const metrosExtra = metros - 3;
+                const gramosExtra = metrosExtra * 20;
+                textoGasExtra = `\n⚠️ *Carga adicional de ${tipoGas}:* +${gramosExtra}g aprox. (${metrosExtra}m extras)`;
+            }
+
+            ultimoClimaTexto = `❄️ *PRESUPUESTO INSTALACIÓN AIRE*\n👤 *Cliente:* ${cliente}${sugerenciaFrigorias}\n⚡ *Equipo:* ${aireSeleccionado} Frigorías (${tipoGas})\n--------------------------------\n📦 *Materiales y Cómputo (${metros} mts):*\n• Caño Cobre Alta (${cañoAlta}): ${metros} mts\n• Caño Cobre Baja (${cañoBaja}): ${metros} mts\n• Aislatubo térmico: ${metros} mts\n• Cable Taller interconexión: ${metros + 1} mts\n• Manguera desagüe cristal: ${metros + 1} mts\n• Ménsulas reforzadas y tacos antivibratorios${textoGasExtra}\n--------------------------------\n🔌 *Recomendación Eléctrica:* Térmica ${termicaRecomendada}\n--------------------------------\n💰 *Instalación (incluye vacío y prueba):* $${manoObra.toLocaleString()}`;
 
             const resDiv = document.getElementById('resultadoClima');
             resDiv.style.display = 'block';
