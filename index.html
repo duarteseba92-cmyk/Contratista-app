@@ -19,53 +19,57 @@
             --danger: #ef4444;
             --border: #2a3a5e;
         }
-        body { font-family: system-ui, -apple-system, sans-serif; background-color: var(--bg-main); color: var(--text-main); margin: 0; padding: 12px; padding-bottom: 90px; }
+        body { font-family: system-ui, -apple-system, sans-serif; background-color: var(--bg-main); color: var(--text-main); margin: 0; padding: 12px; padding-bottom: 95px; }
         
-        header { text-align: center; margin-bottom: 14px; padding: 16px; background: linear-gradient(135deg, var(--bg-card), #1a2744); border-radius: 14px; border: 1px solid var(--border); box-shadow: 0 8px 16px -4px rgba(0,0,0,0.4); }
+        header { text-align: center; margin-bottom: 14px; padding: 18px; background: linear-gradient(135deg, var(--bg-card), #1a2744); border-radius: 16px; border: 1px solid var(--border); box-shadow: 0 10px 20px -5px rgba(0,0,0,0.5); }
         h1 { color: var(--accent); font-size: 1.5rem; margin: 0; font-weight: 800; letter-spacing: 0.5px; }
         p.subtitle { color: var(--text-muted); font-size: 0.75rem; margin: 4px 0 0 0; text-transform: uppercase; letter-spacing: 1.5px; }
         
-        /* Barra de Navegación Inferior Estilo App Nativa */
-        .tabs { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(19, 28, 49, 0.95); backdrop-filter: blur(10px); display: flex; justify-content: space-around; padding: 8px 4px; border-top: 1px solid var(--border); z-index: 1000; box-shadow: 0 -6px 20px rgba(0,0,0,0.5); overflow-x: auto; scrollbar-width: none; }
+        /* Barra de Navegación Inferior Estilo App Nativa con Indicador Activo */
+        .tabs { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(13, 20, 36, 0.95); backdrop-filter: blur(12px); display: flex; justify-content: space-around; padding: 8px 4px; border-top: 1px solid var(--border); z-index: 1000; box-shadow: 0 -8px 25px rgba(0,0,0,0.6); overflow-x: auto; scrollbar-width: none; }
         .tabs::-webkit-scrollbar { display: none; }
-        .tab-btn { background: none; border: none; color: var(--text-muted); font-weight: 700; border-radius: 10px; cursor: pointer; font-size: 0.65rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 8px; min-width: 50px; transition: all 0.2s ease; position: relative; }
-        .tab-btn span.icon { font-size: 1.2rem; }
+        .tab-btn { background: none; border: none; color: var(--text-muted); font-weight: 700; border-radius: 12px; cursor: pointer; font-size: 0.65rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 8px; min-width: 50px; transition: all 0.25s ease; position: relative; }
+        .tab-btn span.icon { font-size: 1.25rem; transition: transform 0.2s; }
         .tab-btn.active { color: var(--accent); background: var(--accent-glow); }
-        .badge-count { position: absolute; top: 4px; right: 8px; background: var(--accent); color: #000; font-size: 0.55rem; padding: 1px 4px; border-radius: 6px; font-weight: 800; display: none; }
+        .tab-btn.active span.icon { transform: translateY(-2px); }
+        .tab-btn.active::after { content: ''; position: absolute; top: 0; left: 20%; right: 20%; height: 2px; background: var(--accent); border-radius: 2px; }
+        .badge-count { position: absolute; top: 4px; right: 6px; background: var(--accent); color: #000; font-size: 0.55rem; padding: 1px 4px; border-radius: 6px; font-weight: 800; display: none; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
 
         .section { display: none; animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
         .section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 18px; margin-bottom: 14px; box-shadow: 0 6px 16px -2px rgba(0,0,0,0.3); }
+        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 18px; margin-bottom: 14px; box-shadow: 0 8px 18px -4px rgba(0,0,0,0.35); }
         h2 { font-size: 1.1rem; margin-top: 0; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 10px; display: flex; align-items: center; gap: 8px; }
         
         label { display: block; margin-top: 14px; color: var(--text-muted); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
-        input, select, textarea { width: 100%; padding: 12px; margin-top: 6px; background: var(--bg-input); border: 1px solid var(--border); color: var(--text-main); border-radius: 10px; box-sizing: border-box; font-size: 0.95rem; outline: none; transition: all 0.2s; }
+        input, select, textarea { width: 100%; padding: 12px 14px; margin-top: 6px; background: var(--bg-input); border: 1px solid var(--border); color: var(--text-main); border-radius: 10px; box-sizing: border-box; font-size: 0.95rem; outline: none; transition: all 0.2s; }
         input:focus, select:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
 
         .grid-trabajos { display: grid; grid-template-columns: 1fr; gap: 8px; margin-top: 8px; }
         .trabajo-btn { background: var(--bg-input); border: 1px solid var(--border); color: var(--text-main); padding: 14px; text-align: left; border-radius: 10px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 8px; }
         .trabajo-btn:hover { border-color: var(--accent); }
-        .trabajo-btn.selected { background: var(--accent-glow); color: var(--accent); border-color: var(--accent); font-weight: 700; }
+        .trabajo-btn.selected { background: var(--accent-glow); color: var(--accent); border-color: var(--accent); font-weight: 700; box-shadow: inset 0 0 0 1px var(--accent); }
 
         .btn-group { display: flex; gap: 10px; margin-top: 16px; }
-        button.btn { width: 100%; padding: 14px; font-weight: 700; border: none; border-radius: 10px; cursor: pointer; font-size: 0.95rem; transition: filter 0.2s, transform 0.1s; display: flex; justify-content: center; align-items: center; gap: 8px; }
-        button.btn:active { transform: scale(0.98); }
-        .btn-primary { background: var(--accent); color: #000; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3); }
-        .btn-whatsapp { background: #10b981; color: white; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); }
+        button.btn { width: 100%; padding: 14px; font-weight: 700; border: none; border-radius: 12px; cursor: pointer; font-size: 0.95rem; transition: filter 0.2s, transform 0.1s; display: flex; justify-content: center; align-items: center; gap: 8px; }
+        button.btn:active { transform: scale(0.97); }
+        .btn-primary { background: var(--accent); color: #000; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.35); }
+        .btn-whatsapp { background: #10b981; color: white; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35); }
         .btn-danger-soft { background: rgba(239, 68, 68, 0.12); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.25); padding: 6px 10px; font-size: 0.8rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
         .btn-danger-soft:hover { background: rgba(239, 68, 68, 0.25); }
         
-        .resumen-box { background: var(--bg-input); border-left: 4px solid var(--accent); padding: 14px; margin-top: 16px; font-size: 0.9rem; border-radius: 8px; line-height: 1.6; white-space: pre-line; border: 1px solid var(--border); border-left-width: 4px; }
+        .resumen-box { background: var(--bg-input); border-left: 4px solid var(--accent); padding: 14px; margin-top: 16px; font-size: 0.9rem; border-radius: 10px; line-height: 1.6; white-space: pre-line; border: 1px solid var(--border); border-left-width: 4px; }
         .item-list { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
         .item-row { display: flex; justify-content: space-between; align-items: center; background: var(--bg-input); padding: 12px 14px; border-radius: 10px; font-size: 0.9rem; border: 1px solid var(--border); animation: slideIn 0.25s ease; }
         @keyframes slideIn { from { opacity: 0; transform: translateX(-6px); } to { opacity: 1; transform: translateX(0); } }
-        .balance-total { font-size: 1.3rem; font-weight: 800; text-align: center; padding: 14px; background: var(--bg-input); border-radius: 10px; margin-bottom: 14px; border: 1px solid var(--border); color: var(--success); letter-spacing: 0.5px; }
+        .balance-total { font-size: 1.3rem; font-weight: 800; text-align: center; padding: 14px; background: var(--bg-input); border-radius: 12px; margin-bottom: 14px; border: 1px solid var(--border); color: var(--success); letter-spacing: 0.5px; }
         
         .tag-stock { font-size: 0.7rem; padding: 2px 6px; border-radius: 6px; font-weight: 700; margin-left: 6px; }
         .tag-ok { background: rgba(16, 185, 129, 0.2); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.3); }
         .tag-low { background: rgba(239, 68, 68, 0.2); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.3); }
+        
+        .empty-state { text-align: center; padding: 20px; color: var(--text-muted); font-size: 0.85rem; font-style: italic; }
     </style>
 </head>
 <body>
@@ -441,7 +445,7 @@
         }
         function renderStock() {
             const lista = document.getElementById('listaStock');
-            lista.innerHTML = stock.length === 0 ? '<small style="color:var(--text-muted)">No hay stock registrado.</small>' : '';
+            lista.innerHTML = stock.length === 0 ? '<div class="empty-state">📦 No hay materiales registrados en el pañol.</div>' : '';
             stock.forEach((s, idx) => {
                 let badgeEstado = s.cantidad <= 5 ? '<span class="tag-stock tag-low">⚠️ Bajo</span>' : '<span class="tag-stock tag-ok">✔ OK</span>';
                 lista.innerHTML += `<div class="item-row"><span>📦 ${s.nombre} (<strong>${s.cantidad}</strong>)${badgeEstado}</span><button class="btn-danger-soft" onclick="eliminarStock(${idx})">🗑️ Borrar</button></div>`;
@@ -468,7 +472,7 @@
         }
         function renderFinanzas() {
             const lista = document.getElementById('listaMovimientos');
-            lista.innerHTML = movimientos.length === 0 ? '<small style="color:var(--text-muted)">Sin movimientos registrados.</small>' : '';
+            lista.innerHTML = movimientos.length === 0 ? '<div class="empty-state">💰 Sin movimientos de caja registrados.</div>' : '';
             let total = 0;
             movimientos.forEach((m, idx) => {
                 if (m.tipo === 'ingreso') total += m.monto;
@@ -501,7 +505,7 @@
         }
         function renderPersonal() {
             const lista = document.getElementById('listaPersonal');
-            lista.innerHTML = personal.length === 0 ? '<small style="color:var(--text-muted)">Sin personal cargado.</small>' : '';
+            lista.innerHTML = personal.length === 0 ? '<div class="empty-state">👷 Sin personal cargado en la planilla.</div>' : '';
             personal.forEach((p, idx) => {
                 lista.innerHTML += `<div class="item-row"><span>👷 ${p.nombre} (${p.dias}d) - <strong>$${p.total.toLocaleString()}</strong></span><button class="btn-danger-soft" onclick="eliminarPersonal(${idx})">🗑️</button></div>`;
             });
@@ -528,7 +532,7 @@
         }
         function renderAgenda() {
             const lista = document.getElementById('listaAgenda');
-            lista.innerHTML = agenda.length === 0 ? '<small style="color:var(--text-muted)">Agenda vacía.</small>' : '';
+            lista.innerHTML = agenda.length === 0 ? '<div class="empty-state">📇 Agenda de corralones vacía.</div>' : '';
             agenda.forEach((a, idx) => {
                 lista.innerHTML += `<div class="item-row" style="flex-direction:row; align-items:flex-start;"><div><strong>👤 ${a.nombre}</strong> ${a.tel ? '- 📞 ' + a.tel : ''}<br><small style="color:var(--text-muted);">${a.notas}</small></div><button class="btn-danger-soft" onclick="eliminarAgenda(${idx})">🗑️</button></div>`;
             });
