@@ -1,9 +1,16 @@
+
 {
-  "name": "Control de Obra Contratista",
-  "short_name": "Contratista",
+  "name": "Gestión de Obras Pro",
+  "short_name": "ObrasPro",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#121212",
-  "theme_color": "#1e1e1e",
-  "icons": []
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "https://img.icons8.com/fluency/96/worker-beard.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    }
+  ]
 }
