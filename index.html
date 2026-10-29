@@ -19,23 +19,25 @@
             --danger: #ef4444;
             --border: #2a3a5e;
         }
-        body { font-family: system-ui, -apple-system, sans-serif; background-color: var(--bg-main); color: var(--text-main); margin: 0; padding: 12px; }
+        body { font-family: system-ui, -apple-system, sans-serif; background-color: var(--bg-main); color: var(--text-main); margin: 0; padding: 12px; padding-bottom: 90px; }
         
         header { text-align: center; margin-bottom: 14px; padding: 16px; background: linear-gradient(135deg, var(--bg-card), #1a2744); border-radius: 14px; border: 1px solid var(--border); box-shadow: 0 8px 16px -4px rgba(0,0,0,0.4); }
         h1 { color: var(--accent); font-size: 1.5rem; margin: 0; font-weight: 800; letter-spacing: 0.5px; }
         p.subtitle { color: var(--text-muted); font-size: 0.75rem; margin: 4px 0 0 0; text-transform: uppercase; letter-spacing: 1.5px; }
         
-        /* Pestañas de Navegación Estilizadas */
-        .tabs { display: flex; gap: 6px; margin-bottom: 14px; background: var(--bg-card); padding: 6px; border-radius: 12px; border: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; }
+        /* Barra de Navegación Inferior Estilo App Nativa */
+        .tabs { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(19, 28, 49, 0.95); backdrop-filter: blur(10px); display: flex; justify-content: space-around; padding: 8px 4px; border-top: 1px solid var(--border); z-index: 1000; box-shadow: 0 -6px 20px rgba(0,0,0,0.5); overflow-x: auto; scrollbar-width: none; }
         .tabs::-webkit-scrollbar { display: none; }
-        .tab-btn { flex: 1; min-width: 65px; padding: 10px 4px; background: none; border: none; color: var(--text-muted); font-weight: 700; border-radius: 8px; cursor: pointer; font-size: 0.7rem; text-align: center; white-space: nowrap; transition: all 0.25s ease; }
-        .tab-btn.active { background: var(--accent); color: #000; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35); transform: translateY(-1px); }
-        
-        .section { display: none; animation: fadeIn 0.3s ease; }
-        .section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+        .tab-btn { background: none; border: none; color: var(--text-muted); font-weight: 700; border-radius: 10px; cursor: pointer; font-size: 0.65rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 8px; min-width: 50px; transition: all 0.2s ease; position: relative; }
+        .tab-btn span.icon { font-size: 1.2rem; }
+        .tab-btn.active { color: var(--accent); background: var(--accent-glow); }
+        .badge-count { position: absolute; top: 4px; right: 8px; background: var(--accent); color: #000; font-size: 0.55rem; padding: 1px 4px; border-radius: 6px; font-weight: 800; display: none; }
 
-        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 18px; margin-bottom: 14px; box-shadow: 0 6px 12px -2px rgba(0,0,0,0.3); }
+        .section { display: none; animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+        .section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 18px; margin-bottom: 14px; box-shadow: 0 6px 16px -2px rgba(0,0,0,0.3); }
         h2 { font-size: 1.1rem; margin-top: 0; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 10px; display: flex; align-items: center; gap: 8px; }
         
         label { display: block; margin-top: 14px; color: var(--text-muted); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
@@ -57,8 +59,13 @@
         
         .resumen-box { background: var(--bg-input); border-left: 4px solid var(--accent); padding: 14px; margin-top: 16px; font-size: 0.9rem; border-radius: 8px; line-height: 1.6; white-space: pre-line; border: 1px solid var(--border); border-left-width: 4px; }
         .item-list { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
-        .item-row { display: flex; justify-content: space-between; align-items: center; background: var(--bg-input); padding: 12px 14px; border-radius: 10px; font-size: 0.9rem; border: 1px solid var(--border); }
+        .item-row { display: flex; justify-content: space-between; align-items: center; background: var(--bg-input); padding: 12px 14px; border-radius: 10px; font-size: 0.9rem; border: 1px solid var(--border); animation: slideIn 0.25s ease; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(-6px); } to { opacity: 1; transform: translateX(0); } }
         .balance-total { font-size: 1.3rem; font-weight: 800; text-align: center; padding: 14px; background: var(--bg-input); border-radius: 10px; margin-bottom: 14px; border: 1px solid var(--border); color: var(--success); letter-spacing: 0.5px; }
+        
+        .tag-stock { font-size: 0.7rem; padding: 2px 6px; border-radius: 6px; font-weight: 700; margin-left: 6px; }
+        .tag-ok { background: rgba(16, 185, 129, 0.2); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.3); }
+        .tag-low { background: rgba(239, 68, 68, 0.2); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.3); }
     </style>
 </head>
 <body>
@@ -67,17 +74,6 @@
         <h1>🏗️ ObrasPro Total</h1>
         <p class="subtitle">Gestión y Cómputo Profesional</p>
     </header>
-
-    <!-- Pestañas -->
-    <div class="tabs">
-        <button class="tab-btn active" onclick="cambiarTab('presupuesto', this)">📋 Cotizar</button>
-        <button class="tab-btn" onclick="cambiarTab('climatizacion', this)">❄️ Clima</button>
-        <button class="tab-btn" onclick="cambiarTab('recibos', this)">📄 Recibos</button>
-        <button class="tab-btn" onclick="cambiarTab('stock', this)">📦 Stock</button>
-        <button class="tab-btn" onclick="cambiarTab('finanzas', this)">💰 Finanzas</button>
-        <button class="tab-btn" onclick="cambiarTab('personal', this)">👷 Personal</button>
-        <button class="tab-btn" onclick="cambiarTab('agenda', this)">📇 Agenda</button>
-    </div>
 
     <!-- 1. COTIZADOR DE OBRA -->
     <div id="presupuesto" class="section active">
@@ -251,6 +247,35 @@
         </div>
     </div>
 
+    <!-- Barra de Navegación Inferior Flotante -->
+    <div class="tabs">
+        <button class="tab-btn active" onclick="cambiarTab('presupuesto', this)">
+            <span class="icon">📋</span>Cotizar
+        </button>
+        <button class="tab-btn" onclick="cambiarTab('climatizacion', this)">
+            <span class="icon">❄️</span>Clima
+        </button>
+        <button class="tab-btn" onclick="cambiarTab('recibos', this)">
+            <span class="icon">📄</span>Recibos
+        </button>
+        <button class="tab-btn" onclick="cambiarTab('stock', this)">
+            <span class="icon">📦</span>Stock
+            <span id="badgeStock" class="badge-count">0</span>
+        </button>
+        <button class="tab-btn" onclick="cambiarTab('finanzas', this)">
+            <span class="icon">💰</span>Caja
+            <span id="badgeFinanzas" class="badge-count">0</span>
+        </button>
+        <button class="tab-btn" onclick="cambiarTab('personal', this)">
+            <span class="icon">👷</span>Personal
+            <span id="badgePersonal" class="badge-count">0</span>
+        </button>
+        <button class="tab-btn" onclick="cambiarTab('agenda', this)">
+            <span class="icon">📇</span>Agenda
+            <span id="badgeAgenda" class="badge-count">0</span>
+        </button>
+    </div>
+
     <script>
         let trabajoSeleccionado = 'pared_hueco_12';
         let aireSeleccionado = '2250';
@@ -262,6 +287,23 @@
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
             btn.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function actualizarBadges() {
+            const updateBadge = (id, count) => {
+                const badge = document.getElementById(id);
+                if (count > 0) {
+                    badge.innerText = count;
+                    badge.style.display = 'inline-block';
+                } else {
+                    badge.style.display = 'none';
+                }
+            };
+            updateBadge('badgeStock', stock.length);
+            updateBadge('badgeFinanzas', movimientos.length);
+            updateBadge('badgePersonal', personal.length);
+            updateBadge('badgeAgenda', agenda.length);
         }
 
         function seleccionarTrabajo(tipo, btn) {
@@ -401,8 +443,10 @@
             const lista = document.getElementById('listaStock');
             lista.innerHTML = stock.length === 0 ? '<small style="color:var(--text-muted)">No hay stock registrado.</small>' : '';
             stock.forEach((s, idx) => {
-                lista.innerHTML += `<div class="item-row"><span>📦 ${s.nombre} (<strong>${s.cantidad}</strong>)</span><button class="btn-danger-soft" onclick="eliminarStock(${idx})">🗑️ Borrar</button></div>`;
+                let badgeEstado = s.cantidad <= 5 ? '<span class="tag-stock tag-low">⚠️ Bajo</span>' : '<span class="tag-stock tag-ok">✔ OK</span>';
+                lista.innerHTML += `<div class="item-row"><span>📦 ${s.nombre} (<strong>${s.cantidad}</strong>)${badgeEstado}</span><button class="btn-danger-soft" onclick="eliminarStock(${idx})">🗑️ Borrar</button></div>`;
             });
+            actualizarBadges();
         }
 
         let movimientos = JSON.parse(localStorage.getItem('obras_movs')) || [];
@@ -434,6 +478,7 @@
             const bal = document.getElementById('balanceDisplay');
             bal.innerText = `Ganancia Neta: $${total.toLocaleString()}`;
             bal.style.color = total >= 0 ? 'var(--success)' : 'var(--danger)';
+            actualizarBadges();
         }
 
         let personal = JSON.parse(localStorage.getItem('obras_personal')) || [];
@@ -460,6 +505,7 @@
             personal.forEach((p, idx) => {
                 lista.innerHTML += `<div class="item-row"><span>👷 ${p.nombre} (${p.dias}d) - <strong>$${p.total.toLocaleString()}</strong></span><button class="btn-danger-soft" onclick="eliminarPersonal(${idx})">🗑️</button></div>`;
             });
+            actualizarBadges();
         }
 
         let agenda = JSON.parse(localStorage.getItem('obras_agenda')) || [];
@@ -486,6 +532,7 @@
             agenda.forEach((a, idx) => {
                 lista.innerHTML += `<div class="item-row" style="flex-direction:row; align-items:flex-start;"><div><strong>👤 ${a.nombre}</strong> ${a.tel ? '- 📞 ' + a.tel : ''}<br><small style="color:var(--text-muted);">${a.notas}</small></div><button class="btn-danger-soft" onclick="eliminarAgenda(${idx})">🗑️</button></div>`;
             });
+            actualizarBadges();
         }
 
         renderStock();
