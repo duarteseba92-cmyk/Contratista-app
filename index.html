@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ObrasPro Total</title>
-    <meta name="theme-color" content="#0f172a">
+    <title>ObrasPro Total - Gestión Profesional</title>
+    <meta name="theme-color" content="#090d16">
     <link rel="manifest" href="manifest.json">
     <style>
         :root {
@@ -12,6 +12,7 @@
             --bg-card: #131c31;
             --bg-input: #1b2642;
             --accent: #f59e0b;
+            --accent-glow: rgba(245, 158, 11, 0.15);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --success: #10b981;
@@ -20,51 +21,57 @@
         }
         body { font-family: system-ui, -apple-system, sans-serif; background-color: var(--bg-main); color: var(--text-main); margin: 0; padding: 12px; }
         
-        header { text-align: center; margin-bottom: 14px; padding: 12px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border); }
-        h1 { color: var(--accent); font-size: 1.4rem; margin: 2px 0; font-weight: 800; }
-        p.subtitle { color: var(--text-muted); font-size: 0.8rem; margin: 0; text-transform: uppercase; }
+        header { text-align: center; margin-bottom: 14px; padding: 16px; background: linear-gradient(135deg, var(--bg-card), #1a2744); border-radius: 14px; border: 1px solid var(--border); box-shadow: 0 8px 16px -4px rgba(0,0,0,0.4); }
+        h1 { color: var(--accent); font-size: 1.5rem; margin: 0; font-weight: 800; letter-spacing: 0.5px; }
+        p.subtitle { color: var(--text-muted); font-size: 0.75rem; margin: 4px 0 0 0; text-transform: uppercase; letter-spacing: 1.5px; }
         
-        .tabs { display: flex; gap: 4px; margin-bottom: 14px; background: var(--bg-card); padding: 4px; border-radius: 10px; border: 1px solid var(--border); overflow-x: auto; }
-        .tab-btn { flex: 1; min-width: 60px; padding: 10px 2px; background: none; border: none; color: var(--text-muted); font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 0.68rem; text-align: center; white-space: nowrap; }
-        .tab-btn.active { background: var(--accent); color: #000; }
+        /* Pestañas de Navegación Estilizadas */
+        .tabs { display: flex; gap: 6px; margin-bottom: 14px; background: var(--bg-card); padding: 6px; border-radius: 12px; border: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; }
+        .tabs::-webkit-scrollbar { display: none; }
+        .tab-btn { flex: 1; min-width: 65px; padding: 10px 4px; background: none; border: none; color: var(--text-muted); font-weight: 700; border-radius: 8px; cursor: pointer; font-size: 0.7rem; text-align: center; white-space: nowrap; transition: all 0.25s ease; }
+        .tab-btn.active { background: var(--accent); color: #000; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35); transform: translateY(-1px); }
         
-        .section { display: none; }
+        .section { display: none; animation: fadeIn 0.3s ease; }
         .section.active { display: block; }
-        
-        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 14px; }
-        h2 { font-size: 1.1rem; margin-top: 0; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 8px; }
-        
-        label { display: block; margin-top: 12px; color: var(--text-muted); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; }
-        input, select, textarea { width: 100%; padding: 12px; margin-top: 6px; background: var(--bg-input); border: 1px solid var(--border); color: var(--text-main); border-radius: 8px; box-sizing: border-box; font-size: 1rem; outline: none; }
-        input:focus, select:focus { border-color: var(--accent); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
-        .grid-trabajos { display: grid; grid-template-columns: 1fr; gap: 8px; margin-top: 6px; }
-        .trabajo-btn { background: var(--bg-input); border: 1px solid var(--border); color: var(--text-main); padding: 12px; text-align: left; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-        .trabajo-btn.selected { background: var(--accent); color: #000; border-color: var(--accent); }
-
-        .btn-group { display: flex; gap: 8px; margin-top: 16px; }
-        button.btn { width: 100%; padding: 14px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; font-size: 0.95rem; }
-        .btn-primary { background: var(--accent); color: #000; }
-        .btn-whatsapp { background: #10b981; color: white; }
-        .btn-danger-soft { background: rgba(239, 68, 68, 0.15); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.3); padding: 6px 10px; font-size: 0.8rem; border-radius: 6px; }
+        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 18px; margin-bottom: 14px; box-shadow: 0 6px 12px -2px rgba(0,0,0,0.3); }
+        h2 { font-size: 1.1rem; margin-top: 0; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 10px; display: flex; align-items: center; gap: 8px; }
         
-        .resumen-box { background: var(--bg-input); border-left: 4px solid var(--accent); padding: 14px; margin-top: 14px; font-size: 0.9rem; border-radius: 6px; line-height: 1.5; white-space: pre-line; }
-        .item-list { margin-top: 10px; display: flex; flex-direction: column; gap: 8px; }
-        .item-row { display: flex; justify-content: space-between; align-items: center; background: var(--bg-input); padding: 12px; border-radius: 8px; font-size: 0.9rem; border: 1px solid var(--border); }
-        .balance-total { font-size: 1.2rem; font-weight: 800; text-align: center; padding: 12px; background: var(--bg-input); border-radius: 8px; margin-bottom: 12px; border: 1px solid var(--border); color: var(--success); }
+        label { display: block; margin-top: 14px; color: var(--text-muted); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+        input, select, textarea { width: 100%; padding: 12px; margin-top: 6px; background: var(--bg-input); border: 1px solid var(--border); color: var(--text-main); border-radius: 10px; box-sizing: border-box; font-size: 0.95rem; outline: none; transition: all 0.2s; }
+        input:focus, select:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+
+        .grid-trabajos { display: grid; grid-template-columns: 1fr; gap: 8px; margin-top: 8px; }
+        .trabajo-btn { background: var(--bg-input); border: 1px solid var(--border); color: var(--text-main); padding: 14px; text-align: left; border-radius: 10px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 8px; }
+        .trabajo-btn:hover { border-color: var(--accent); }
+        .trabajo-btn.selected { background: var(--accent-glow); color: var(--accent); border-color: var(--accent); font-weight: 700; }
+
+        .btn-group { display: flex; gap: 10px; margin-top: 16px; }
+        button.btn { width: 100%; padding: 14px; font-weight: 700; border: none; border-radius: 10px; cursor: pointer; font-size: 0.95rem; transition: filter 0.2s, transform 0.1s; display: flex; justify-content: center; align-items: center; gap: 8px; }
+        button.btn:active { transform: scale(0.98); }
+        .btn-primary { background: var(--accent); color: #000; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3); }
+        .btn-whatsapp { background: #10b981; color: white; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); }
+        .btn-danger-soft { background: rgba(239, 68, 68, 0.12); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.25); padding: 6px 10px; font-size: 0.8rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+        .btn-danger-soft:hover { background: rgba(239, 68, 68, 0.25); }
+        
+        .resumen-box { background: var(--bg-input); border-left: 4px solid var(--accent); padding: 14px; margin-top: 16px; font-size: 0.9rem; border-radius: 8px; line-height: 1.6; white-space: pre-line; border: 1px solid var(--border); border-left-width: 4px; }
+        .item-list { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+        .item-row { display: flex; justify-content: space-between; align-items: center; background: var(--bg-input); padding: 12px 14px; border-radius: 10px; font-size: 0.9rem; border: 1px solid var(--border); }
+        .balance-total { font-size: 1.3rem; font-weight: 800; text-align: center; padding: 14px; background: var(--bg-input); border-radius: 10px; margin-bottom: 14px; border: 1px solid var(--border); color: var(--success); letter-spacing: 0.5px; }
     </style>
 </head>
 <body>
 
     <header>
         <h1>🏗️ ObrasPro Total</h1>
-        <p class="subtitle">Gestión Profesional</p>
+        <p class="subtitle">Gestión y Cómputo Profesional</p>
     </header>
 
     <!-- Pestañas -->
     <div class="tabs">
         <button class="tab-btn active" onclick="cambiarTab('presupuesto', this)">📋 Cotizar</button>
-        <button class="tab-btn" onclick="cambiarTab('climatizacion', this)">❄️ Aire Acond.</button>
+        <button class="tab-btn" onclick="cambiarTab('climatizacion', this)">❄️ Clima</button>
         <button class="tab-btn" onclick="cambiarTab('recibos', this)">📄 Recibos</button>
         <button class="tab-btn" onclick="cambiarTab('stock', this)">📦 Stock</button>
         <button class="tab-btn" onclick="cambiarTab('finanzas', this)">💰 Finanzas</button>
@@ -93,7 +100,6 @@
             <label>Superficie Real (M²)</label>
             <input type="number" id="superficie" placeholder="Ej: 45">
 
-            <!-- Campo extra exclusivo para porcelanato -->
             <div id="divExtraPorcelanato" style="display:none;">
                 <label>Metros que trae una Caja de Piso (M²)</label>
                 <input type="number" id="m2PorCaja" placeholder="Ej: 1.44" value="1.44">
@@ -102,7 +108,7 @@
             <label>Mano de Obra por M² ($)</label>
             <input type="number" id="valorMano" placeholder="Ej: 9500">
 
-            <button class="btn btn-primary" style="margin-top: 14px;" onclick="calcularPresupuesto()">🚀 Calcular Cómputo</button>
+            <button class="btn btn-primary" style="margin-top: 16px;" onclick="calcularPresupuesto()">🚀 Calcular Cómputo</button>
 
             <div id="resultado" class="resumen-box" style="display:none;"></div>
             
@@ -115,12 +121,12 @@
     <!-- 2. CLIMATIZACIÓN / AIRES ACONDICIONADOS -->
     <div id="climatizacion" class="section">
         <div class="card">
-            <h2>❄️ Instalación y Cálculo de Climatización</h2>
+            <h2>❄️ Instalación y Climatización</h2>
             <label>Cliente / Ubicación</label>
             <input type="text" id="climaCliente" placeholder="Ej: Dormitorio Principal">
 
-            <label>1. Calculadora Rápida de Frigorías (Opcional)</label>
-            <div style="display: flex; gap: 6px;">
+            <label>1. Calculadora Rápida de Frigorías</label>
+            <div style="display: flex; gap: 8px;">
                 <input type="number" id="climaLargo" placeholder="Largo (m)">
                 <input type="number" id="climaAncho" placeholder="Ancho (m)">
                 <input type="number" id="climaAlto" placeholder="Alto (m)" value="2.6">
@@ -147,7 +153,7 @@
             <label>Mano de Obra de Instalación ($)</label>
             <input type="number" id="climaMano" placeholder="Ej: 50000">
 
-            <button class="btn btn-primary" style="margin-top: 14px;" onclick="calcularAire()">🚀 Calcular Cómputo Técnico</button>
+            <button class="btn btn-primary" style="margin-top: 16px;" onclick="calcularAire()">🚀 Calcular Cómputo Técnico</button>
 
             <div id="resultadoClima" class="resumen-box" style="display:none;"></div>
             
@@ -167,7 +173,7 @@
             <input type="text" id="recConcepto" placeholder="Ej: Seña inicial de materiales">
             <label>Monto ($)</label>
             <input type="number" id="recMonto" placeholder="Ej: 75000">
-            <button class="btn btn-whatsapp" style="margin-top: 12px;" onclick="enviarReciboWhatsApp()">📲 Enviar Recibo WhatsApp</button>
+            <button class="btn btn-whatsapp" style="margin-top: 14px;" onclick="enviarReciboWhatsApp()">📲 Enviar Recibo WhatsApp</button>
         </div>
     </div>
 
@@ -179,7 +185,7 @@
             <input type="text" id="stNombre" placeholder="Ej: Cemento Loma Negra">
             <label>Cantidad</label>
             <input type="number" id="stCantidad" placeholder="Ej: 40">
-            <button class="btn btn-primary" style="margin-top: 12px;" onclick="agregarStock()">➕ Añadir Material</button>
+            <button class="btn btn-primary" style="margin-top: 14px;" onclick="agregarStock()">➕ Añadir Material</button>
         </div>
         <div class="card">
             <h2>Inventario Actual</h2>
@@ -200,7 +206,7 @@
                 <option value="gasto">🔻 Gasto</option>
                 <option value="ingreso">🟢 Ingreso / Cobro</option>
             </select>
-            <button class="btn btn-primary" style="margin-top: 12px;" onclick="agregarMovimiento()">Registrar Operación</button>
+            <button class="btn btn-primary" style="margin-top: 14px;" onclick="agregarMovimiento()">Registrar Operación</button>
         </div>
         <div class="card">
             <h2>Balance Neto</h2>
@@ -219,7 +225,7 @@
             <input type="number" id="jornalPersonal" placeholder="Ej: 22000">
             <label>Días Trabajados</label>
             <input type="number" id="diasPersonal" placeholder="Ej: 6">
-            <button class="btn btn-primary" style="margin-top: 12px;" onclick="agregarPersonal()">Calcular Semana</button>
+            <button class="btn btn-primary" style="margin-top: 14px;" onclick="agregarPersonal()">Calcular Semana</button>
         </div>
         <div class="card">
             <h2>Planilla de Pagos</h2>
@@ -237,7 +243,7 @@
             <input type="tel" id="agTelefono" placeholder="Ej: 3624...">
             <label>Notas / Precios</label>
             <textarea id="agNotas" rows="2" placeholder="Referencias de precios"></textarea>
-            <button class="btn btn-primary" style="margin-top: 12px;" onclick="agregarContacto()">Guardar Contacto</button>
+            <button class="btn btn-primary" style="margin-top: 14px;" onclick="agregarContacto()">Guardar Contacto</button>
         </div>
         <div class="card">
             <h2>Contactos Útiles</h2>
@@ -395,7 +401,7 @@
             const lista = document.getElementById('listaStock');
             lista.innerHTML = stock.length === 0 ? '<small style="color:var(--text-muted)">No hay stock registrado.</small>' : '';
             stock.forEach((s, idx) => {
-                lista.innerHTML += `<div class="item-row"><span>📦 ${s.nombre} (<strong>${s.cantidad}</strong>)</span><button class="btn-danger-soft" onclick="eliminarStock(${idx})">🗑️</button></div>`;
+                lista.innerHTML += `<div class="item-row"><span>📦 ${s.nombre} (<strong>${s.cantidad}</strong>)</span><button class="btn-danger-soft" onclick="eliminarStock(${idx})">🗑️ Borrar</button></div>`;
             });
         }
 
