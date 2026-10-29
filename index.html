@@ -443,14 +443,10 @@
             let cañoBaja = (aireSeleccionado === '4500' || aireSeleccionado === '6000') ? "1/2\" o 5/8\"" : "3/8\"";
             let termicaRecomendada = (aireSeleccionado === '6000') ? "20A (Cable 4 mm²)" : "10A - 16A (Cable 2.5 mm²)";
 
-            // Cómputo exacto de gas refrigerante extra por metro superado
-            let textoGasExtra = "";
-            if (metros > 3) {
-                const metrosExtra = metros - 3;
-                let grsPorMetro = (aireSeleccionado === '4500' || aireSeleccionado === '6000') ? 25 : 15;
-                const gramosTotales = metrosExtra * grsPorMetro;
-                textoGasExtra = `\n⚠️ *Añadir Gas ${tipoGas}:* +${gramosTotales}g adicionales (${metrosExtra}m de cañería extra)`;
-            }
+            // Cómputo de gas refrigerante calculado siempre por metro de cañería
+            let grsPorMetro = (aireSeleccionado === '4500' || aireSeleccionado === '6000') ? 25 : 15;
+            let gramosTotales = metros * grsPorMetro;
+            let textoGasExtra = `\n⚠️ *Carga de Gas ${tipoGas}:* +${gramosTotales}g (${metros}m totales de cañería)`;
 
             // Checklist de calidad seleccionado
             let checksTxt = "\n--------------------------------\n📋 *Garantía de Calidad Aplicada:*";
