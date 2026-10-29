@@ -3,80 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Control de Obra & Presupuestos</title>
-    <!-- Configuración para que parezca una App instalada -->
-    <meta name="theme-color" content="#1e1e1e">
+    <title>Gestión de Obras Pro - Contratista</title>
+    <meta name="theme-color" content="#0f172a">
+    <link rel="manifest" href="manifest.json">
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #121212; color: #fff; margin: 0; padding: 15px; }
-        h1, h2 { color: #ff9800; text-align: center; }
-        h1 { font-size: 1.4rem; margin-bottom: 20px; }
-        .card { background: #1e1e1e; border: 1px solid #333; padding: 15px; border-radius: 10px; margin-bottom: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
-        label { display: block; margin-top: 10px; color: #aaa; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
-        input, select { width: 100%; padding: 12px; margin-top: 5px; background: #2a2a2a; color: #fff; border: 1px solid #444; border-radius: 6px; box-sizing: border-box; font-size: 1rem; }
-        button { width: 100%; padding: 14px; font-weight: bold; border: none; border-radius: 6px; margin-top: 15px; cursor: pointer; font-size: 1rem; }
-        .btn-calcular { background: #ff9800; color: #000; }
+        :root {
+            --bg-main: #0f172a;
+            --bg-card: #1e293b;
+            --accent: #f59e0b;
+            --accent-hover: #d97706;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+            --border: #334155;
+        }
+        body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg-main); color: var(--text-main); margin: 0; padding: 12px; }
+        header { text-align: center; margin-bottom: 15px; }
+        h1 { color: var(--accent); font-size: 1.3rem; margin: 5px 0; }
+        p.subtitle { color: var(--text-muted); font-size: 0.8rem; margin: 0; }
+        
+        .tabs { display: flex; gap: 5px; margin-bottom: 15px; background: var(--bg-card); padding: 5px; border-radius: 8px; border: 1px solid var(--border); }
+        .tab-btn { flex: 1; padding: 10px; background: none; border: none; color: var(--text-muted); font-weight: bold; font-size: 0.85rem; border-radius: 6px; cursor: pointer; text-align: center; }
+        .tab-btn.active { background: var(--accent); color: #000; }
+
+        .section { display: none; }
+        .section.active { display: block; }
+
+        .card { background: var(--bg-card); border: 1px solid var(--border); padding: 12px; border-radius: 10px; margin-bottom: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+        label { display: block; margin-top: 8px; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; font-weight: bold; }
+        input, select { width: 100%; padding: 10px; margin-top: 4px; background: #0f172a; color: var(--text-main); border: 1px solid var(--border); border-radius: 6px; box-sizing: border-box; font-size: 0.95rem; }
+        
+        button.btn { width: 100%; padding: 12px; font-weight: bold; border: none; border-radius: 6px; margin-top: 10px; cursor: pointer; font-size: 0.95rem; }
+        .btn-primary { background: var(--accent); color: #000; }
         .btn-whatsapp { background: #25D366; color: white; }
-        .resumen { background: #252525; border-left: 4px solid #ff9800; padding: 12px; margin-top: 15px; border-radius: 4px; }
-        .materia-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #333; font-size: 0.95rem; }
+        .btn-danger { background: #ef4444; color: white; font-size: 0.75rem; padding: 6px; margin-top: 5px; }
+
+        .resumen-box { background: #0f172a; border-left: 4px solid var(--accent); padding: 10px; margin-top: 10px; border-radius: 4px; }
+        .item-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+        .history-card { background: #111827; border: 1px solid var(--border); padding: 10px; border-radius: 6px; margin-bottom: 8px; font-size: 0.85rem; }
     </style>
 </head>
 <body>
 
-    <h1>🏗️ Control de Obra Contratista</h1>
+    <header>
+        <h1>🏗️ Gestión de Obras Pro</h1>
+        <p class="subtitle">Herramienta profesional para contratistas</p>
+    </header>
 
-    <!-- MODULO 1: DATOS DE LA OBRA -->
-    <div class="card">
-        <h2>1. Datos del Cliente</h2>
-        <label>Nombre del Cliente</label>
-        <input type="text" id="cliente" placeholder="Ej: Juan Pérez">
-        
-        <label>Tipo de Trabajo</label>
-        <select id="tipoTrabajo">
-            <option value="pared">Construcción de Pared (M2)</option>
-            <option value="pintura">Pintura de Interiores (M2)</option>
-        </select>
-
-        <label>Superficie Total (Metros Cuadrados)</label>
-        <input type="number" id="medidaM2" placeholder="Ej: 25">
+    <!-- PESTAÑAS DE NAVEGACIÓN -->
+    <div class="tabs">
+        <button class="tab-btn active" onclick="cambiarTab('presupuesto', this)">Presupuestos</button>
+        <button class="tab-btn" onclick="cambiarTab('historial', this)">Guardados</button>
+        <button class="tab-btn" onclick="cambiarTab('gastos', this)">Gastos Diarios</button>
     </div>
 
-    <!-- MODULO 2: MANO DE OBRA -->
-    <div class="card">
-        <h2>2. Costo Mano de Obra</h2>
-        <label>Precio de Mano de Obra por M2 ($)</label>
-        <input type="number" id="costoManoObra" placeholder="Ej: 5000">
-    </div>
+    <!-- SECCIÓN 1: PRESUPUESTOS Y MATERIALES -->
+    <div id="sec-presupuesto" class="section active">
+        <div class="card">
+            <label>Cliente / Obra</label>
+            <input type="text" id="cliente" placeholder="Ej: Roberto Gomez">
+            
+            <label>Tipo de Trabajo</label>
+            <select id="tipoTrabajo" onchange="actualizarPreciosSugeridos()">
+                <option value="pared">Construcción de Pared (M²)</option>
+                <option value="revoque">Revoque Grueso y Fino (M²)</option>
+                <option value="piso">Colocación de Pisos / Cerámicos (M²)</option>
+                <option value="losa">Losa de Hormigón / Techo (M²)</option>
+            </select>
 
-    <button class="btn-calcular" onclick="calcularTodo()">📐 Calcular Presupuesto</button>
+            <label>Superficie (M²)</label>
+            <input type="number" id="medidaM2" placeholder="Ej: 40">
 
-    <!-- MODULO 3: RESULTADOS -->
-    <div class="card" id="resultadoCard" style="display:none;">
-        <h2>3. Resumen de Costos</h2>
-        <div id="listaMateriales"></div>
-        
-        <div class="resumen">
-            <p><strong>Costo Materiales:</strong> $<span id="totalMateriales">0</span></p>
-            <p><strong>Mano de Obra:</strong> $<span id="totalManoObra">0</span></p>
-            <h3 style="color:#4CAF50; margin:8px 0;">TOTAL: $<span id="totalGeneral">0</span></h3>
+            <label>Valor Mano de Obra por M² ($)</label>
+            <input type="number" id="costoManoObra" placeholder="Ej: 8000">
         </div>
-        
-        <button class="btn-whatsapp" onclick="compartirWhatsApp()">📱 Enviar Presupuesto por WhatsApp</button>
+
+        <button class="btn btn-primary" onclick="calcularPresupuesto()">⚙️ Calcular Cómputo y Presupuesto</button>
+
+        <div class="card" id="resultadoCard" style="display:none;">
+            <h3 style="color:var(--accent); margin-top:0;">Desglose Profesional</h3>
+            <div id="listaMateriales"></div>
+            
+            <div class="resumen-box">
+                <p style="margin:4px 0;"><strong>Materiales Estimados:</strong> $<span id="totalMateriales">0</span></p>
+                <p style="margin:4px 0;"><strong>Mano de Obra:</strong> $<span id="totalManoObra">0</span></p>
+                <h3 style="color:var(--success); margin:8px 0;">TOTAL GENERAL: $<span id="totalGeneral">0</span></h3>
+            </div>
+            
+            <button class="btn btn-primary" onclick="guardarPresupuestoLocal()" style="background:#3b82f6; color:#fff;">💾 Guardar Presupuesto</button>
+            <button class="btn btn-whatsapp" onclick="compartirWhatsApp()">📱 Enviar por WhatsApp</button>
+        </div>
+    </div>
+
+    <!-- SECCIÓN 2: HISTORIAL -->
+    <div id="sec-historial" class="section">
+        <div class="card">
+            <h3 style="margin-top:0; color:var(--accent);">Presupuestos Guardados</h3>
+            <div id="contenedorHistorial">
+                <p style="color:var(--text-muted); font-size:0.85rem;">No hay presupuestos guardados todavía.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECCIÓN 3: GASTOS DIARIOS DE OBRA -->
+    <div id="sec-gastos" class="section">
+        <div class="card">
+            <h3 style="margin-top:0; color:var(--accent);">Control de Gastos de Compra</h3>
+            <label>Detalle del Gasto (Corralón, flete, etc.)</label>
+            <input type="text" id="gastoDetalle" placeholder="Ej: 3 Bolsas de cemento extra">
+            
+            <label>Monto ($)</label>
+            <input type="number" id="gastoMonto" placeholder="Ej: 25000">
+            
+            <button class="btn btn-primary" onclick="agregarGasto()">➕ Registrar Gasto</button>
+        </div>
+
+        <div class="card">
+            <h3 style="margin-top:0;">Gastos Registrados</h3>
+            <div id="listaGastos">
+                <p style="color:var(--text-muted); font-size:0.85rem;">Sin gastos cargados hoy.</p>
+            </div>
+            <h4 style="margin-bottom:0; text-align:right; color:#ef4444;">Total Gastado: $<span id="totalGastosAcumulado">0</span></h4>
+        </div>
     </div>
 
     <script>
-        const PRECIOS = {
-            ladrillo: 250,
-            bolsaCemento: 8500,
-            baldePintura: 45000
+        // Precios estimativos de referencia por unidad
+        const PRECIOS_INSUMOS = {
+            ladrilloHec: 280,
+            cemento: 9200,
+            cal: 6500,
+            arenaM3: 45000,
+            pegamento: 12000,
+            hierro: 3500
         };
 
-        function calcularTodo() {
+        let ultimoCalculo = null;
+        let listaGastosArray = [];
+        let historialArray = [];
+
+        // Cargar datos guardados si existen
+        window.onload = function() {
+            if(localStorage.getItem('historial_obras')) {
+                historialArray = JSON.parse(localStorage.getItem('historial_obras'));
+                renderHistorial();
+            }
+            if(localStorage.getItem('gastos_obras')) {
+                listaGastosArray = JSON.parse(localStorage.getItem('gastos_obras'));
+                renderGastos();
+            }
+        };
+
+        function cambiarTab(tabId, btn) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('sec-' + tabId).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        function calcularPresupuesto() {
+            const cliente = document.getElementById("cliente").value || "Cliente General";
             const tipo = document.getElementById("tipoTrabajo").value;
             const m2 = parseFloat(document.getElementById("medidaM2").value) || 0;
-            const costoManoObraM2 = parseFloat(document.getElementById("costoManoObra").value) || 0;
+            const costoManoM2 = parseFloat(document.getElementById("costoManoObra").value) || 0;
 
             if (m2 <= 0) {
-                alert("Por favor ingresa una cantidad de M2 válida.");
+                alert("Por favor ingresa una cantidad de Metros Cuadrados (M²) válida.");
                 return;
             }
 
@@ -84,27 +176,58 @@
             let costoMateriales = 0;
 
             if (tipo === "pared") {
-                const cantLadrillos = Math.ceil(m2 * 12);
-                const cantCemento = (m2 * 0.1).toFixed(1);
-
-                const subLadrillos = cantLadrillos * PRECIOS.ladrillo;
-                const subCemento = cantCemento * PRECIOS.bolsaCemento;
-                costoMateriales = subLadrillos + subCemento;
+                const ladrillos = Math.ceil(m2 * 12.5);
+                const cemento = Math.ceil(m2 * 0.12);
+                const arena = (m2 * 0.022).toFixed(2);
+                
+                const subL = ladrillos * PRECIOS_INSUMOS.ladrilloHec;
+                const subC = cemento * PRECIOS_INSUMOS.cemento;
+                const subA = parseFloat(arena) * PRECIOS_INSUMOS.arenaM3;
+                costoMateriales = subL + subC + subA;
 
                 htmlMateriales = `
-                    <div class="materia-item"><span>Ladrillos (${cantLadrillos} un):</span> <strong>$${subLadrillos.toLocaleString()}</strong></div>
-                    <div class="materia-item"><span>Cemento (${cantCemento} bolsas):</span> <strong>$${subCemento.toLocaleString()}</strong></div>
+                    <div class="item-row"><span>Ladrillos (${ladrillos} un):</span> <strong>$${subL.toLocaleString()}</strong></div>
+                    <div class="item-row"><span>Cemento (${cemento} bolsas):</span> <strong>$${subC.toLocaleString()}</strong></div>
+                    <div class="item-row"><span>Arena (${arena} m³):</span> <strong>$${subA.toLocaleString()}</strong></div>
                 `;
-            } else if (tipo === "pintura") {
-                const baldes = Math.ceil(m2 / 60);
-                costoMateriales = baldes * PRECIOS.baldePintura;
+            } else if (tipo === "revoque") {
+                const cemento = Math.ceil(m2 * 0.08);
+                const cal = Math.ceil(m2 * 0.1);
+                const arena = (m2 * 0.018).toFixed(2);
+
+                const subC = cemento * PRECIOS_INSUMOS.cemento;
+                const subCal = cal * PRECIOS_INSUMOS.cal;
+                const subA = parseFloat(arena) * PRECIOS_INSUMOS.arenaM3;
+                costoMateriales = subC + subCal + subA;
 
                 htmlMateriales = `
-                    <div class="materia-item"><span>Pintura 20L (${baldes} balde/s):</span> <strong>$${costoMateriales.toLocaleString()}</strong></div>
+                    <div class="item-row"><span>Cemento (${cemento} bols):</span> <strong>$${subC.toLocaleString()}</strong></div>
+                    <div class="item-row"><span>Cal (${cal} bols):</span> <strong>$${subCal.toLocaleString()}</strong></div>
+                    <div class="item-row"><span>Arena Fina (${arena} m³):</span> <strong>$${subA.toLocaleString()}</strong></div>
+                `;
+            } else if (tipo === "piso") {
+                const pegamento = Math.ceil(m2 / 4); // 1 bolsa cada 4m2 aprox
+                const subP = pegamento * PRECIOS_INSUMOS.pegamento;
+                costoMateriales = subP;
+
+                htmlMateriales = `
+                    <div class="item-row"><span>Pegamento Cerámico (${pegamento} bols):</span> <strong>$${subP.toLocaleString()}</strong></div>
+                    <div class="item-row"><span>*Cerámicos / Porcelanato:</span> <span style="color:var(--accent);">A cotizar según elección</span></div>
+                `;
+            } else if (tipo === "losa") {
+                const cemento = Math.ceil(m2 * 0.35);
+                const hierro = Math.ceil(m2 * 4.5);
+                const subC = cemento * PRECIOS_INSUMOS.cemento;
+                const subH = hierro * PRECIOS_INSUMOS.hierro;
+                costoMateriales = subC + subH;
+
+                htmlMateriales = `
+                    <div class="item-row"><span>Cemento (${cemento} bols):</span> <strong>$${subC.toLocaleString()}</strong></div>
+                    <div class="item-row"><span>Hierro estrutural (${hierro} kg):</span> <strong>$${subH.toLocaleString()}</strong></div>
                 `;
             }
 
-            const totalManoObra = m2 * costoManoObraM2;
+            const totalManoObra = m2 * costoManoM2;
             const totalGeneral = costoMateriales + totalManoObra;
 
             document.getElementById("listaMateriales").innerHTML = htmlMateriales;
@@ -113,13 +236,100 @@
             document.getElementById("totalGeneral").innerText = totalGeneral.toLocaleString();
 
             document.getElementById("resultadoCard").style.display = "block";
+
+            // Guardar en variable temporal para exportar o registrar
+            ultimoCalculo = {
+                fecha: new Date().toLocaleDateString(),
+                cliente,
+                tipo,
+                m2,
+                totalGeneral: totalGeneral.toLocaleString()
+            };
+        }
+
+        function guardarPresupuestoLocal() {
+            if(!ultimoCalculo) return;
+            historialArray.unshift(ultimoCalculo);
+            localStorage.setItem('historial_obras', JSON.stringify(historialArray));
+            renderHistorial();
+            alert("¡Presupuesto guardado con éxito en la memoria del teléfono!");
+        }
+
+        function renderHistorial() {
+            const contenedor = document.getElementById("contenedorHistorial");
+            if(historialArray.length === 0) {
+                contenedor.innerHTML = `<p style="color:var(--text-muted); font-size:0.85rem;">No hay presupuestos guardados.</p>`;
+                return;
+            }
+            let html = "";
+            historialArray.forEach((item, index) => {
+                html += `
+                    <div class="history-card">
+                        <div style="display:flex; justify-content:space-between; color:var(--accent); font-weight:bold;">
+                            <span>${item.cliente}</span>
+                            <span>$${item.totalGeneral}</span>
+                        </div>
+                        <div style="color:var(--text-muted); margin-top:3px;">
+                            Trabajo: ${item.tipo.toUpperCase()} (${item.m2} M²) - ${item.fecha}
+                        </div>
+                        <button class="btn btn-danger" onclick="borrarHistorial(${index})">Eliminar registro</button>
+                    </div>
+                `;
+            });
+            contenedor.innerHTML = html;
+        }
+
+        function borrarHistorial(index) {
+            historialArray.splice(index, 1);
+            localStorage.setItem('historial_obras', JSON.stringify(historialArray));
+            renderHistorial();
+        }
+
+        function agregarGasto() {
+            const detalle = document.getElementById("gastoDetalle").value;
+            const monto = parseFloat(document.getElementById("gastoMonto").value) || 0;
+            if(!detalle || monto <= 0) {
+                alert("Completa el detalle y el monto del gasto.");
+                return;
+            }
+            listaGastosArray.unshift({detalle, monto});
+            localStorage.setItem('gastos_obras', JSON.stringify(listaGastosArray));
+            document.getElementById("gastoDetalle").value = "";
+            document.getElementById("gastoMonto").value = "";
+            renderGastos();
+        }
+
+        function renderGastos() {
+            const contenedor = document.getElementById("listaGastos");
+            if(listaGastosArray.length === 0) {
+                contenedor.innerHTML = `<p style="color:var(--text-muted); font-size:0.85rem;">Sin gastos cargados.</p>`;
+                document.getElementById("totalGastosAcumulado").innerText = "0";
+                return;
+            }
+            let html = "";
+            let total = 0;
+            listaGastosArray.forEach((g, i) => {
+                total += g.monto;
+                html += `
+                    <div class="item-row">
+                        <span>${g.detalle}</span>
+                        <strong>$${g.monto.toLocaleString()} <span style="color:red; cursor:pointer;" onclick="borrarGasto(${i})">❌</span></strong>
+                    </div>
+                `;
+            });
+            contenedor.innerHTML = html;
+            document.getElementById("totalGastosAcumulado").innerText = total.toLocaleString();
+        }
+
+        function borrarGasto(i) {
+            listaGastosArray.splice(i, 1);
+            localStorage.setItem('gastos_obras', JSON.stringify(listaGastosArray));
+            renderGastos();
         }
 
         function compartirWhatsApp() {
-            const cliente = document.getElementById("cliente").value || "Cliente";
-            const total = document.getElementById("totalGeneral").innerText;
-            const texto = `Hola *${cliente}*, te envío el presupuesto estimado para la obra:\n\n*Total General: $${total}*\n\nGenerado con App Contratista.`;
-            
+            if(!ultimoCalculo) return;
+            const texto = `Hola *${ultimoCalculo.cliente}*, te comparto el presupuesto estimado de obra (${ultimoCalculo.tipo.toUpperCase()} - ${ultimoCalculo.m2} M²):\n\n*Total Estimado: $${ultimoCalculo.totalGeneral}*\n\nGenerado con Gestión de Obras Pro.`;
             window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(texto)}`, '_blank');
         }
     </script>
