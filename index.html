@@ -135,7 +135,7 @@
         </div>
     </div>
 
-    <!-- 1.5. ESTRUCTURA DE HORMIGÓN ARMADO ACTUALIZADA -->
+    <!-- 1.5. ESTRUCTURA DE HORMIGÓN ARMADO -->
     <div id="hormigon" class="section">
         <div class="card">
             <h2>🏛️ Estructura de Hormigón Armado</h2>
@@ -491,19 +491,18 @@
 
             if (hormigonSeleccionado === 'pilotines') {
                 nombreEstructura = `Pilotines (${cantidadInput} Unidades)`;
-                // Estimado promedio por pilotín estándar de 30cm diámetro x 2m profundidad (~0.14 m3 por unidad)
                 const volUnitario = 0.14; 
                 const volumenTotal = cantidadInput * volUnitario;
                 const bolsasCemento = Math.ceil(volumenTotal * 8);
                 const arenaM3 = (volumenTotal * 0.6).toFixed(2);
                 const piedraM3 = (volumenTotal * 0.75).toFixed(2);
-                const hierro12 = Math.round(cantidadInput * 12); // kg aprox por pilotín
+                const hierro12 = Math.round(cantidadInput * 12);
 
                 matTexto = `• Volumen Total Estimado: ${volumenTotal.toFixed(2)} M³\n• Cemento: ${bolsasCemento} bolsas\n• Arena gruesa: ${arenaM3} m³\n• Piedra partida: ${piedraM3} m³\n• Hierro Ø 12 mm: ~${hierro12} kg`;
                 manoObraTotal = cantidadInput * valorUnitarioMano;
 
             } else {
-                let volumen = cantidadInput; // En este caso son M3 directos
+                let volumen = cantidadInput;
                 let hierroTxt = "";
                 const bolsasCemento = Math.ceil(volumen * 7.5);
                 const arenaM3 = (volumen * 0.55).toFixed(2);
@@ -577,15 +576,14 @@
             let cañoBaja = (aireSeleccionado === '4500' || aireSeleccionado === '6000') ? "1/2\" o 5/8\"" : "3/8\"";
             let termicaRecomendada = (aireSeleccionado === '6000') ? "20A (Cable 4 mm²)" : "10A - 16A (Cable 2.5 mm²)";
 
-            // Cómputo corregido a 150g/m para equipos chicos y 250g/m para grandes (750g para 5 metros)[span_1](start_span)[span_1](end_span)
             let grsPorMetro = (aireSeleccionado === '4500' || aireSeleccionado === '6000') ? 250 : 150;
             let gramosTotales = metros * grsPorMetro;
-            let textoGasExtra = `\n⚠️ *Carga de Gas ${tipoGas}:* ${gramosTotales}g (${metros}m de cañería)`;
+            let textoGasExtra = `\n⚠️ *Carga de Gas ${tipoGas}:* ${gramosTotales}g (${metros}m de cañería)[span_1](start_span)[span_1](end_span)`;
 
             let checksTxt = "\n--------------------------------\n📋 *Garantía de Calidad Aplicada:*";
             if (document.getElementById('chkNitr').checked) checksTxt += "\n• ✔️ Hermeticidad probada con Nitrógeno";
             if (document.getElementById('chkVacio').checked) checksTxt += "\n• ✔️ Vacío técnico con Bomba y Vacuómetro";
-            if (document.getElementById('chkElect').checked) checksTxt += "\n• ✔️ Circuito eléctrico verificado";
+            if (document.getElementById('chkElect').checked) checksTxt += "\n• ✔️ Verificación de circuito y térmica";
             if (document.getElementById('chkAmp').checked) checksTxt += "\n• ✔️ Consumo de Amperaje medido en régimen";
 
             let advInverter = tec === 'Inverter' ? "\n⚡ *Nota Técnica:* Equipo Inverter (Se sugiere protector de tensión de red)." : "";
@@ -747,7 +745,7 @@
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js?v=4').then((registration) => {
+                navigator.serviceWorker.register('sw.js?v=5').then((registration) => {
                     registration.update();
                     registration.onupdatefound = () => {
                         const installingWorker = registration.installing;
