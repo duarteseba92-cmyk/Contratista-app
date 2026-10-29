@@ -25,7 +25,7 @@
         h1 { color: var(--accent); font-size: 1.5rem; margin: 0; font-weight: 800; letter-spacing: 0.5px; }
         p.subtitle { color: var(--text-muted); font-size: 0.75rem; margin: 4px 0 0 0; text-transform: uppercase; letter-spacing: 1.5px; }
         
-        /* Barra de Navegación Inferior Estilo App Nativa con Indicador Activo */
+        /* Barra de Navegación Inferior Estilo App Nativa */
         .tabs { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(13, 20, 36, 0.95); backdrop-filter: blur(12px); display: flex; justify-content: space-around; padding: 8px 4px; border-top: 1px solid var(--border); z-index: 1000; box-shadow: 0 -8px 25px rgba(0,0,0,0.6); overflow-x: auto; scrollbar-width: none; }
         .tabs::-webkit-scrollbar { display: none; }
         .tab-btn { background: none; border: none; color: var(--text-muted); font-weight: 700; border-radius: 12px; cursor: pointer; font-size: 0.65rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 8px; min-width: 50px; transition: all 0.25s ease; position: relative; }
@@ -543,6 +543,27 @@
         renderFinanzas();
         renderPersonal();
         renderAgenda();
+    </script>
+
+    <!-- Sistema de Actualización Automática en Segundo Plano -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js').then((registration) => {
+                    registration.update();
+                    registration.onupdatefound = () => {
+                        const installingWorker = registration.installing;
+                        installingWorker.onstatechange = () => {
+                            if (installingWorker.state === 'installed') {
+                                if (navigator.serviceWorker.controller) {
+                                    window.location.reload();
+                                }
+                            }
+                        };
+                    };
+                });
+            });
+        }
     </script>
 </body>
 </html>
