@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ObrasPro Total - Gestión Profesional</title>
+    <title>ObrasPro Total</title>
     <meta name="theme-color" content="#0f172a">
     <link rel="manifest" href="manifest.json">
     <style>
@@ -12,7 +12,6 @@
             --bg-card: #131c31;
             --bg-input: #1b2642;
             --accent: #f59e0b;
-            --accent-hover: #d97706;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --success: #10b981;
@@ -21,35 +20,38 @@
         }
         body { font-family: system-ui, -apple-system, sans-serif; background-color: var(--bg-main); color: var(--text-main); margin: 0; padding: 12px; }
         
-        header { text-align: center; margin-bottom: 14px; padding: 10px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3); }
-        h1 { color: var(--accent); font-size: 1.3rem; margin: 2px 0; font-weight: 800; letter-spacing: 0.5px; }
-        p.subtitle { color: var(--text-muted); font-size: 0.75rem; margin: 0; text-transform: uppercase; letter-spacing: 1px; }
+        header { text-align: center; margin-bottom: 14px; padding: 12px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border); }
+        h1 { color: var(--accent); font-size: 1.4rem; margin: 2px 0; font-weight: 800; }
+        p.subtitle { color: var(--text-muted); font-size: 0.8rem; margin: 0; text-transform: uppercase; }
         
         .tabs { display: flex; gap: 4px; margin-bottom: 14px; background: var(--bg-card); padding: 4px; border-radius: 10px; border: 1px solid var(--border); overflow-x: auto; }
-        .tab-btn { flex: 1; min-width: 65px; padding: 10px 4px; background: none; border: none; color: var(--text-muted); font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 0.7rem; text-align: center; white-space: nowrap; transition: all 0.2s ease; }
-        .tab-btn.active { background: var(--accent); color: #000; box-shadow: 0 2px 4px rgba(245, 158, 11, 0.4); }
+        .tab-btn { flex: 1; min-width: 65px; padding: 10px 4px; background: none; border: none; color: var(--text-muted); font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 0.75rem; text-align: center; white-space: nowrap; }
+        .tab-btn.active { background: var(--accent); color: #000; }
         
-        .section { display: none; animation: fadeIn 0.3s ease; }
+        .section { display: none; }
         .section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 14px; }
+        h2 { font-size: 1.1rem; margin-top: 0; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+        
+        label { display: block; margin-top: 12px; color: var(--text-muted); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; }
+        input, textarea { width: 100%; padding: 12px; margin-top: 6px; background: var(--bg-input); border: 1px solid var(--border); color: var(--text-main); border-radius: 8px; box-sizing: border-box; font-size: 1rem; outline: none; }
+        input:focus { border-color: var(--accent); }
 
-        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 14px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.2); }
-        h2 { font-size: 1.05rem; margin-top: 0; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 8px; display: flex; align-items: center; gap: 6px; }
-        
-        label { display: block; margin-top: 10px; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
-        input, select, textarea { width: 100%; padding: 10px; margin-top: 4px; background: var(--bg-input); border: 1px solid var(--border); color: var(--text-main); border-radius: 8px; box-sizing: border-box; font-size: 0.9rem; outline: none; transition: border-color 0.2s; }
-        input:focus, select:focus, textarea:focus { border-color: var(--accent); }
-        
-        .btn-group { display: flex; gap: 8px; margin-top: 14px; }
-        button.btn { width: 100%; padding: 12px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; font-size: 0.85rem; transition: filter 0.2s; display: flex; justify-content: center; align-items: center; gap: 6px; }
-        button.btn:active { transform: scale(0.98); }
+        /* Selector de trabajos con botones grandes */
+        .grid-trabajos { display: grid; grid-template-columns: 1fr; gap: 8px; margin-top: 6px; }
+        .trabajo-btn { background: var(--bg-input); border: 1px solid var(--border); color: var(--text-main); padding: 12px; text-align: left; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .trabajo-btn.selected { background: var(--accent); color: #000; border-color: var(--accent); }
+
+        .btn-group { display: flex; gap: 8px; margin-top: 16px; }
+        button.btn { width: 100%; padding: 14px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; font-size: 0.95rem; }
         .btn-primary { background: var(--accent); color: #000; }
         .btn-whatsapp { background: #10b981; color: white; }
-        .btn-danger-soft { background: rgba(239, 68, 68, 0.15); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.3); padding: 4px 8px; font-size: 0.75rem; border-radius: 6px; }
+        .btn-danger-soft { background: rgba(239, 68, 68, 0.15); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.3); padding: 6px 10px; font-size: 0.8rem; border-radius: 6px; }
         
-        .resumen-box { background: var(--bg-input); border-left: 4px solid var(--accent); padding: 12px; margin-top: 14px; font-size: 0.85rem; border-radius: 6px; line-height: 1.5; white-space: pre-line; }
-        .item-list { margin-top: 10px; display: flex; flex-direction: column; gap: 6px; }
-        .item-row { display: flex; justify-content: space-between; align-items: center; background: var(--bg-input); padding: 10px 12px; border-radius: 8px; font-size: 0.85rem; border: 1px solid var(--border); }
+        .resumen-box { background: var(--bg-input); border-left: 4px solid var(--accent); padding: 14px; margin-top: 14px; font-size: 0.9rem; border-radius: 6px; line-height: 1.5; white-space: pre-line; }
+        .item-list { margin-top: 10px; display: flex; flex-direction: column; gap: 8px; }
+        .item-row { display: flex; justify-content: space-between; align-items: center; background: var(--bg-input); padding: 12px; border-radius: 8px; font-size: 0.9rem; border: 1px solid var(--border); }
         .balance-total { font-size: 1.2rem; font-weight: 800; text-align: center; padding: 12px; background: var(--bg-input); border-radius: 8px; margin-bottom: 12px; border: 1px solid var(--border); color: var(--success); }
     </style>
 </head>
@@ -57,10 +59,10 @@
 
     <header>
         <h1>🏗️ ObrasPro Total</h1>
-        <p class="subtitle">Gestión Integral Profesional</p>
+        <p class="subtitle">Gestión Profesional</p>
     </header>
 
-    <!-- Pestañas de Navegación -->
+    <!-- Pestañas -->
     <div class="tabs">
         <button class="tab-btn active" onclick="cambiarTab('presupuesto', this)">📋 Cotizar</button>
         <button class="tab-btn" onclick="cambiarTab('recibos', this)">📄 Recibos</button>
@@ -77,23 +79,16 @@
             <label>Cliente / Obra</label>
             <input type="text" id="cliente" placeholder="Ej: Roberto Gomez">
 
-            <label>Etapa o Tipo de Trabajo</label>
-            <select id="tipoTrabajo">
-                <optgroup label="── MAMPOSERÍA ──">
-                    <option value="pared_hueco_12">Pared Ladrillo Hueco 12x18x33 (M²)</option>
-                    <option value="pared_hueco_18">Pared Ladrillo Hueco 18x18x33 (M²)</option>
-                    <option value="pared_comun">Pared Ladrillo Común 15 cm (M²)</option>
-                </optgroup>
-                <optgroup label="── REVOQUES ──">
-                    <option value="revoque_azotado">Azotado Impermeable / Cerezita (M²)</option>
-                    <option value="revoque_grueso">Revoque Grueso (M²)</option>
-                    <option value="revoque_fino">Revoque Fino / Enlucido (M²)</option>
-                </optgroup>
-                <optgroup label="── PISOS Y SUELOS ──">
-                    <option value="contrapiso">Contrapiso con Cascote (M²)</option>
-                    <option value="porcelanato">Colocación Porcelanato / Cerámica (M²)</option>
-                </optgroup>
-            </select>
+            <label>Seleccionar Tipo de Trabajo</label>
+            <div class="grid-trabajos">
+                <button type="button" class="trabajo-btn selected" onclick="seleccionarTrabajo('pared_hueco_12', this)">🧱 Pared Ladrillo Hueco 12 cm (M²)</button>
+                <button type="button" class="trabajo-btn" onclick="seleccionarTrabajo('pared_hueco_18', this)">🧱 Pared Ladrillo Hueco 18 cm (M²)</button>
+                <button type="button" class="trabajo-btn" onclick="seleccionarTrabajo('pared_comun', this)">🧱 Pared Ladrillo Común 15 cm (M²)</button>
+                <button type="button" class="trabajo-btn" onclick="seleccionarTrabajo('revoque_grueso', this)">🛠️ Revoque Grueso (M²)</button>
+                <button type="button" class="trabajo-btn" onclick="seleccionarTrabajo('revoque_fino', this)">✨ Revoque Fino / Enlucido (M²)</button>
+                <button type="button" class="trabajo-btn" onclick="seleccionarTrabajo('contrapiso', this)">📐 Contrapiso con Cascote (M²)</button>
+                <button type="button" class="trabajo-btn" onclick="seleccionarTrabajo('porcelanato', this)">🏠 Colocación Porcelanato (M²)</button>
+            </div>
 
             <label>Superficie (M²)</label>
             <input type="number" id="superficie" placeholder="Ej: 45">
@@ -101,7 +96,7 @@
             <label>Mano de Obra por M² ($)</label>
             <input type="number" id="valorMano" placeholder="Ej: 9500">
 
-            <button class="btn btn-primary" onclick="calcularPresupuesto()">🚀 Calcular Cómputo</button>
+            <button class="btn btn-primary" style="margin-top: 14px;" onclick="calcularPresupuesto()">🚀 Calcular Cómputo</button>
 
             <div id="resultado" class="resumen-box" style="display:none;"></div>
             
@@ -121,7 +116,7 @@
             <input type="text" id="recConcepto" placeholder="Ej: Seña inicial de materiales">
             <label>Monto ($)</label>
             <input type="number" id="recMonto" placeholder="Ej: 75000">
-            <button class="btn btn-whatsapp" onclick="enviarReciboWhatsApp()">📲 Enviar Recibo WhatsApp</button>
+            <button class="btn btn-whatsapp" style="margin-top: 12px;" onclick="enviarReciboWhatsApp()">📲 Enviar Recibo WhatsApp</button>
         </div>
     </div>
 
@@ -133,7 +128,7 @@
             <input type="text" id="stNombre" placeholder="Ej: Cemento Loma Negra">
             <label>Cantidad</label>
             <input type="number" id="stCantidad" placeholder="Ej: 40">
-            <button class="btn btn-primary" onclick="agregarStock()">➕ Añadir Material</button>
+            <button class="btn btn-primary" style="margin-top: 12px;" onclick="agregarStock()">➕ Añadir Material</button>
         </div>
         <div class="card">
             <h2>Inventario Actual</h2>
@@ -146,15 +141,17 @@
         <div class="card">
             <h2>💰 Caja y Movimientos</h2>
             <label>Concepto</label>
-            <input type="text" id="finConcepto" placeholder="Ej: Compra de hierros / Seña">
+            <input type="text" id="finConcepto" placeholder="Ej: Compra de hierros">
             <label>Monto ($)</label>
             <input type="number" id="finMonto" placeholder="Ej: 150000">
             <label>Tipo</label>
-            <select id="finTipo">
-                <option value="gasto">🔻 Gasto</option>
-                <option value="ingreso">🟢 Ingreso / Cobro</option>
-            </select>
-            <button class="btn btn-primary" onclick="agregarMovimiento()">Registrar Operación</button>
+            <div style="display: flex; gap: 10px; margin-top: 6px;">
+                <select id="finTipo" style="padding: 12px; background: var(--bg-input); border: 1px solid var(--border); color: var(--text-main); border-radius: 8px; width: 100%;">
+                    <option value="gasto">🔻 Gasto</option>
+                    <option value="ingreso">🟢 Ingreso / Cobro</option>
+                </select>
+            </div>
+            <button class="btn btn-primary" style="margin-top: 12px;" onclick="agregarMovimiento()">Registrar Operación</button>
         </div>
         <div class="card">
             <h2>Balance Neto</h2>
@@ -173,7 +170,7 @@
             <input type="number" id="jornalPersonal" placeholder="Ej: 22000">
             <label>Días Trabajados</label>
             <input type="number" id="diasPersonal" placeholder="Ej: 6">
-            <button class="btn btn-primary" onclick="agregarPersonal()">Calcular Semana</button>
+            <button class="btn btn-primary" style="margin-top: 12px;" onclick="agregarPersonal()">Calcular Semana</button>
         </div>
         <div class="card">
             <h2>Planilla de Pagos</h2>
@@ -191,7 +188,7 @@
             <input type="tel" id="agTelefono" placeholder="Ej: 3624...">
             <label>Notas / Precios</label>
             <textarea id="agNotas" rows="2" placeholder="Referencias de precios"></textarea>
-            <button class="btn btn-primary" onclick="agregarContacto()">Guardar Contacto</button>
+            <button class="btn btn-primary" style="margin-top: 12px;" onclick="agregarContacto()">Guardar Contacto</button>
         </div>
         <div class="card">
             <h2>Contactos Útiles</h2>
@@ -200,7 +197,9 @@
     </div>
 
     <script>
+        let trabajoSeleccionado = 'pared_hueco_12';
         let ultimoPresupuestoTexto = "";
+
         function cambiarTab(tabId, btn) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -208,35 +207,47 @@
             btn.classList.add('active');
         }
 
+        function seleccionarTrabajo(tipo, btn) {
+            trabajoSeleccionado = tipo;
+            document.querySelectorAll('.trabajo-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+        }
+
         function calcularPresupuesto() {
             const cliente = document.getElementById('cliente').value || 'Cliente';
             const superficie = parseFloat(document.getElementById('superficie').value) || 0;
             const valorMano = parseFloat(document.getElementById('valorMano').value) || 0;
-            const tipo = document.getElementById('tipoTrabajo').value;
+            
             if (superficie <= 0 || valorMano <= 0) return alert('Completa superficie y mano de obra.');
 
             let matTexto = "";
             let manoObraTotal = superficie * valorMano;
+            let nombreTrabajoReadable = "";
 
-            if (tipo === 'pared_hueco_12') {
+            if (trabajoSeleccionado === 'pared_hueco_12') {
+                nombreTrabajoReadable = "Pared Ladrillo Hueco 12 cm";
                 matTexto = `• Ladrillos Huecos (12x18x33): ${Math.round(superficie * 16)} un.\n• Cemento: ${Math.ceil(superficie * 0.25)} bolsas\n• Cal: ${Math.ceil(superficie * 0.35)} bolsas\n• Arena: ${(superficie * 0.04).toFixed(2)} m³`;
-            } else if (tipo === 'pared_hueco_18') {
+            } else if (trabajoSeleccionado === 'pared_hueco_18') {
+                nombreTrabajoReadable = "Pared Ladrillo Hueco 18 cm";
                 matTexto = `• Ladrillos Huecos (18x18x33): ${Math.round(superficie * 16)} un.\n• Cemento: ${Math.ceil(superficie * 0.35)} bolsas\n• Cal: ${Math.ceil(superficie * 0.5)} bolsas\n• Arena: ${(superficie * 0.06).toFixed(2)} m³`;
-            } else if (tipo === 'pared_comun') {
+            } else if (trabajoSeleccionado === 'pared_comun') {
+                nombreTrabajoReadable = "Pared Ladrillo Común 15 cm";
                 matTexto = `• Ladrillos Comunes: ${Math.round(superficie * 90)} un.\n• Cemento: ${Math.ceil(superficie * 0.4)} bolsas\n• Cal: ${Math.ceil(superficie * 0.6)} bolsas\n• Arena: ${(superficie * 0.08).toFixed(2)} m³`;
-            } else if (tipo === 'revoque_azotado') {
-                matTexto = `• Cemento: ${Math.ceil(superficie * 0.12)} bolsas\n• Hidrófugo: ${(superficie * 0.5).toFixed(1)} kg\n• Arena Fina: ${(superficie * 0.02).toFixed(2)} m³`;
-            } else if (tipo === 'revoque_grueso') {
+            } else if (trabajoSeleccionado === 'revoque_grueso') {
+                nombreTrabajoReadable = "Revoque Grueso";
                 matTexto = `• Cemento: ${Math.ceil(superficie * 0.1)} bolsas\n• Cal: ${Math.ceil(superficie * 0.25)} bolsas\n• Arena: ${(superficie * 0.03).toFixed(2)} m³`;
-            } else if (tipo === 'revoque_fino') {
+            } else if (trabajoSeleccionado === 'revoque_fino') {
+                nombreTrabajoReadable = "Revoque Fino / Enlucido";
                 matTexto = `• Cal Fina: ${Math.ceil(superficie * 0.2)} bolsas\n• Cemento: ${Math.ceil(superficie * 0.03)} bolsas\n• Arena Fina: ${(superficie * 0.015).toFixed(2)} m³`;
-            } else if (tipo === 'contrapiso') {
+            } else if (trabajoSeleccionado === 'contrapiso') {
+                nombreTrabajoReadable = "Contrapiso con Cascote";
                 matTexto = `• Cemento: ${Math.ceil(superficie * 0.2)} bolsas\n• Cal: ${Math.ceil(superficie * 0.3)} bolsas\n• Cascote: ${(superficie * 0.09).toFixed(2)} m³\n• Arena: ${(superficie * 0.05).toFixed(2)} m³`;
             } else {
+                nombreTrabajoReadable = "Colocación Porcelanato";
                 matTexto = `• Pegamento: ${Math.ceil(superficie * 0.25)} bolsas\n• Pastina: ${(superficie * 0.3).toFixed(1)} kg`;
             }
 
-            ultimoPresupuestoTexto = `🏗️ *PRESUPUESTO - OBRAS PRO*\n👤 *Cliente:* ${cliente}\n📐 *Trabajo:* ${tipo.replaceAll('_', ' ').toUpperCase()} (${superficie} M²)\n--------------------------------\n📦 *Materiales Estimados:*\n${matTexto}\n--------------------------------\n💰 *Mano de Obra Total:* $${manoObraTotal.toLocaleString()}`;
+            ultimoPresupuestoTexto = `🏗️ *PRESUPUESTO - OBRAS PRO*\n👤 *Cliente:* ${cliente}\n📐 *Trabajo:* ${nombreTrabajoReadable} (${superficie} M²)\n--------------------------------\n📦 *Materiales Estimados:*\n${matTexto}\n--------------------------------\n💰 *Mano de Obra Total:* $${manoObraTotal.toLocaleString()}`;
             
             const resDiv = document.getElementById('resultado');
             resDiv.style.display = 'block';
