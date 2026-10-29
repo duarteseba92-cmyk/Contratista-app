@@ -12,7 +12,7 @@
             --bg-card: #131c31;
             --bg-input: #1b2642;
             --accent: #f59e0b;
-            --accent-glow: rgba(245, 158, 11, 0.15);
+            --accent-glow: rgba(245, 158, 11, 0.2);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --success: #10b981;
@@ -21,49 +21,58 @@
         }
         body { font-family: system-ui, -apple-system, sans-serif; background-color: var(--bg-main); color: var(--text-main); margin: 0; padding: 12px; padding-bottom: 95px; }
         
-        header { text-align: center; margin-bottom: 14px; padding: 18px; background: linear-gradient(135deg, var(--bg-card), #1a2744); border-radius: 16px; border: 1px solid var(--border); box-shadow: 0 10px 20px -5px rgba(0,0,0,0.5); }
+        /* Pantalla de Carga Inicial (Splash Screen) */
+        #splash-screen { position: fixed; inset: 0; background: var(--bg-main); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; transition: opacity 0.4s ease; }
+        #splash-screen h1 { font-size: 2rem; color: var(--accent); margin: 0; animation: pulseGlow 1.5s infinite alternate; }
+        #splash-screen p { color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; margin-top: 8px; }
+        @keyframes pulseGlow { from { opacity: 0.6; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+
+        header { text-align: center; margin-bottom: 14px; padding: 18px; background: linear-gradient(135deg, var(--bg-card), #1a2744); border-radius: 18px; border: 1px solid var(--border); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.6); position: relative; overflow: hidden; }
+        header::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--accent), transparent); }
         h1 { color: var(--accent); font-size: 1.5rem; margin: 0; font-weight: 800; letter-spacing: 0.5px; }
         p.subtitle { color: var(--text-muted); font-size: 0.75rem; margin: 4px 0 0 0; text-transform: uppercase; letter-spacing: 1.5px; }
         
         /* Barra de Navegación Inferior Estilo App Nativa */
-        .tabs { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(13, 20, 36, 0.95); backdrop-filter: blur(12px); display: flex; justify-content: space-around; padding: 8px 4px; border-top: 1px solid var(--border); z-index: 1000; box-shadow: 0 -8px 25px rgba(0,0,0,0.6); overflow-x: auto; scrollbar-width: none; }
+        .tabs { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(13, 20, 36, 0.92); backdrop-filter: blur(16px); display: flex; justify-content: space-around; padding: 8px 4px; border-top: 1px solid var(--border); z-index: 1000; box-shadow: 0 -10px 30px rgba(0,0,0,0.7); overflow-x: auto; scrollbar-width: none; }
         .tabs::-webkit-scrollbar { display: none; }
-        .tab-btn { background: none; border: none; color: var(--text-muted); font-weight: 700; border-radius: 12px; cursor: pointer; font-size: 0.65rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 8px; min-width: 50px; transition: all 0.25s ease; position: relative; }
+        .tab-btn { background: none; border: none; color: var(--text-muted); font-weight: 700; border-radius: 12px; cursor: pointer; font-size: 0.65rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 8px; min-width: 50px; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); position: relative; }
         .tab-btn span.icon { font-size: 1.25rem; transition: transform 0.2s; }
         .tab-btn.active { color: var(--accent); background: var(--accent-glow); }
         .tab-btn.active span.icon { transform: translateY(-2px); }
-        .tab-btn.active::after { content: ''; position: absolute; top: 0; left: 20%; right: 20%; height: 2px; background: var(--accent); border-radius: 2px; }
+        .tab-btn.active::after { content: ''; position: absolute; top: 0; left: 15%; right: 15%; height: 3px; background: var(--accent); border-radius: 2px; box-shadow: 0 0 8px var(--accent); }
         .badge-count { position: absolute; top: 4px; right: 6px; background: var(--accent); color: #000; font-size: 0.55rem; padding: 1px 4px; border-radius: 6px; font-weight: 800; display: none; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
 
-        .section { display: none; animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+        .section { display: none; animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
         .section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 18px; margin-bottom: 14px; box-shadow: 0 8px 18px -4px rgba(0,0,0,0.35); }
+        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 18px; padding: 18px; margin-bottom: 14px; box-shadow: 0 10px 22px -5px rgba(0,0,0,0.4); position: relative; overflow: hidden; }
+        .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: rgba(255, 255, 255, 0.08); }
+        
         h2 { font-size: 1.1rem; margin-top: 0; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 10px; display: flex; align-items: center; gap: 8px; }
         
         label { display: block; margin-top: 14px; color: var(--text-muted); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
-        input, select, textarea { width: 100%; padding: 12px 14px; margin-top: 6px; background: var(--bg-input); border: 1px solid var(--border); color: var(--text-main); border-radius: 10px; box-sizing: border-box; font-size: 0.95rem; outline: none; transition: all 0.2s; }
+        input, select, textarea { width: 100%; padding: 12px 14px; margin-top: 6px; background: var(--bg-input); border: 1px solid var(--border); color: var(--text-main); border-radius: 12px; box-sizing: border-box; font-size: 0.95rem; outline: none; transition: all 0.2s; }
         input:focus, select:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
 
         .grid-trabajos { display: grid; grid-template-columns: 1fr; gap: 8px; margin-top: 8px; }
-        .trabajo-btn { background: var(--bg-input); border: 1px solid var(--border); color: var(--text-main); padding: 14px; text-align: left; border-radius: 10px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 8px; }
+        .trabajo-btn { background: var(--bg-input); border: 1px solid var(--border); color: var(--text-main); padding: 14px; text-align: left; border-radius: 12px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 8px; }
         .trabajo-btn:hover { border-color: var(--accent); }
-        .trabajo-btn.selected { background: var(--accent-glow); color: var(--accent); border-color: var(--accent); font-weight: 700; box-shadow: inset 0 0 0 1px var(--accent); }
+        .trabajo-btn.selected { background: var(--accent-glow); color: var(--accent); border-color: var(--accent); font-weight: 700; box-shadow: inset 0 0 0 1px var(--accent), 0 4px 12px rgba(0,0,0,0.2); }
 
         .btn-group { display: flex; gap: 10px; margin-top: 16px; }
-        button.btn { width: 100%; padding: 14px; font-weight: 700; border: none; border-radius: 12px; cursor: pointer; font-size: 0.95rem; transition: filter 0.2s, transform 0.1s; display: flex; justify-content: center; align-items: center; gap: 8px; }
+        button.btn { width: 100%; padding: 14px; font-weight: 700; border: none; border-radius: 14px; cursor: pointer; font-size: 0.95rem; transition: filter 0.2s, transform 0.1s; display: flex; justify-content: center; align-items: center; gap: 8px; }
         button.btn:active { transform: scale(0.97); }
-        .btn-primary { background: var(--accent); color: #000; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.35); }
-        .btn-whatsapp { background: #10b981; color: white; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35); }
+        .btn-primary { background: var(--accent); color: #000; box-shadow: 0 6px 18px rgba(245, 158, 11, 0.35); }
+        .btn-whatsapp { background: var(--success); color: white; box-shadow: 0 6px 18px rgba(16, 185, 129, 0.35); }
         .btn-danger-soft { background: rgba(239, 68, 68, 0.12); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.25); padding: 6px 10px; font-size: 0.8rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
         .btn-danger-soft:hover { background: rgba(239, 68, 68, 0.25); }
         
-        .resumen-box { background: var(--bg-input); border-left: 4px solid var(--accent); padding: 14px; margin-top: 16px; font-size: 0.9rem; border-radius: 10px; line-height: 1.6; white-space: pre-line; border: 1px solid var(--border); border-left-width: 4px; }
+        .resumen-box { background: var(--bg-input); border-left: 4px solid var(--accent); padding: 14px; margin-top: 16px; font-size: 0.9rem; border-radius: 12px; line-height: 1.6; white-space: pre-line; border: 1px solid var(--border); border-left-width: 4px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); }
         .item-list { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
-        .item-row { display: flex; justify-content: space-between; align-items: center; background: var(--bg-input); padding: 12px 14px; border-radius: 10px; font-size: 0.9rem; border: 1px solid var(--border); animation: slideIn 0.25s ease; }
+        .item-row { display: flex; justify-content: space-between; align-items: center; background: var(--bg-input); padding: 12px 14px; border-radius: 12px; font-size: 0.9rem; border: 1px solid var(--border); animation: slideIn 0.25s ease; }
         @keyframes slideIn { from { opacity: 0; transform: translateX(-6px); } to { opacity: 1; transform: translateX(0); } }
-        .balance-total { font-size: 1.3rem; font-weight: 800; text-align: center; padding: 14px; background: var(--bg-input); border-radius: 12px; margin-bottom: 14px; border: 1px solid var(--border); color: var(--success); letter-spacing: 0.5px; }
+        .balance-total { font-size: 1.3rem; font-weight: 800; text-align: center; padding: 14px; background: var(--bg-input); border-radius: 14px; margin-bottom: 14px; border: 1px solid var(--border); color: var(--success); letter-spacing: 0.5px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); }
         
         .tag-stock { font-size: 0.7rem; padding: 2px 6px; border-radius: 6px; font-weight: 700; margin-left: 6px; }
         .tag-ok { background: rgba(16, 185, 129, 0.2); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.3); }
@@ -73,6 +82,12 @@
     </style>
 </head>
 <body>
+
+    <!-- Pantalla de Carga Estética (Splash) -->
+    <div id="splash-screen">
+        <h1>🏗️ ObrasPro</h1>
+        <p>Cargando Sistema...</p>
+    </div>
 
     <header>
         <h1>🏗️ ObrasPro Total</h1>
@@ -281,12 +296,27 @@
     </div>
 
     <script>
+        // Ocultar pantalla de carga inicial suavemente al abrir
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const splash = document.getElementById('splash-screen');
+                splash.style.opacity = '0';
+                setTimeout(() => splash.remove(), 400);
+            }, 300);
+        });
+
+        // Soporte de vibración háptica segura
+        function vibrar(ms = 30) {
+            if ('vibrate' in navigator) navigator.vibrate(ms);
+        }
+
         let trabajoSeleccionado = 'pared_hueco_12';
         let aireSeleccionado = '2250';
         let ultimoPresupuestoTexto = "";
         let ultimoClimaTexto = "";
 
         function cambiarTab(tabId, btn) {
+            vibrar(25);
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
@@ -311,6 +341,7 @@
         }
 
         function seleccionarTrabajo(tipo, btn) {
+            vibrar(20);
             trabajoSeleccionado = tipo;
             const botones = document.querySelectorAll('#presupuesto .trabajo-btn');
             botones.forEach(b => b.classList.remove('selected'));
@@ -321,6 +352,7 @@
         }
 
         function seleccionarAire(cap, btn) {
+            vibrar(20);
             aireSeleccionado = cap;
             const botones = document.querySelectorAll('#climatizacion .trabajo-btn');
             botones.forEach(b => b.classList.remove('selected'));
@@ -328,6 +360,7 @@
         }
 
         function calcularPresupuesto() {
+            vibrar(40);
             const cliente = document.getElementById('cliente').value || 'Cliente';
             const superficie = parseFloat(document.getElementById('superficie').value) || 0;
             const valorMano = parseFloat(document.getElementById('valorMano').value) || 0;
@@ -374,6 +407,7 @@
         }
 
         function calcularAire() {
+            vibrar(40);
             const cliente = document.getElementById('climaCliente').value || 'Cliente';
             const largo = parseFloat(document.getElementById('climaLargo').value) || 0;
             const ancho = parseFloat(document.getElementById('climaAncho').value) || 0;
@@ -411,14 +445,17 @@
         }
 
         function enviarWhatsApp() {
+            vibrar(30);
             if (ultimoPresupuestoTexto) window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(ultimoPresupuestoTexto)}`, '_blank');
         }
 
         function enviarWhatsAppClima() {
+            vibrar(30);
             if (ultimoClimaTexto) window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(ultimoClimaTexto)}`, '_blank');
         }
 
         function enviarReciboWhatsApp() {
+            vibrar(30);
             const cliente = document.getElementById('recCliente').value || 'Cliente';
             const concepto = document.getElementById('recConcepto').value || 'Pago de obra';
             const monto = parseFloat(document.getElementById('recMonto').value) || 0;
@@ -429,6 +466,7 @@
 
         let stock = JSON.parse(localStorage.getItem('obras_stock')) || [];
         function agregarStock() {
+            vibrar(30);
             const nombre = document.getElementById('stNombre').value;
             const cantidad = parseFloat(document.getElementById('stCantidad').value) || 0;
             if (!nombre || cantidad <= 0) return alert('Completa los datos.');
@@ -439,6 +477,7 @@
             renderStock();
         }
         function eliminarStock(idx) {
+            vibrar(40);
             stock.splice(idx, 1);
             localStorage.setItem('obras_stock', JSON.stringify(stock));
             renderStock();
@@ -455,6 +494,7 @@
 
         let movimientos = JSON.parse(localStorage.getItem('obras_movs')) || [];
         function agregarMovimiento() {
+            vibrar(30);
             const conc = document.getElementById('finConcepto').value;
             const monto = parseFloat(document.getElementById('finMonto').value) || 0;
             const tipo = document.getElementById('finTipo').value;
@@ -466,6 +506,7 @@
             renderFinanzas();
         }
         function eliminarMovimiento(idx) {
+            vibrar(40);
             movimientos.splice(idx, 1);
             localStorage.setItem('obras_movs', JSON.stringify(movimientos));
             renderFinanzas();
@@ -487,6 +528,7 @@
 
         let personal = JSON.parse(localStorage.getItem('obras_personal')) || [];
         function agregarPersonal() {
+            vibrar(30);
             const nombre = document.getElementById('nombrePersonal').value;
             const jornal = parseFloat(document.getElementById('jornalPersonal').value) || 0;
             const dias = parseFloat(document.getElementById('diasPersonal').value) || 0;
@@ -499,6 +541,7 @@
             renderPersonal();
         }
         function eliminarPersonal(idx) {
+            vibrar(40);
             personal.splice(idx, 1);
             localStorage.setItem('obras_personal', JSON.stringify(personal));
             renderPersonal();
@@ -514,6 +557,7 @@
 
         let agenda = JSON.parse(localStorage.getItem('obras_agenda')) || [];
         function agregarContacto() {
+            vibrar(30);
             const nombre = document.getElementById('agNombre').value;
             const tel = document.getElementById('agTelefono').value;
             const notas = document.getElementById('agNotas').value;
@@ -526,6 +570,7 @@
             renderAgenda();
         }
         function eliminarAgenda(idx) {
+            vibrar(40);
             agenda.splice(idx, 1);
             localStorage.setItem('obras_agenda', JSON.stringify(agenda));
             renderAgenda();
