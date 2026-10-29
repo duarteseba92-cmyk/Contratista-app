@@ -21,7 +21,6 @@
         }
         body { font-family: system-ui, -apple-system, sans-serif; background-color: var(--bg-main); color: var(--text-main); margin: 0; padding: 12px; padding-bottom: 95px; }
         
-        /* Pantalla de Carga Inicial (Splash Screen) */
         #splash-screen { position: fixed; inset: 0; background: var(--bg-main); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; transition: opacity 0.4s ease; }
         #splash-screen h1 { font-size: 2rem; color: var(--accent); margin: 0; animation: pulseGlow 1.5s infinite alternate; }
         #splash-screen p { color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; margin-top: 8px; }
@@ -32,7 +31,6 @@
         h1 { color: var(--accent); font-size: 1.5rem; margin: 0; font-weight: 800; letter-spacing: 0.5px; }
         p.subtitle { color: var(--text-muted); font-size: 0.75rem; margin: 4px 0 0 0; text-transform: uppercase; letter-spacing: 1.5px; }
         
-        /* Barra de Navegación Inferior Estilo App Nativa */
         .tabs { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(13, 20, 36, 0.92); backdrop-filter: blur(16px); display: flex; justify-content: space-around; padding: 8px 4px; border-top: 1px solid var(--border); z-index: 1000; box-shadow: 0 -10px 30px rgba(0,0,0,0.7); overflow-x: auto; scrollbar-width: none; }
         .tabs::-webkit-scrollbar { display: none; }
         .tab-btn { background: none; border: none; color: var(--text-muted); font-weight: 700; border-radius: 12px; cursor: pointer; font-size: 0.65rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 8px; min-width: 50px; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); position: relative; }
@@ -79,11 +77,15 @@
         .tag-low { background: rgba(239, 68, 68, 0.2); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.3); }
         
         .empty-state { text-align: center; padding: 20px; color: var(--text-muted); font-size: 0.85rem; font-style: italic; }
+
+        /* Estilos Checklist Clima */
+        .checklist-group { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+        .check-item { display: flex; align-items: center; gap: 10px; background: var(--bg-input); padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border); cursor: pointer; font-size: 0.85rem; }
+        .check-item input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--accent); margin: 0; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <!-- Pantalla de Carga Estética (Splash) -->
     <div id="splash-screen">
         <h1>🏗️ ObrasPro</h1>
         <p>Cargando Sistema...</p>
@@ -133,7 +135,7 @@
         </div>
     </div>
 
-    <!-- 2. CLIMATIZACIÓN / AIRES ACONDICIONADOS -->
+    <!-- 2. CLIMATIZACIÓN / AIRES ACONDICIONADOS REPOTENCIADO -->
     <div id="climatizacion" class="section">
         <div class="card">
             <h2>❄️ Instalación y Climatización</h2>
@@ -155,11 +157,17 @@
                 <button type="button" class="trabajo-btn" onclick="seleccionarAire('6000', this)">❄️ 6.000 Frigorías</button>
             </div>
 
+            <label>Tecnología del Equipo</label>
+            <select id="tipoTecnologia">
+                <option value="Inverter">⚡ Inverter (Requiere protección de tensión)</option>
+                <option value="Tradicional">🔌 On/Off Tradicional</option>
+            </select>
+
             <label>Tipo de Gas Refrigerante</label>
             <select id="tipoGas">
-                <option value="R410A">R-410A (Ecoblend / Inverter)</option>
-                <option value="R32">R-32 (Alta Eficiencia)</option>
-                <option value="R22">R-22 (Equipos Tradicionales)</option>
+                <option value="R410A">R-410A (Ecológico estándar)</option>
+                <option value="R32">R-32 (Nueva generación / Eficiente)</option>
+                <option value="R22">R-22 (Refrigerante tradicional)</option>
             </select>
 
             <label>Metros de Cañería Estimados</label>
@@ -168,7 +176,15 @@
             <label>Mano de Obra de Instalación ($)</label>
             <input type="number" id="climaMano" placeholder="Ej: 50000">
 
-            <button class="btn btn-primary" style="margin-top: 16px;" onclick="calcularAire()">🚀 Calcular Cómputo Técnico</button>
+            <label>3. Protocolo de Calidad / Checklist Técnico</label>
+            <div class="checklist-group">
+                <label class="check-item"><input type="checkbox" id="chkNitr" checked> 🟢 Prueba de hermeticidad con Nitrógeno</label>
+                <label class="check-item"><input type="checkbox" id="chkVacio" checked> 🌀 Vacío profundo con bomba y vacuómetro</label>
+                <label class="check-item"><input type="checkbox" id="chkElect" checked> ⚡ Verificación de circuito y térmica</label>
+                <label class="check-item"><input type="checkbox" id="chkAmp" checked> 📊 Medición de consumo eléctrico (Amperaje)</label>
+            </div>
+
+            <button class="btn btn-primary" style="margin-top: 18px;" onclick="calcularAire()">🚀 Calcular Cómputo Técnico</button>
 
             <div id="resultadoClima" class="resumen-box" style="display:none;"></div>
             
@@ -266,7 +282,6 @@
         </div>
     </div>
 
-    <!-- Barra de Navegación Inferior Flotante -->
     <div class="tabs">
         <button class="tab-btn active" onclick="cambiarTab('presupuesto', this)">
             <span class="icon">📋</span>Cotizar
@@ -296,7 +311,6 @@
     </div>
 
     <script>
-        // Ocultar pantalla de carga inicial suavemente al abrir
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const splash = document.getElementById('splash-screen');
@@ -305,7 +319,6 @@
             }, 300);
         });
 
-        // Soporte de vibración háptica segura
         function vibrar(ms = 30) {
             if ('vibrate' in navigator) navigator.vibrate(ms);
         }
@@ -415,6 +428,7 @@
             const metros = parseFloat(document.getElementById('climaMetros').value) || 3;
             const manoObra = parseFloat(document.getElementById('climaMano').value) || 0;
             const tipoGas = document.getElementById('tipoGas').value;
+            const tec = document.getElementById('tipoTecnologia').value;
 
             if (metros <= 0 || manoObra <= 0) return alert('Completa metros de cañería y mano de obra.');
 
@@ -422,21 +436,32 @@
             if (largo > 0 && ancho > 0) {
                 const m3 = largo * ancho * alto;
                 const frigNecesarias = Math.round(m3 * 50);
-                sugerenciaFrigorias = `\n📐 *Ambiente:* ${largo}x${ancho}m (${m3.toFixed(1)} m³)\n💡 *Frigorías sugeridas:* ~${frigNecesarias} Frig.\n--------------------------------`;
+                sugerenciaFrigorias = `\n📐 *Ambiente:* ${largo}x${ancho}m (${m3.toFixed(1)} m³)\n💡 *Sugerido:* ~${frigNecesarias} Frigorías\n--------------------------------`;
             }
 
             let cañoAlta = "1/4\"";
             let cañoBaja = (aireSeleccionado === '4500' || aireSeleccionado === '6000') ? "1/2\" o 5/8\"" : "3/8\"";
             let termicaRecomendada = (aireSeleccionado === '6000') ? "20A (Cable 4 mm²)" : "10A - 16A (Cable 2.5 mm²)";
 
+            // Cómputo exacto de gas refrigerante extra por metro superado
             let textoGasExtra = "";
             if (metros > 3) {
                 const metrosExtra = metros - 3;
-                const gramosExtra = metrosExtra * 20;
-                textoGasExtra = `\n⚠️ *Carga adicional de ${tipoGas}:* +${gramosExtra}g aprox. (${metrosExtra}m extras)`;
+                let grsPorMetro = (aireSeleccionado === '4500' || aireSeleccionado === '6000') ? 25 : 15;
+                const gramosTotales = metrosExtra * grsPorMetro;
+                textoGasExtra = `\n⚠️ *Añadir Gas ${tipoGas}:* +${gramosTotales}g adicionales (${metrosExtra}m de cañería extra)`;
             }
 
-            ultimoClimaTexto = `❄️ *PRESUPUESTO INSTALACIÓN AIRE*\n👤 *Cliente:* ${cliente}${sugerenciaFrigorias}\n⚡ *Equipo:* ${aireSeleccionado} Frigorías (${tipoGas})\n--------------------------------\n📦 *Materiales y Cómputo (${metros} mts):*\n• Caño Cobre Alta (${cañoAlta}): ${metros} mts\n• Caño Cobre Baja (${cañoBaja}): ${metros} mts\n• Aislatubo térmico: ${metros} mts\n• Cable Taller interconexión: ${metros + 1} mts\n• Manguera desagüe cristal: ${metros + 1} mts\n• Ménsulas reforzadas y tacos antivibratorios${textoGasExtra}\n--------------------------------\n🔌 *Recomendación Eléctrica:* Térmica ${termicaRecomendada}\n--------------------------------\n💰 *Instalación (incluye vacío y prueba):* $${manoObra.toLocaleString()}`;
+            // Checklist de calidad seleccionado
+            let checksTxt = "\n--------------------------------\n📋 *Garantía de Calidad Aplicada:*";
+            if (document.getElementById('chkNitr').checked) checksTxt += "\n• ✔️ Hermeticidad probada con Nitrógeno";
+            if (document.getElementById('chkVacio').checked) checksTxt += "\n• ✔️ Vacío técnico con Bomba y Vacuómetro";
+            if (document.getElementById('chkElect').checked) checksTxt += "\n• ✔️ Circuito eléctrico verificado";
+            if (document.getElementById('chkAmp').checked) checksTxt += "\n• ✔️ Consumo de Amperaje medido en régimen";
+
+            let advInverter = tec === 'Inverter' ? "\n⚡ *Nota Técnica:* Equipo Inverter (Se sugiere protector de tensión de red)." : "";
+
+            ultimoClimaTexto = `❄️ *PRESUPUESTO DE CLIMATIZACIÓN*\n👤 *Cliente:* ${cliente}${sugerenciaFrigorias}\n⚡ *Equipo:* ${aireSeleccionado} Frig. - ${tec} (${tipoGas})\n--------------------------------\n📦 *Materiales y Cómputo (${metros} mts):*\n• Caño Cobre Alta (${cañoAlta}): ${metros} mts\n• Caño Cobre Baja (${cañoBaja}): ${metros} mts\n• Aislatubo térmico: ${metros} mts\n• Cable Taller interconexión: ${metros + 1} mts\n• Manguera desagüe cristal: ${metros + 1} mts\n• Ménsulas reforzadas y tacos antivibratorios${textoGasExtra}${checksTxt}\n--------------------------------\n🔌 *Recomendación Eléctrica:* Térmica ${termicaRecomendada}${advInverter}\n--------------------------------\n💰 *Instalación Profesional:* $${manoObra.toLocaleString()}`;
 
             const resDiv = document.getElementById('resultadoClima');
             resDiv.style.display = 'block';
@@ -590,7 +615,6 @@
         renderAgenda();
     </script>
 
-    <!-- Sistema de Actualización Automática en Segundo Plano -->
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
