@@ -38,7 +38,6 @@
         input, textarea { width: 100%; padding: 12px; margin-top: 6px; background: var(--bg-input); border: 1px solid var(--border); color: var(--text-main); border-radius: 8px; box-sizing: border-box; font-size: 1rem; outline: none; }
         input:focus { border-color: var(--accent); }
 
-        /* Selector de trabajos con botones grandes */
         .grid-trabajos { display: grid; grid-template-columns: 1fr; gap: 8px; margin-top: 6px; }
         .trabajo-btn { background: var(--bg-input); border: 1px solid var(--border); color: var(--text-main); padding: 12px; text-align: left; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
         .trabajo-btn.selected { background: var(--accent); color: #000; border-color: var(--accent); }
@@ -87,11 +86,17 @@
                 <button type="button" class="trabajo-btn" onclick="seleccionarTrabajo('revoque_grueso', this)">🛠️ Revoque Grueso (M²)</button>
                 <button type="button" class="trabajo-btn" onclick="seleccionarTrabajo('revoque_fino', this)">✨ Revoque Fino / Enlucido (M²)</button>
                 <button type="button" class="trabajo-btn" onclick="seleccionarTrabajo('contrapiso', this)">📐 Contrapiso con Cascote (M²)</button>
-                <button type="button" class="trabajo-btn" onclick="seleccionarTrabajo('porcelanato', this)">🏠 Colocación Porcelanato (M²)</button>
+                <button type="button" class="trabajo-btn" onclick="seleccionarTrabajo('porcelanato', this)">🏠 Colocación Porcelanato / Cerámica (M²)</button>
             </div>
 
-            <label>Superficie (M²)</label>
+            <label>Superficie Real (M²)</label>
             <input type="number" id="superficie" placeholder="Ej: 45">
+
+            <!-- Campo extra exclusivo para porcelanato -->
+            <div id="divExtraPorcelanato" style="display:none;">
+                <label>Metros que trae una Caja de Piso (M²)</label>
+                <input type="number" id="m2PorCaja" placeholder="Ej: 1.44 (consultar caja)" value="1.44">
+            </div>
 
             <label>Mano de Obra por M² ($)</label>
             <input type="number" id="valorMano" placeholder="Ej: 9500">
@@ -211,6 +216,14 @@
             trabajoSeleccionado = tipo;
             document.querySelectorAll('.trabajo-btn').forEach(b => b.classList.remove('selected'));
             btn.classList.add('selected');
+
+            // Mostrar u ocultar campo extra de cajas si es porcelanato
+            const divExtra = document.getElementById('divExtraPorcelanato');
+            if (tipo === 'porcelanato') {
+                divExtra.style.display = 'block';
+            } else {
+                divExtra.style.display = 'none';
+            }
         }
 
         function calcularPresupuesto() {
@@ -244,7 +257,11 @@
                 matTexto = `• Cemento: ${Math.ceil(superficie * 0.2)} bolsas\n• Cal: ${Math.ceil(superficie * 0.3)} bolsas\n• Cascote: ${(superficie * 0.09).toFixed(2)} m³\n• Arena: ${(superficie * 0.05).toFixed(2)} m³`;
             } else {
                 nombreTrabajoReadable = "Colocación Porcelanato";
-                matTexto = `• Pegamento: ${Math.ceil(superficie * 0.25)} bolsas\n• Pastina: ${(superficie * 0.3).toFixed(1)} kg`;
+                const m2PorCaja = parseFloat(document.getElementById('m2PorCaja').value) || 1.44;
+                const m2ConDesperdicio = superficie * 1.10; // 10% extra por cortes
+                const totalCajas = Math.ceil(m2ConDesperdicio / m2PorCaja);
+                
+                matTexto = `• Superficie con 10% corte: ${m2ConDesperdicio.toFixed(2)} M²\n• 📦 Cajas de Porcelanato: ${totalCajas} cajas (aprox.)\n• Pegamento: ${Math.ceil(superficie * 0.25)} bolsas\n• Pastina: ${(superficie * 0.3).toFixed(1)} kg`;
             }
 
             ultimoPresupuestoTexto = `🏗️ *PRESUPUESTO - OBRAS PRO*\n👤 *Cliente:* ${cliente}\n📐 *Trabajo:* ${nombreTrabajoReadable} (${superficie} M²)\n--------------------------------\n📦 *Materiales Estimados:*\n${matTexto}\n--------------------------------\n💰 *Mano de Obra Total:* $${manoObraTotal.toLocaleString()}`;
