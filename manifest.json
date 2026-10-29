@@ -1,7 +1,7 @@
-
 {
   "name": "Gestión de Obras Pro",
   "short_name": "ObrasPro",
+  "description": "Herramienta profesional para contratistas, cálculo de materiales y control de gastos de obra.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0f172a",
