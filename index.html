@@ -511,4 +511,212 @@
         function calcularAire() {
             vibrar(40);
             const cliente = document.getElementById('climaCliente').value || 'Cliente';
-            const largo = parseFloat(
+            const largo = parseFloat(document.getElementById('climaLargo').value) || 0;
+            const ancho = parseFloat(document.getElementById('climaAncho').value) || 0;
+            const alto = parseFloat(document.getElementById('climaAlto').value) || 2.6;
+            const metros = parseFloat(document.getElementById('climaMetros').value) || 3;
+            const manoObra = parseFloat(document.getElementById('climaMano').value) || 0;
+            const tipoGas = document.getElementById('tipoGas').value;
+            const tec = document.getElementById('tipoTecnologia').value;
+
+            if (metros <= 0 || manoObra <= 0) return alert('Completa metros de cañería y mano de obra.');
+
+            let sugerenciaFrigorias = "";
+            if (largo > 0 && ancho > 0) {
+                const m3 = largo * ancho * alto;
+                const frigNecesarias = Math.round(m3 * 50);
+                sugerenciaFrigorias = `\n📐 *Ambiente:* ${largo}x${ancho}m (${m3.toFixed(1)} m³)\n💡 *Sugerido:* ~${frigNecesarias} Frigorías\n--------------------------------`;
+            }
+
+            let cañoAlta = "1/4\"";
+            let cañoBaja = (aireSeleccionado === '4500' || aireSeleccionado === '6000') ? "1/2\" o 5/8\"" : "3/8\"";
+            let termicaRecomendada = (aireSeleccionado === '6000') ? "20A (Cable 4 mm²)" : "10A - 16A (Cable 2.5 mm²)";
+
+            // Cómputo corregido a 150g/m para equipos chicos y 250g/m para grandes
+            let grsPorMetro = (aireSeleccionado === '4500' || aireSeleccionado === '6000') ? 250 : 150;
+            let gramosTotales = metros * grsPorMetro;
+            let textoGasExtra = `\n⚠️ *Carga de Gas ${tipoGas}:* ${gramosTotales}g (${metros}m de cañería)`;
+
+            let checksTxt = "\n--------------------------------\n📋 *Garantía de Calidad Aplicada:*";
+            if (document.getElementById('chkNitr').checked) checksTxt += "\n• ✔️ Hermeticidad probada con Nitrógeno";
+            if (document.getElementById('chkVacio').checked) checksTxt += "\n• ✔️ Vacío técnico con Bomba y Vacuómetro";
+            if (document.getElementById('chkElect').checked) checksTxt += "\n• ✔️ Circuito eléctrico verificado";
+            if (document.getElementById('chkAmp').checked) checksTxt += "\n• ✔️ Consumo de Amperaje medido en régimen";
+
+            let advInverter = tec === 'Inverter' ? "\n⚡ *Nota Técnica:* Equipo Inverter (Se sugiere protector de tensión de red)." : "";
+
+            ultimoClimaTexto = `❄️ *PRESUPUESTO DE CLIMATIZACIÓN*\n👤 *Cliente:* ${cliente}${sugerenciaFrigorias}\n⚡ *Equipo:* ${aireSeleccionado} Frig. - ${tec} (${tipoGas})\n--------------------------------\n📦 *Materiales y Cómputo (${metros} mts):*\n• Caño Cobre Alta (${cañoAlta}): ${metros} mts\n• Caño Cobre Baja (${cañoBaja}): ${metros} mts\n• Aislatubo térmico: ${metros} mts\n• Cable Taller interconexión: ${metros + 1} mts\n• Manguera desagüe cristal: ${metros + 1} mts\n• Ménsulas reforzadas y tacos antivibratorios${textoGasExtra}${checksTxt}\n--------------------------------\n🔌 *Recomendación Eléctrica:* Térmica ${termicaRecomendada}${advInverter}\n--------------------------------\n💰 *Instalación Profesional:* $${manoObra.toLocaleString()}`;
+
+            const resDiv = document.getElementById('resultadoClima');
+            resDiv.style.display = 'block';
+            resDiv.innerText = ultimoClimaTexto;
+            document.getElementById('accionesClima').style.display = 'flex';
+        }
+
+        function enviarWhatsApp() {
+            vibrar(30);
+            if (ultimoPresupuestoTexto) window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(ultimoPresupuestoTexto)}`, '_blank');
+        }
+
+        function enviarWhatsAppClima() {
+            vibrar(30);
+            if (ultimoClimaTexto) window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(ultimoClimaTexto)}`, '_blank');
+        }
+
+        function enviarReciboWhatsApp() {
+            vibrar(30);
+            const cliente = document.getElementById('recCliente').value || 'Cliente';
+            const concepto = document.getElementById('recConcepto').value || 'Pago de obra';
+            const monto = parseFloat(document.getElementById('recMonto').value) || 0;
+            if (monto <= 0) return alert('Ingresa un monto.');
+            const texto = `🧾 *RECIBO DE PAGO - OBRAS PRO*\n📅 *Fecha:* ${new Date().toLocaleDateString()}\n👤 *Cliente:* ${cliente}\n📝 *Concepto:* ${concepto}\n💵 *Monto:* $${monto.toLocaleString()}\n--------------------------------\n✅ ¡Gracias por confiar en nosotros!`;
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(texto)}`, '_blank');
+        }
+
+        let stock = JSON.parse(localStorage.getItem('obras_stock')) || [];
+        function agregarStock() {
+            vibrar(30);
+            const nombre = document.getElementById('stNombre').value;
+            const cantidad = parseFloat(document.getElementById('stCantidad').value) || 0;
+            if (!nombre || cantidad <= 0) return alert('Completa los datos.');
+            stock.push({ nombre, cantidad });
+            localStorage.setItem('obras_stock', JSON.stringify(stock));
+            document.getElementById('stNombre').value = '';
+            document.getElementById('stCantidad').value = '';
+            renderStock();
+        }
+        function eliminarStock(idx) {
+            vibrar(40);
+            stock.splice(idx, 1);
+            localStorage.setItem('obras_stock', JSON.stringify(stock));
+            renderStock();
+        }
+        function renderStock() {
+            const lista = document.getElementById('listaStock');
+            lista.innerHTML = stock.length === 0 ? '<div class="empty-state">📦 No hay materiales registrados en el pañol.</div>' : '';
+            stock.forEach((s, idx) => {
+                let badgeEstado = s.cantidad <= 5 ? '<span class="tag-stock tag-low">⚠️ Bajo</span>' : '<span class="tag-stock tag-ok">✔ OK</span>';
+                lista.innerHTML += `<div class="item-row"><span>📦 ${s.nombre} (<strong>${s.cantidad}</strong>)${badgeEstado}</span><button class="btn-danger-soft" onclick="eliminarStock(${idx})">🗑️ Borrar</button></div>`;
+            });
+            actualizarBadges();
+        }
+
+        let movimientos = JSON.parse(localStorage.getItem('obras_movs')) || [];
+        function agregarMovimiento() {
+            vibrar(30);
+            const conc = document.getElementById('finConcepto').value;
+            const monto = parseFloat(document.getElementById('finMonto').value) || 0;
+            const tipo = document.getElementById('finTipo').value;
+            if (!conc || monto <= 0) return alert('Completa concepto y monto.');
+            movimientos.push({ conc, monto, tipo });
+            localStorage.setItem('obras_movs', JSON.stringify(movimientos));
+            document.getElementById('finConcepto').value = '';
+            document.getElementById('finMonto').value = '';
+            renderFinanzas();
+        }
+        function eliminarMovimiento(idx) {
+            vibrar(40);
+            movimientos.splice(idx, 1);
+            localStorage.setItem('obras_movs', JSON.stringify(movimientos));
+            renderFinanzas();
+        }
+        function renderFinanzas() {
+            const lista = document.getElementById('listaMovimientos');
+            lista.innerHTML = movimientos.length === 0 ? '<div class="empty-state">💰 Sin movimientos de caja registrados.</div>' : '';
+            let total = 0;
+            movimientos.forEach((m, idx) => {
+                if (m.tipo === 'ingreso') total += m.monto;
+                else total -= m.monto;
+                lista.innerHTML += `<div class="item-row"><span>${m.tipo === 'ingreso' ? '🟢' : '🔻'} ${m.conc}: <strong>$${m.monto.toLocaleString()}</strong></span><button class="btn-danger-soft" onclick="eliminarMovimiento(${idx})">🗑️</button></div>`;
+            });
+            const bal = document.getElementById('balanceDisplay');
+            bal.innerText = `Ganancia Neta: $${total.toLocaleString()}`;
+            bal.style.color = total >= 0 ? 'var(--success)' : 'var(--danger)';
+            actualizarBadges();
+        }
+
+        let personal = JSON.parse(localStorage.getItem('obras_personal')) || [];
+        function agregarPersonal() {
+            vibrar(30);
+            const nombre = document.getElementById('nombrePersonal').value;
+            const jornal = parseFloat(document.getElementById('jornalPersonal').value) || 0;
+            const dias = parseFloat(document.getElementById('diasPersonal').value) || 0;
+            if (!nombre || jornal <= 0 || dias <= 0) return alert('Completa datos de personal.');
+            personal.push({ nombre, total: jornal * dias, dias });
+            localStorage.setItem('obras_personal', JSON.stringify(personal));
+            document.getElementById('nombrePersonal').value = '';
+            document.getElementById('jornalPersonal').value = '';
+            document.getElementById('diasPersonal').value = '';
+            renderPersonal();
+        }
+        function eliminarPersonal(idx) {
+            vibrar(40);
+            personal.splice(idx, 1);
+            localStorage.setItem('obras_personal', JSON.stringify(personal));
+            renderPersonal();
+        }
+        function renderPersonal() {
+            const lista = document.getElementById('listaPersonal');
+            lista.innerHTML = personal.length === 0 ? '<div class="empty-state">👷 Sin personal cargado en la planilla.</div>' : '';
+            personal.forEach((p, idx) => {
+                lista.innerHTML += `<div class="item-row"><span>👷 ${p.nombre} (${p.dias}d) - <strong>$${p.total.toLocaleString()}</strong></span><button class="btn-danger-soft" onclick="eliminarPersonal(${idx})">🗑️</button></div>`;
+            });
+            actualizarBadges();
+        }
+
+        let agenda = JSON.parse(localStorage.getItem('obras_agenda')) || [];
+        function agregarContacto() {
+            vibrar(30);
+            const nombre = document.getElementById('agNombre').value;
+            const tel = document.getElementById('agTelefono').value;
+            const notas = document.getElementById('agNotas').value;
+            if (!nombre) return alert('Ingresa un nombre.');
+            agenda.push({ nombre, tel, notas });
+            localStorage.setItem('obras_agenda', JSON.stringify(agenda));
+            document.getElementById('agNombre').value = '';
+            document.getElementById('agTelefono').value = '';
+            document.getElementById('agNotas').value = '';
+            renderAgenda();
+        }
+        function eliminarAgenda(idx) {
+            vibrar(40);
+            agenda.splice(idx, 1);
+            localStorage.setItem('obras_agenda', JSON.stringify(agenda));
+            renderAgenda();
+        }
+        function renderAgenda() {
+            const lista = document.getElementById('listaAgenda');
+            lista.innerHTML = agenda.length === 0 ? '<div class="empty-state">📇 Agenda de corralones vacía.</div>' : '';
+            agenda.forEach((a, idx) => {
+                lista.innerHTML += `<div class="item-row" style="flex-direction:row; align-items:flex-start;"><div><strong>👤 ${a.nombre}</strong> ${a.tel ? '- 📞 ' + a.tel : ''}<br><small style="color:var(--text-muted);">${a.notas}</small></div><button class="btn-danger-soft" onclick="eliminarAgenda(${idx})">🗑️</button></div>`;
+            });
+            actualizarBadges();
+        }
+
+        renderStock();
+        renderFinanzas();
+        renderPersonal();
+        renderAgenda();
+    </script>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js?v=3').then((registration) => {
+                    registration.update();
+                    registration.onupdatefound = () => {
+                        const installingWorker = registration.installing;
+                        installingWorker.onstatechange = () => {
+                            if (installingWorker.state === 'installed') {
+                                if (navigator.serviceWorker.controller) {
+                                    window.location.reload();
+                                }
+                            }
+                        };
+                    };
+                });
+            });
+        }
+    </script>
+</body>
+</html>
