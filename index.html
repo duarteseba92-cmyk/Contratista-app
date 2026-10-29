@@ -33,12 +33,12 @@
         
         .tabs { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(13, 20, 36, 0.92); backdrop-filter: blur(16px); display: flex; justify-content: space-around; padding: 8px 4px; border-top: 1px solid var(--border); z-index: 1000; box-shadow: 0 -10px 30px rgba(0,0,0,0.7); overflow-x: auto; scrollbar-width: none; }
         .tabs::-webkit-scrollbar { display: none; }
-        .tab-btn { background: none; border: none; color: var(--text-muted); font-weight: 700; border-radius: 12px; cursor: pointer; font-size: 0.65rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 8px; min-width: 50px; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); position: relative; }
-        .tab-btn span.icon { font-size: 1.25rem; transition: transform 0.2s; }
+        .tab-btn { background: none; border: none; color: var(--text-muted); font-weight: 700; border-radius: 12px; cursor: pointer; font-size: 0.60rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 4px; min-width: 45px; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); position: relative; }
+        .tab-btn span.icon { font-size: 1.2rem; transition: transform 0.2s; }
         .tab-btn.active { color: var(--accent); background: var(--accent-glow); }
         .tab-btn.active span.icon { transform: translateY(-2px); }
         .tab-btn.active::after { content: ''; position: absolute; top: 0; left: 15%; right: 15%; height: 3px; background: var(--accent); border-radius: 2px; box-shadow: 0 0 8px var(--accent); }
-        .badge-count { position: absolute; top: 4px; right: 6px; background: var(--accent); color: #000; font-size: 0.55rem; padding: 1px 4px; border-radius: 6px; font-weight: 800; display: none; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
+        .badge-count { position: absolute; top: 4px; right: 4px; background: var(--accent); color: #000; font-size: 0.5rem; padding: 1px 3px; border-radius: 6px; font-weight: 800; display: none; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
 
         .section { display: none; animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
         .section.active { display: block; }
@@ -131,6 +131,36 @@
             
             <div id="accionesPresupuesto" class="btn-group" style="display:none;">
                 <button class="btn btn-whatsapp" onclick="enviarWhatsApp()">📲 Enviar por WhatsApp</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 1.5. ESTRUCTURA DE HORMIGÓN ARMADO (NUEVA SECCIÓN) -->
+    <div id="hormigon" class="section">
+        <div class="card">
+            <h2>🏛️ Cómputo de Hormigón Armado</h2>
+            <label>Cliente / Obra</label>
+            <input type="text" id="hormigonCliente" placeholder="Ej: Losa o Columnas Planta Baja">
+
+            <label>Seleccionar Elemento Estructural</label>
+            <div class="grid-trabajos">
+                <button type="button" class="trabajo-btn selected" onclick="seleccionarHormigon('columnas', this)">🏛️ Columnas / Vigas Estructurales (M³)</button>
+                <button type="button" class="trabajo-btn" onclick="seleccionarHormigon('losa', this)">🏠 Losa de Hormigón Armado (M³)</button>
+                <button type="button" class="trabajo-btn" onclick="seleccionarHormigon('cimientos', this)">🧱 Bases / Cimientos Corrido (M³)</button>
+            </div>
+
+            <label>Volumen Estimado (M³)</label>
+            <input type="number" id="hormigonVolumen" placeholder="Ej: 3.5">
+
+            <label>Mano de Obra por M³ ($)</label>
+            <input type="number" id="hormigonMano" placeholder="Ej: 45000">
+
+            <button class="btn btn-primary" style="margin-top: 16px;" onclick="calcularHormigon()">🚀 Calcular Estructura</button>
+
+            <div id="resultadoHormigon" class="resumen-box" style="display:none;"></div>
+            
+            <div id="accionesHormigon" class="btn-group" style="display:none;">
+                <button class="btn btn-whatsapp" onclick="enviarWhatsAppHormigon()">📲 Enviar por WhatsApp</button>
             </div>
         </div>
     </div>
@@ -286,6 +316,9 @@
         <button class="tab-btn active" onclick="cambiarTab('presupuesto', this)">
             <span class="icon">📋</span>Cotizar
         </button>
+        <button class="tab-btn" onclick="cambiarTab('hormigon', this)">
+            <span class="icon">🏛️</span>Hormigón
+        </button>
         <button class="tab-btn" onclick="cambiarTab('climatizacion', this)">
             <span class="icon">❄️</span>Clima
         </button>
@@ -324,8 +357,10 @@
         }
 
         let trabajoSeleccionado = 'pared_hueco_12';
+        let hormigonSeleccionado = 'columnas';
         let aireSeleccionado = '2250';
         let ultimoPresupuestoTexto = "";
+        let ultimoHormigonTexto = "";
         let ultimoClimaTexto = "";
 
         function cambiarTab(tabId, btn) {
@@ -364,6 +399,14 @@
             divExtra.style.display = (tipo === 'porcelanato') ? 'block' : 'none';
         }
 
+        function seleccionarHormigon(tipo, btn) {
+            vibrar(20);
+            hormigonSeleccionado = tipo;
+            const botones = document.querySelectorAll('#hormigon .trabajo-btn');
+            botones.forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+        }
+
         function seleccionarAire(cap, btn) {
             vibrar(20);
             aireSeleccionado = cap;
@@ -389,7 +432,6 @@
                 matTexto = `• Ladrillos Huecos (12x18x33): ${Math.round(superficie * 16)} un.\n• Cemento: ${Math.ceil(superficie * 0.35)} bolsas\n• Cal: ${Math.ceil(superficie * 0.45)} bolsas\n• Arena: ${(superficie * 0.10).toFixed(2)} m³`;
             } else if (trabajoSeleccionado === 'pared_hueco_18') {
                 nombreTrabajoReadable = "Pared Ladrillo Hueco 18 cm";
-                // Arena aumentada generosamente (0.14 m3 por m2) para asegurar holgura total en obra
                 matTexto = `• Ladrillos Huecos (18x18x33): ${Math.round(superficie * 16)} un.\n• Cemento: ${Math.ceil(superficie * 0.45)} bolsas\n• Cal: ${Math.ceil(superficie * 0.60)} bolsas\n• Arena: ${(superficie * 0.14).toFixed(2)} m³`;
             } else if (trabajoSeleccionado === 'pared_comun') {
                 nombreTrabajoReadable = "Pared Ladrillo Común 15 cm";
@@ -420,6 +462,53 @@
             document.getElementById('accionesPresupuesto').style.display = 'flex';
         }
 
+        function calcularHormigon() {
+            vibrar(40);
+            const cliente = document.getElementById('hormigonCliente').value || 'Cliente';
+            const volumen = parseFloat(document.getElementById('hormigonVolumen').value) || 0;
+            const manoObra = parseFloat(document.getElementById('hormigonMano').value) || 0;
+            
+            if (volumen <= 0 || manoObra <= 0) return alert('Completa volumen en M³ y mano de obra.');
+
+            let nombreEstructura = "";
+            let hierroTxt = "";
+
+            // Coeficientes estándar H21 / H17 por m3 de H°A°
+            const bolsasCemento = Math.ceil(volumen * 7.5);
+            const arenaM3 = (volumen * 0.55).toFixed(2);
+            const piedraM3 = (volumen * 0.75).toFixed(2);
+
+            if (hormigonSeleccionado === 'columnas') {
+                nombreEstructura = "Columnas / Vigas Estructurales";
+                const hierro12kg = Math.round(volumen * 85); // Aprox kg de hierro del 12
+                const hierro8kg = Math.round(volumen * 45);  // Aprox kg de hierro del 8 (estribos)
+                hierroTxt = `• Hierro Ø 12 mm: ~${hierro12kg} kg\n• Hierro Ø 8 mm (Estribos): ~${hierro8kg} kg`;
+            } else if (hormigonSeleccionado === 'losa') {
+                nombreEstructura = "Losa de Hormigón Armado";
+                const hierro8kg = Math.round(volumen * 70);
+                const hierro6kg = Math.round(volumen * 30);
+                hierroTxt = `• Hierro Ø 8 mm: ~${hierro8kg} kg\n• Hierro Ø 6 mm: ~${hierro6kg} kg`;
+            } else {
+                nombreEstructura = "Bases / Cimientos Corrido";
+                const hierro12kg = Math.round(volumen * 55);
+                hierroTxt = `• Hierro Ø 12 mm / 10 mm: ~${hierro12kg} kg`;
+            }
+
+            let manoObraTotal = volumen * manoObra;
+
+            ultimoHormigonTexto = `🏛️ *CÓMPUTO DE HORMIGÓN ARMADO*\n👤 *Cliente:* ${cliente}\n📐 *Elemento:* ${nombreEstructura} (${volumen} M³)\n--------------------------------\n📦 *Materiales Estimados:*\n• Cemento H21/H17: ${bolsasCemento} bolsas\n• Arena gruesa: ${arenaM3} m³\n• Piedra partida: ${piedraM3} m³\n${hierroTxt}\n--------------------------------\n💰 *Mano de Obra Total:* $${manoObraTotal.toLocaleString()}`;
+            
+            const resDiv = document.getElementById('resultadoHormigon');
+            resDiv.style.display = 'block';
+            resDiv.innerText = ultimoHormigonTexto;
+            document.getElementById('accionesHormigon').style.display = 'flex';
+        }
+
+        function enviarWhatsAppHormigon() {
+            vibrar(30);
+            if (ultimoHormigonTexto) window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(ultimoHormigonTexto)}`, '_blank');
+        }
+
         function calcularAire() {
             vibrar(40);
             const cliente = document.getElementById('climaCliente').value || 'Cliente';
@@ -444,15 +533,13 @@
             let cañoBaja = (aireSeleccionado === '4500' || aireSeleccionado === '6000') ? "1/2\" o 5/8\"" : "3/8\"";
             let termicaRecomendada = (aireSeleccionado === '6000') ? "20A (Cable 4 mm²)" : "10A - 16A (Cable 2.5 mm²)";
 
-            // Cómputo de gas progresivo desde el metro 1 en adelante
             let grsPorMetro = (aireSeleccionado === '4500' || aireSeleccionado === '6000') ? 25 : 15;
             let gramosTotales = metros * grsPorMetro;
             let textoGasExtra = `\n⚠️ *Carga de Gas ${tipoGas}:* ${gramosTotales}g (${metros}m de cañería)`;
 
-            // Checklist de calidad seleccionado
             let checksTxt = "\n--------------------------------\n📋 *Garantía de Calidad Aplicada:*";
             if (document.getElementById('chkNitr').checked) checksTxt += "\n• ✔️ Hermeticidad probada con Nitrógeno";
-            if (document.getElementById('chkVacio').checked) checksTxt += "\n• ✔️ Vacío profundo con bomba y vacuómetro";
+            if (document.getElementById('chkVacio').checked) checksTxt += "\n• ✔️ Vacío técnico con Bomba y Vacuómetro";
             if (document.getElementById('chkElect').checked) checksTxt += "\n• ✔️ Circuito eléctrico verificado";
             if (document.getElementById('chkAmp').checked) checksTxt += "\n• ✔️ Consumo de Amperaje medido en régimen";
 
