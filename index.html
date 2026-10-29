@@ -25,7 +25,7 @@
         p.subtitle { color: var(--text-muted); font-size: 0.8rem; margin: 0; text-transform: uppercase; }
         
         .tabs { display: flex; gap: 4px; margin-bottom: 14px; background: var(--bg-card); padding: 4px; border-radius: 10px; border: 1px solid var(--border); overflow-x: auto; }
-        .tab-btn { flex: 1; min-width: 65px; padding: 10px 4px; background: none; border: none; color: var(--text-muted); font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 0.75rem; text-align: center; white-space: nowrap; }
+        .tab-btn { flex: 1; min-width: 60px; padding: 10px 2px; background: none; border: none; color: var(--text-muted); font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 0.68rem; text-align: center; white-space: nowrap; }
         .tab-btn.active { background: var(--accent); color: #000; }
         
         .section { display: none; }
@@ -64,6 +64,7 @@
     <!-- Pestañas -->
     <div class="tabs">
         <button class="tab-btn active" onclick="cambiarTab('presupuesto', this)">📋 Cotizar</button>
+        <button class="tab-btn" onclick="cambiarTab('climatizacion', this)">❄️ Aire Acond.</button>
         <button class="tab-btn" onclick="cambiarTab('recibos', this)">📄 Recibos</button>
         <button class="tab-btn" onclick="cambiarTab('stock', this)">📦 Stock</button>
         <button class="tab-btn" onclick="cambiarTab('finanzas', this)">💰 Finanzas</button>
@@ -71,7 +72,7 @@
         <button class="tab-btn" onclick="cambiarTab('agenda', this)">📇 Agenda</button>
     </div>
 
-    <!-- 1. COTIZADOR -->
+    <!-- 1. COTIZADOR DE OBRA -->
     <div id="presupuesto" class="section active">
         <div class="card">
             <h2>⚙️ Cómputo y Presupuesto</h2>
@@ -95,7 +96,7 @@
             <!-- Campo extra exclusivo para porcelanato -->
             <div id="divExtraPorcelanato" style="display:none;">
                 <label>Metros que trae una Caja de Piso (M²)</label>
-                <input type="number" id="m2PorCaja" placeholder="Ej: 1.44 (consultar caja)" value="1.44">
+                <input type="number" id="m2PorCaja" placeholder="Ej: 1.44" value="1.44">
             </div>
 
             <label>Mano de Obra por M² ($)</label>
@@ -111,7 +112,37 @@
         </div>
     </div>
 
-    <!-- 2. RECIBOS -->
+    <!-- 2. CLIMATIZACIÓN / AIRES ACONDICIONADOS -->
+    <div id="climatizacion" class="section">
+        <div class="card">
+            <h2>❄️ Instalación de Aire Acondicionado</h2>
+            <label>Cliente / Ubicación</label>
+            <input type="text" id="climaCliente" placeholder="Ej: Oficina Central">
+
+            <label>Capacidad del Equipo</label>
+            <div class="grid-trabajos">
+                <button type="button" class="trabajo-btn selected" onclick="seleccionarAire('2250', this)">❄️ 2.250 / 3.000 Frigorías (Split Estándar)</button>
+                <button type="button" class="trabajo-btn" onclick="seleccionarAire('4500', this)">❄️ 4.500 Frigorías</button>
+                <button type="button" class="trabajo-btn" onclick="seleccionarAire('6000', this)">❄️ 6.000 Frigorías en adelante</button>
+            </div>
+
+            <label>Metros de Cañería Estimados</label>
+            <input type="number" id="climaMetros" placeholder="Ej: 3 (metros)" value="3">
+
+            <label>Mano de Obra de Instalación ($)</label>
+            <input type="number" id="climaMano" placeholder="Ej: 45000">
+
+            <button class="btn btn-primary" style="margin-top: 14px;" onclick="calcularAire()">🚀 Calcular Materiales de Instalación</button>
+
+            <div id="resultadoClima" class="resumen-box" style="display:none;"></div>
+            
+            <div id="accionesClima" class="btn-group" style="display:none;">
+                <button class="btn btn-whatsapp" onclick="enviarWhatsAppClima()">📲 Enviar Presupuesto Aire</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. RECIBOS -->
     <div id="recibos" class="section">
         <div class="card">
             <h2>📄 Emitir Recibo de Pago</h2>
@@ -125,7 +156,7 @@
         </div>
     </div>
 
-    <!-- 3. STOCK -->
+    <!-- 4. STOCK -->
     <div id="stock" class="section">
         <div class="card">
             <h2>📦 Control de Pañol / Stock</h2>
@@ -141,7 +172,7 @@
         </div>
     </div>
 
-    <!-- 4. FINANZAS -->
+    <!-- 5. FINANZAS -->
     <div id="finanzas" class="section">
         <div class="card">
             <h2>💰 Caja y Movimientos</h2>
@@ -165,7 +196,7 @@
         </div>
     </div>
 
-    <!-- 5. PERSONAL -->
+    <!-- 6. PERSONAL -->
     <div id="personal" class="section">
         <div class="card">
             <h2>👷 Jornales de Personal</h2>
@@ -183,7 +214,7 @@
         </div>
     </div>
 
-    <!-- 6. AGENDA -->
+    <!-- 7. AGENDA -->
     <div id="agenda" class="section">
         <div class="card">
             <h2>📇 Agenda de Proveedores</h2>
@@ -203,7 +234,9 @@
 
     <script>
         let trabajoSeleccionado = 'pared_hueco_12';
+        let aireSeleccionado = '2250';
         let ultimoPresupuestoTexto = "";
+        let ultimoClimaTexto = "";
 
         function cambiarTab(tabId, btn) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -214,16 +247,20 @@
 
         function seleccionarTrabajo(tipo, btn) {
             trabajoSeleccionado = tipo;
-            document.querySelectorAll('.trabajo-btn').forEach(b => b.classList.remove('selected'));
+            // Buscar botones solo dentro del cotizador de obra
+            const botones = document.querySelectorAll('#presupuesto .trabajo-btn');
+            botones.forEach(b => b.classList.remove('selected'));
             btn.classList.add('selected');
 
-            // Mostrar u ocultar campo extra de cajas si es porcelanato
             const divExtra = document.getElementById('divExtraPorcelanato');
-            if (tipo === 'porcelanato') {
-                divExtra.style.display = 'block';
-            } else {
-                divExtra.style.display = 'none';
-            }
+            divExtra.style.display = (tipo === 'porcelanato') ? 'block' : 'none';
+        }
+
+        function seleccionarAire(cap, btn) {
+            aireSeleccionado = cap;
+            const botones = document.querySelectorAll('#climatizacion .trabajo-btn');
+            botones.forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
         }
 
         function calcularPresupuesto() {
@@ -258,10 +295,10 @@
             } else {
                 nombreTrabajoReadable = "Colocación Porcelanato";
                 const m2PorCaja = parseFloat(document.getElementById('m2PorCaja').value) || 1.44;
-                const m2ConDesperdicio = superficie * 1.10; // 10% extra por cortes
+                const m2ConDesperdicio = superficie * 1.10; 
                 const totalCajas = Math.ceil(m2ConDesperdicio / m2PorCaja);
                 
-                matTexto = `• Superficie con 10% corte: ${m2ConDesperdicio.toFixed(2)} M²\n• 📦 Cajas de Porcelanato: ${totalCajas} cajas (aprox.)\n• Pegamento: ${Math.ceil(superficie * 0.25)} bolsas\n• Pastina: ${(superficie * 0.3).toFixed(1)} kg`;
+                matTexto = `• Superficie con 10% corte: ${m2ConDesperdicio.toFixed(2)} M²\n• 📦 Cajas de Porcelanato: ${totalCajas} cajas\n• Pegamento: ${Math.ceil(superficie * 0.25)} bolsas\n• Pastina: ${(superficie * 0.3).toFixed(1)} kg`;
             }
 
             ultimoPresupuestoTexto = `🏗️ *PRESUPUESTO - OBRAS PRO*\n👤 *Cliente:* ${cliente}\n📐 *Trabajo:* ${nombreTrabajoReadable} (${superficie} M²)\n--------------------------------\n📦 *Materiales Estimados:*\n${matTexto}\n--------------------------------\n💰 *Mano de Obra Total:* $${manoObraTotal.toLocaleString()}`;
@@ -272,8 +309,31 @@
             document.getElementById('accionesPresupuesto').style.display = 'flex';
         }
 
+        function calcularAire() {
+            const cliente = document.getElementById('climaCliente').value || 'Cliente';
+            const metros = parseFloat(document.getElementById('climaMetros').value) || 3;
+            const manoObra = parseFloat(document.getElementById('climaMano').value) || 0;
+
+            if (metros <= 0 || manoObra <= 0) return alert('Completa metros de cañería y mano de obra.');
+
+            let cañoAlta = "1/4\"";
+            let cañoBaja = aireSeleccionado === '6000' ? "1/2\" o 5/8\"" : "3/8\"";
+            let cableTaller = "4 x 1.5 mm²";
+
+            ultimoClimaTexto = `❄️ *PRESUPUESTO INSTALACIÓN AIRE*\n👤 *Cliente:* ${cliente}\n⚡ *Equipo:* ${aireSeleccionado} Frigorías\n--------------------------------\n📦 *Materiales (${metros} mts):*\n• Caño de Cobre Alta (${cañoAlta}): ${metros} mts\n• Caño de Cobre Baja (${cañoBaja}): ${metros} mts\n• Aislatubo / Aislación: ${metros} mts\n• Cable Taller Interconexión: ${metros + 1} mts\n• Manguera Desagüe Cristal: ${metros + 1} mts\n• Juego de Ménsulas y Tacos Goma\n--------------------------------\n💰 *Instalación Completa:* $${manoObra.toLocaleString()}`;
+
+            const resDiv = document.getElementById('resultadoClima');
+            resDiv.style.display = 'block';
+            resDiv.innerText = ultimoClimaTexto;
+            document.getElementById('accionesClima').style.display = 'flex';
+        }
+
         function enviarWhatsApp() {
             if (ultimoPresupuestoTexto) window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(ultimoPresupuestoTexto)}`, '_blank');
+        }
+
+        function enviarWhatsAppClima() {
+            if (ultimoClimaTexto) window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(ultimoClimaTexto)}`, '_blank');
         }
 
         function enviarReciboWhatsApp() {
@@ -305,7 +365,7 @@
             const lista = document.getElementById('listaStock');
             lista.innerHTML = stock.length === 0 ? '<small style="color:var(--text-muted)">No hay stock registrado.</small>' : '';
             stock.forEach((s, idx) => {
-                lista.innerHTML += `<div class="item-row"><span>📦 ${s.nombre} (<strong>${s.cantidad}</strong>)</span><button class="btn-danger-soft" onclick="eliminarStock(${idx})">🗑️ Borrar</button></div>`;
+                lista.innerHTML += `<div class="item-row"><span>📦 ${s.nombre} (<strong>${s.cantidad}</strong>)</span><button class="btn-danger-soft" onclick="eliminarStock(${idx})">🗑️</button></div>`;
             });
         }
 
