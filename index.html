@@ -122,8 +122,8 @@
                 <input type="number" id="m2PorCaja" placeholder="Ej: 1.44" value="1.44">
             </div>
 
-            <label>Mano de Obra Total o por M² ($)</label>
-            <input type="number" id="valorMano" placeholder="Ej: 450000 (Total mano de obra)">
+            <label>Mano de Obra Total (Opcional) ($)</label>
+            <input type="number" id="valorMano" placeholder="Ej: 450000 (Dejar en blanco si no se cotiza)">
 
             <button class="btn btn-primary" style="margin-top: 16px;" onclick="calcularPresupuesto()">🚀 Calcular Cómputo</button>
 
@@ -157,8 +157,8 @@
                 <input type="number" id="hormigonCantidad" placeholder="Ej: 10">
             </div>
 
-            <label id="lblManoObraTexto">Mano de Obra Total ($)</label>
-            <input type="number" id="hormigonMano" placeholder="Ej: 350000">
+            <label id="lblManoObraTexto">Mano de Obra Total (Opcional) ($)</label>
+            <input type="number" id="hormigonMano" placeholder="Ej: 350000 (Dejar en blanco si no se cotiza)">
 
             <button class="btn btn-primary" style="margin-top: 16px;" onclick="calcularHormigon()">🚀 Calcular Estructura</button>
 
@@ -208,8 +208,8 @@
             <label>Metros de Cañería Estimados</label>
             <input type="number" id="climaMetros" placeholder="Ej: 3 (metros)" value="3">
 
-            <label>Mano de Obra Total de Instalación ($)</label>
-            <input type="number" id="climaMano" placeholder="Ej: 75000">
+            <label>Mano de Obra Total de Instalación (Opcional) ($)</label>
+            <input type="number" id="climaMano" placeholder="Ej: 75000 (Dejar en blanco si no se cotiza)">
 
             <label>3. Protocolo de Calidad / Checklist Técnico</label>
             <div class="checklist-group">
@@ -433,7 +433,7 @@
             const superficie = parseFloat(document.getElementById('superficie').value) || 0;
             const manoObraTotal = parseFloat(document.getElementById('valorMano').value) || 0;
             
-            if (superficie <= 0 || manoObraTotal <= 0) return alert('Completa superficie y mano de obra.');
+            if (superficie <= 0) return alert('Completa la superficie real en M².');
 
             let matTexto = "";
             let nombreTrabajoReadable = "";
@@ -465,7 +465,9 @@
                 matTexto = `• Superficie con 10% corte: ${m2ConDesperdicio.toFixed(2)} M²\n• 📦 Cajas de Porcelanato: ${totalCajas} cajas\n• Pegamento: ${Math.ceil(superficie * 0.30)} bolsas\n• Pastina: ${(superficie * 0.35).toFixed(1)} kg`;
             }
 
-            ultimoPresupuestoTexto = `🏗️ *PRESUPUESTO - OBRAS PRO*\n👤 *Cliente:* ${cliente}\n📐 *Trabajo:* ${nombreTrabajoReadable} (${superficie} M²)\n--------------------------------\n📦 *Materiales Estimados:*\n${matTexto}\n--------------------------------\n💰 *Mano de Obra Total:* $${manoObraTotal.toLocaleString()}`;
+            let textoManoObra = manoObraTotal > 0 ? `\n--------------------------------\n💰 *Mano de Obra Total:* $${manoObraTotal.toLocaleString()}` : "";
+
+            ultimoPresupuestoTexto = `🏗️ *PRESUPUESTO - OBRAS PRO*\n👤 *Cliente:* ${cliente}\n📐 *Trabajo:* ${nombreTrabajoReadable} (${superficie} M²)\n--------------------------------\n📦 *Materiales Estimados:*\n${matTexto}${textoManoObra}`;
             
             const resDiv = document.getElementById('resultado');
             resDiv.style.display = 'block';
@@ -479,7 +481,7 @@
             const cantidadInput = parseFloat(document.getElementById('hormigonCantidad').value) || 0;
             const manoObraTotal = parseFloat(document.getElementById('hormigonMano').value) || 0;
             
-            if (cantidadInput <= 0 || manoObraTotal <= 0) return alert('Completa la cantidad y la mano de obra total.');
+            if (cantidadInput <= 0) return alert('Completa la cantidad de unidades o el volumen en M³.');
 
             let nombreEstructura = "";
             let matTexto = "";
@@ -532,7 +534,9 @@
                 matTexto = `• Cemento H21/H17: ${bolsasCemento} bolsas\n• Arena gruesa: ${arenaM3} m³\n• Piedra partida: ${piedraM3} m³\n${hierroTxt}`;
             }
 
-            ultimoHormigonTexto = `🏛️ *ESTRUCTURA DE HORMIGÓN*\n👤 *Cliente:* ${cliente}\n📐 *Elemento:* ${nombreEstructura}\n--------------------------------\n📦 *Materiales Estimados:*\n${matTexto}\n--------------------------------\n💰 *Mano de Obra Total:* $${manoObraTotal.toLocaleString()}`;
+            let textoManoObra = manoObraTotal > 0 ? `\n--------------------------------\n💰 *Mano de Obra Total:* $${manoObraTotal.toLocaleString()}` : "";
+
+            ultimoHormigonTexto = `🏛️ *ESTRUCTURA DE HORMIGÓN*\n👤 *Cliente:* ${cliente}\n📐 *Elemento:* ${nombreEstructura}\n--------------------------------\n📦 *Materiales Estimados:*\n${matTexto}${textoManoObra}`;
             
             const resDiv = document.getElementById('resultadoHormigon');
             resDiv.style.display = 'block';
@@ -556,7 +560,7 @@
             const tipoGas = document.getElementById('tipoGas').value;
             const tec = document.getElementById('tipoTecnologia').value;
 
-            if (metros <= 0 || manoObraTotal <= 0) return alert('Completa metros de cañería y mano de obra total.');
+            if (metros <= 0) return alert('Completa los metros de cañería.');
 
             let sugerenciaFrigorias = "";
             if (largo > 0 && ancho > 0) {
@@ -575,13 +579,14 @@
 
             let checksTxt = "\n--------------------------------\n📋 *Garantía de Calidad Aplicada:*";
             if (document.getElementById('chkNitr').checked) checksTxt += "\n• ✔️ Hermeticidad probada con Nitrógeno";
-            if (document.getElementById('chkVacio').checked) checksTxt += "\n• ✔️ Vacío técnico con Bomba y Vacuómetro";
+            if (document.getElementById('chkVacio').checked) checksTxt += "\n• ✔️ Vacío técnico con bomba y vacuómetro";
             if (document.getElementById('chkElect').checked) checksTxt += "\n• ✔️ Verificación de circuito y térmica";
             if (document.getElementById('chkAmp').checked) checksTxt += "\n• ✔️ Consumo de Amperaje medido en régimen";
 
             let advInverter = tec === 'Inverter' ? "\n⚡ *Nota Técnica:* Equipo Inverter (Se sugiere protector de tensión de red)." : "";
+            let textoManoObra = manoObraTotal > 0 ? `\n--------------------------------\n💰 *Instalación Profesional:* $${manoObraTotal.toLocaleString()}` : "";
 
-            ultimoClimaTexto = `❄️ *PRESUPUESTO DE CLIMATIZACIÓN*\n👤 *Cliente:* ${cliente}${sugerenciaFrigorias}\n⚡ *Equipo:* ${aireSeleccionado} Frig. - ${tec} (${tipoGas})\n--------------------------------\n📦 *Materiales y Cómputo (${metros} mts):*\n• Caño Cobre Alta (${cañoAlta}): ${metros} mts\n• Caño Cobre Baja (${cañoBaja}): ${metros} mts\n• Aislatubo térmico: ${metros} mts\n• Cable Taller interconexión: ${metros + 1} mts\n• Manguera desagüe cristal: ${metros + 1} mts\n• Ménsulas reforzadas y tacos antivibratorios${textoGasExtra}${checksTxt}\n--------------------------------\n🔌 *Recomendación Eléctrica:* Térmica ${termicaRecomendada}${advInverter}\n--------------------------------\n💰 *Instalación Profesional:* $${manoObraTotal.toLocaleString()}`;
+            ultimoClimaTexto = `❄️ *PRESUPUESTO DE CLIMATIZACIÓN*\n👤 *Cliente:* ${cliente}${sugerenciaFrigorias}\n⚡ *Equipo:* ${aireSeleccionado} Frig. - ${tec} (${tipoGas})\n--------------------------------\n📦 *Materiales y Cómputo (${metros} mts):*\n• Caño Cobre Alta (${cañoAlta}): ${metros} mts\n• Caño Cobre Baja (${cañoBaja}): ${metros} mts\n• Aislatubo térmico: ${metros} mts\n• Cable Taller interconexión: ${metros + 1} mts\n• Manguera desagüe cristal: ${metros + 1} mts\n• Ménsulas reforzadas y tacos antivibratorios${textoGasExtra}${checksTxt}\n--------------------------------\n🔌 *Recomendación Eléctrica:* Térmica ${termicaRecomendada}${advInverter}${textoManoObra}`;
 
             const resDiv = document.getElementById('resultadoClima');
             resDiv.style.display = 'block';
@@ -738,7 +743,7 @@
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js?v=6').then((registration) => {
+                navigator.serviceWorker.register('sw.js?v=7').then((registration) => {
                     registration.update();
                     registration.onupdatefound = () => {
                         const installingWorker = registration.installing;
