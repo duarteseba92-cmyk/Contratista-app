@@ -40,7 +40,7 @@
         .btn-primary { background: var(--accent); color: #000; }
         .btn-whatsapp { background: #25D366; color: white; }
         
-        .resumen-box { background: var(--bg-main); border-left: 4px solid var(--accent); padding: 10px; margin-top: 10px; font-size: 0.8rem; border-radius: 4px; line-height: 1.4; }
+        .resumen-box { background: var(--bg-main); border-left: 4px solid var(--accent); padding: 10px; margin-top: 10px; font-size: 0.8rem; border-radius: 4px; line-height: 1.4; white-space: pre-line; }
         .item-list { margin-top: 8px; }
         .item-row { display: flex; justify-content: space-between; align-items: center; background: var(--bg-main); padding: 8px 10px; border-radius: 6px; margin-bottom: 5px; font-size: 0.8rem; border: 1px solid var(--border); }
         .balance-total { font-size: 1rem; font-weight: bold; text-align: center; padding: 8px; background: var(--bg-main); border-radius: 6px; margin-bottom: 8px; color: var(--success); }
@@ -66,22 +66,33 @@
     <!-- 1. COTIZADOR POR ETAPAS -->
     <div id="presupuesto" class="section active">
         <div class="card">
-            <h2>Presupuesto por Etapas y M²</h2>
+            <h2>Presupuesto y Cómputo por Etapas</h2>
             <label>Cliente / Obra</label>
             <input type="text" id="cliente" placeholder="Ej: Roberto Gomez">
 
             <label>Etapa o Tipo de Trabajo</label>
             <select id="tipoTrabajo">
-                <option value="cimiento">Cimientos / Excavación (M²)</option>
-                <option value="pared">Elevación de Paredes (M²)</option>
-                <option value="revoque">Revoques Fino / Grueso (M²)</option>
-                <option value="techo">Techado / Losas (M²)</option>
+                <optgroup label="── MAMPOSERÍA Y PAREDES ──">
+                    <option value="pared_hueco_12">Pared Ladrillo Hueco 12x18x33 (M²)</option>
+                    <option value="pared_hueco_18">Pared Ladrillo Hueco 18x18x33 (M²)</option>
+                    <option value="pared_comun">Pared Ladrillo Común 15 cm (M²)</option>
+                </optgroup>
+                <optgroup label="── REVOQUES Y FINOS ──">
+                    <option value="revoque_azotado">Azotado Impermeable / Cerezita (M²)</option>
+                    <option value="revoque_grueso">Revoque Grueso (M²)</option>
+                    <option value="revoque_fino">Revoque Fino / Enlucido (M²)</option>
+                </optgroup>
+                <optgroup label="── PISOS Y ESTRUCTURAS ──">
+                    <option value="cimiento">Cimientos / Encadenado (M³)</option>
+                    <option value="contrapiso">Contrapiso con Cascote (M²)</option>
+                    <option value="porcelanato">Colocación Porcelanato / Cerámica (M²)</option>
+                </optgroup>
             </select>
 
-            <label>Superficie (M²)</label>
-            <input type="number" id="superficie" placeholder="Ej: 50">
+            <label>Superficie (M² o M³)</label>
+            <input type="number" id="superficie" placeholder="Ej: 40">
 
-            <label>Mano de Obra por M² ($)</label>
+            <label>Mano de Obra por M² o Unidad ($)</label>
             <input type="number" id="valorMano" placeholder="Ej: 9000">
 
             <button class="btn btn-primary" onclick="calcularPresupuesto()">⚙️ Calcular Cómputo</button>
@@ -201,17 +212,28 @@
             let matTexto = "";
             let manoObraTotal = superficie * valorMano;
 
-            if (tipo === 'pared') {
-                matTexto = `• Ladrillos: ${Math.round(superficie * 90)} un.\n• Cemento: ${Math.ceil(superficie * 0.35)} bolsas\n• Arena: ${(superficie * 0.08).toFixed(2)} m³`;
-            } else if (tipo === 'revoque') {
-                matTexto = `• Cemento: ${Math.ceil(superficie * 0.15)} bolsas\n• Cal: ${Math.ceil(superficie * 0.25)} bolsas\n• Arena: ${(superficie * 0.05).toFixed(2)} m³`;
-            } else if (tipo === 'cimiento') {
-                matTexto = `• Hormigón / Cascote: ${(superficie * 0.2).toFixed(2)} m³\n• Cemento: ${Math.ceil(superficie * 0.4)} bolsas`;
+            if (tipo === 'pared_hueco_12') {
+                matTexto = `• Ladrillos Huecos (12x18x33): ${Math.round(superficie * 16)} un.\n• Cemento: ${Math.ceil(superficie * 0.25)} bolsas\n• Cal: ${Math.ceil(superficie * 0.35)} bolsas\n• Arena: ${(superficie * 0.04).toFixed(2)} m³`;
+            } else if (tipo === 'pared_hueco_18') {
+                matTexto = `• Ladrillos Huecos (18x18x33): ${Math.round(superficie * 16)} un.\n• Cemento: ${Math.ceil(superficie * 0.35)} bolsas\n• Cal: ${Math.ceil(superficie * 0.5)} bolsas\n• Arena: ${(superficie * 0.06).toFixed(2)} m³`;
+            } else if (tipo === 'pared_comun') {
+                matTexto = `• Ladrillos Comunes: ${Math.round(superficie * 90)} un.\n• Cemento: ${Math.ceil(superficie * 0.4)} bolsas\n• Cal: ${Math.ceil(superficie * 0.6)} bolsas\n• Arena: ${(superficie * 0.08).toFixed(2)} m³`;
+            } else if (tipo === 'revoque_azotado') {
+                matTexto = `• Cemento: ${Math.ceil(superficie * 0.12)} bolsas\n• Hidrófugo: ${(superficie * 0.5).toFixed(1)} kg\n• Arena Fina: ${(superficie * 0.02).toFixed(2)} m³`;
+            } else if (tipo === 'revoque_grueso') {
+                matTexto = `• Cemento: ${Math.ceil(superficie * 0.1)} bolsas\n• Cal: ${Math.ceil(superficie * 0.25)} bolsas\n• Arena: ${(superficie * 0.03).toFixed(2)} m³`;
+            } else if (tipo === 'revoque_fino') {
+                matTexto = `• Cal Fina: ${Math.ceil(superficie * 0.2)} bolsas\n• Cemento: ${Math.ceil(superficie * 0.03)} bolsas\n• Arena Fina: ${(superficie * 0.015).toFixed(2)} m³`;
+            } else if (tipo === 'contrapiso') {
+                matTexto = `• Cemento: ${Math.ceil(superficie * 0.2)} bolsas\n• Cal: ${Math.ceil(superficie * 0.3)} bolsas\n• Cascote: ${(superficie * 0.09).toFixed(2)} m³\n• Arena: ${(superficie * 0.05).toFixed(2)} m³`;
+            } else if (tipo === 'porcelanato') {
+                matTexto = `• Pegamento: ${Math.ceil(superficie * 0.25)} bolsas\n• Pastina: ${(superficie * 0.3).toFixed(1)} kg`;
             } else {
-                matTexto = `• Materiales de losa / viguetas según plano`;
+                matTexto = `• Cemento y áridos según dosificación de cimientos.`;
             }
 
-            ultimoPresupuestoTexto = `🏗️ *PRESUPUESTO - OBRAS PRO*\n👤 *Cliente:* ${cliente}\n📐 *Etapa:* ${tipo.toUpperCase()} (${superficie} M²)\n--------------------------------\n📦 *Materiales Estimados:*\n${matTexto}\n--------------------------------\n💰 *Mano de Obra Total:* $${manoObraTotal.toLocaleString()}`;
+            ultimoPresupuestoTexto = `🏗️ *PRESUPUESTO - OBRAS PRO*\n👤 *Cliente:* ${cliente}\n📐 *Trabajo:* ${tipo.replaceAll('_', ' ').toUpperCase()} (${superficie} M²)\n--------------------------------\n📦 *Materiales Estimados:*\n${matTexto}\n--------------------------------\n💰 *Mano de Obra Total:* $${manoObraTotal.toLocaleString()}`;
+            
             const resDiv = document.getElementById('resultado');
             resDiv.style.display = 'block';
             resDiv.innerText = ultimoPresupuestoTexto;
@@ -313,7 +335,6 @@
         function renderAgenda() {
             const lista = document.getElementById('listaAgenda');
             lista.innerHTML = '';
-            agenda.agenda = agenda || [];
             agenda.forEach(a => {
                 lista.innerHTML += `<div class="item-row" style="flex-direction:column; align-items:flex-start;"><strong>👤 ${a.nombre} ${a.tel ? '- 📞 ' + a.tel : ''}</strong><small style="color:var(--text-muted);">${a.notas}</small></div>`;
             });
