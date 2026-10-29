@@ -3,104 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Obras Pro</title>
+    <title>ObrasPro Total - Gestión Profesional</title>
     <meta name="theme-color" content="#0f172a">
     <link rel="manifest" href="manifest.json">
     <style>
         :root {
-            --bg-main: #0f172a;
-            --bg-card: #1e293b;
+            --bg-main: #090d16;
+            --bg-card: #131c31;
+            --bg-input: #1b2642;
             --accent: #f59e0b;
             --accent-hover: #d97706;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --success: #10b981;
             --danger: #ef4444;
-            --border: #334155;
+            --border: #2a3a5e;
         }
-        body { font-family: system-ui, -apple-system, sans-serif; background-color: var(--bg-main); color: var(--text-main); margin: 0; padding: 10px; }
-        header { text-align: center; margin-bottom: 10px; }
-        h1 { color: var(--accent); font-size: 1.2rem; margin: 4px 0; }
-        p.subtitle { color: var(--text-muted); font-size: 0.75rem; margin: 0; }
+        body { font-family: system-ui, -apple-system, sans-serif; background-color: var(--bg-main); color: var(--text-main); margin: 0; padding: 12px; }
         
-        .tabs { display: flex; gap: 2px; margin-bottom: 12px; background: var(--bg-card); padding: 3px; border-radius: 8px; overflow-x: auto; }
-        .tab-btn { flex: 1; min-width: 65px; padding: 8px 3px; background: none; border: none; color: var(--text-muted); font-weight: bold; border-radius: 6px; cursor: pointer; font-size: 0.65rem; text-align: center; white-space: nowrap; }
-        .tab-btn.active { background: var(--accent); color: #000; }
+        header { text-align: center; margin-bottom: 14px; padding: 10px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3); }
+        h1 { color: var(--accent); font-size: 1.3rem; margin: 2px 0; font-weight: 800; letter-spacing: 0.5px; }
+        p.subtitle { color: var(--text-muted); font-size: 0.75rem; margin: 0; text-transform: uppercase; letter-spacing: 1px; }
         
-        .section { display: none; }
+        .tabs { display: flex; gap: 4px; margin-bottom: 14px; background: var(--bg-card); padding: 4px; border-radius: 10px; border: 1px solid var(--border); overflow-x: auto; }
+        .tab-btn { flex: 1; min-width: 65px; padding: 10px 4px; background: none; border: none; color: var(--text-muted); font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 0.7rem; text-align: center; white-space: nowrap; transition: all 0.2s ease; }
+        .tab-btn.active { background: var(--accent); color: #000; box-shadow: 0 2px 4px rgba(245, 158, 11, 0.4); }
+        
+        .section { display: none; animation: fadeIn 0.3s ease; }
         .section.active { display: block; }
-        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 12px; margin-bottom: 12px; }
-        h2 { font-size: 1rem; margin-top: 0; color: var(--accent); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 14px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.2); }
+        h2 { font-size: 1.05rem; margin-top: 0; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 8px; display: flex; align-items: center; gap: 6px; }
         
-        label { display: block; margin-top: 6px; color: var(--text-muted); font-size: 0.75rem; }
-        input, select, textarea { width: 100%; padding: 8px; margin-top: 3px; background: var(--bg-main); border: 1px solid var(--border); color: var(--text-main); border-radius: 6px; box-sizing: border-box; font-size: 0.85rem; }
+        label { display: block; margin-top: 10px; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+        input, select, textarea { width: 100%; padding: 10px; margin-top: 4px; background: var(--bg-input); border: 1px solid var(--border); color: var(--text-main); border-radius: 8px; box-sizing: border-box; font-size: 0.9rem; outline: none; transition: border-color 0.2s; }
+        input:focus, select:focus, textarea:focus { border-color: var(--accent); }
         
-        .btn-group { display: flex; gap: 6px; margin-top: 10px; }
-        button.btn { width: 100%; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; font-size: 0.8rem; }
+        .btn-group { display: flex; gap: 8px; margin-top: 14px; }
+        button.btn { width: 100%; padding: 12px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; font-size: 0.85rem; transition: filter 0.2s; display: flex; justify-content: center; align-items: center; gap: 6px; }
+        button.btn:active { transform: scale(0.98); }
         .btn-primary { background: var(--accent); color: #000; }
-        .btn-whatsapp { background: #25D366; color: white; }
+        .btn-whatsapp { background: #10b981; color: white; }
+        .btn-danger-soft { background: rgba(239, 68, 68, 0.15); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.3); padding: 4px 8px; font-size: 0.75rem; border-radius: 6px; }
         
-        .resumen-box { background: var(--bg-main); border-left: 4px solid var(--accent); padding: 10px; margin-top: 10px; font-size: 0.8rem; border-radius: 4px; line-height: 1.4; white-space: pre-line; }
-        .item-list { margin-top: 8px; }
-        .item-row { display: flex; justify-content: space-between; align-items: center; background: var(--bg-main); padding: 8px 10px; border-radius: 6px; margin-bottom: 5px; font-size: 0.8rem; border: 1px solid var(--border); }
-        .balance-total { font-size: 1rem; font-weight: bold; text-align: center; padding: 8px; background: var(--bg-main); border-radius: 6px; margin-bottom: 8px; color: var(--success); }
+        .resumen-box { background: var(--bg-input); border-left: 4px solid var(--accent); padding: 12px; margin-top: 14px; font-size: 0.85rem; border-radius: 6px; line-height: 1.5; white-space: pre-line; }
+        .item-list { margin-top: 10px; display: flex; flex-direction: column; gap: 6px; }
+        .item-row { display: flex; justify-content: space-between; align-items: center; background: var(--bg-input); padding: 10px 12px; border-radius: 8px; font-size: 0.85rem; border: 1px solid var(--border); }
+        .balance-total { font-size: 1.2rem; font-weight: 800; text-align: center; padding: 12px; background: var(--bg-input); border-radius: 8px; margin-bottom: 12px; border: 1px solid var(--border); color: var(--success); }
     </style>
 </head>
 <body>
 
     <header>
         <h1>🏗️ ObrasPro Total</h1>
-        <p class="subtitle">Sistema Integral para Contratistas</p>
+        <p class="subtitle">Gestión Integral Profesional</p>
     </header>
 
     <!-- Pestañas de Navegación -->
     <div class="tabs">
         <button class="tab-btn active" onclick="cambiarTab('presupuesto', this)">📋 Cotizar</button>
-        <button class="tab-btn" onclick="cambiarTab('recibos', this)">📄 Recibo</button>
+        <button class="tab-btn" onclick="cambiarTab('recibos', this)">📄 Recibos</button>
         <button class="tab-btn" onclick="cambiarTab('stock', this)">📦 Stock</button>
         <button class="tab-btn" onclick="cambiarTab('finanzas', this)">💰 Finanzas</button>
         <button class="tab-btn" onclick="cambiarTab('personal', this)">👷 Personal</button>
         <button class="tab-btn" onclick="cambiarTab('agenda', this)">📇 Agenda</button>
     </div>
 
-    <!-- 1. COTIZADOR POR ETAPAS -->
+    <!-- 1. COTIZADOR -->
     <div id="presupuesto" class="section active">
         <div class="card">
-            <h2>Presupuesto y Cómputo por Etapas</h2>
+            <h2>⚙️ Cómputo y Presupuesto</h2>
             <label>Cliente / Obra</label>
             <input type="text" id="cliente" placeholder="Ej: Roberto Gomez">
 
             <label>Etapa o Tipo de Trabajo</label>
             <select id="tipoTrabajo">
-                <optgroup label="── MAMPOSERÍA Y PAREDES ──">
+                <optgroup label="── MAMPOSERÍA ──">
                     <option value="pared_hueco_12">Pared Ladrillo Hueco 12x18x33 (M²)</option>
                     <option value="pared_hueco_18">Pared Ladrillo Hueco 18x18x33 (M²)</option>
                     <option value="pared_comun">Pared Ladrillo Común 15 cm (M²)</option>
                 </optgroup>
-                <optgroup label="── REVOQUES Y FINOS ──">
+                <optgroup label="── REVOQUES ──">
                     <option value="revoque_azotado">Azotado Impermeable / Cerezita (M²)</option>
                     <option value="revoque_grueso">Revoque Grueso (M²)</option>
                     <option value="revoque_fino">Revoque Fino / Enlucido (M²)</option>
                 </optgroup>
-                <optgroup label="── PISOS Y ESTRUCTURAS ──">
-                    <option value="cimiento">Cimientos / Encadenado (M³)</option>
+                <optgroup label="── PISOS Y SUELOS ──">
                     <option value="contrapiso">Contrapiso con Cascote (M²)</option>
                     <option value="porcelanato">Colocación Porcelanato / Cerámica (M²)</option>
                 </optgroup>
             </select>
 
-            <label>Superficie (M² o M³)</label>
-            <input type="number" id="superficie" placeholder="Ej: 40">
+            <label>Superficie (M²)</label>
+            <input type="number" id="superficie" placeholder="Ej: 45">
 
-            <label>Mano de Obra por M² o Unidad ($)</label>
-            <input type="number" id="valorMano" placeholder="Ej: 9000">
+            <label>Mano de Obra por M² ($)</label>
+            <input type="number" id="valorMano" placeholder="Ej: 9500">
 
-            <button class="btn btn-primary" onclick="calcularPresupuesto()">⚙️ Calcular Cómputo</button>
+            <button class="btn btn-primary" onclick="calcularPresupuesto()">🚀 Calcular Cómputo</button>
 
             <div id="resultado" class="resumen-box" style="display:none;"></div>
             
             <div id="accionesPresupuesto" class="btn-group" style="display:none;">
-                <button class="btn btn-whatsapp" onclick="enviarWhatsApp()">📲 Enviar Presupuesto</button>
+                <button class="btn btn-whatsapp" onclick="enviarWhatsApp()">📲 Enviar por WhatsApp</button>
             </div>
         </div>
     </div>
@@ -108,29 +114,29 @@
     <!-- 2. RECIBOS -->
     <div id="recibos" class="section">
         <div class="card">
-            <h2>Generar Recibo de Pago</h2>
+            <h2>📄 Emitir Recibo de Pago</h2>
             <label>Cliente</label>
             <input type="text" id="recCliente" placeholder="Ej: Juan Perez">
             <label>Concepto</label>
             <input type="text" id="recConcepto" placeholder="Ej: Seña inicial de materiales">
             <label>Monto ($)</label>
-            <input type="number" id="recMonto" placeholder="Ej: 60000">
+            <input type="number" id="recMonto" placeholder="Ej: 75000">
             <button class="btn btn-whatsapp" onclick="enviarReciboWhatsApp()">📲 Enviar Recibo WhatsApp</button>
         </div>
     </div>
 
-    <!-- 3. CONTROL DE STOCK -->
+    <!-- 3. STOCK -->
     <div id="stock" class="section">
         <div class="card">
-            <h2>Registrar Ingreso de Materiales</h2>
-            <label>Material (Cemento, Ladrillos, Arena)</label>
-            <input type="text" id="stNombre" placeholder="Ej: Bolsas de Cemento Loma Negra">
-            <label>Cantidad Comprada</label>
-            <input type="number" id="stCantidad" placeholder="Ej: 50">
-            <button class="btn btn-primary" onclick="agregarStock()">➕ Añadir al Pañol</button>
+            <h2>📦 Control de Pañol / Stock</h2>
+            <label>Material</label>
+            <input type="text" id="stNombre" placeholder="Ej: Cemento Loma Negra">
+            <label>Cantidad</label>
+            <input type="number" id="stCantidad" placeholder="Ej: 40">
+            <button class="btn btn-primary" onclick="agregarStock()">➕ Añadir Material</button>
         </div>
         <div class="card">
-            <h2>Estado del Pañol / Stock</h2>
+            <h2>Inventario Actual</h2>
             <div id="listaStock" class="item-list"></div>
         </div>
     </div>
@@ -138,11 +144,11 @@
     <!-- 4. FINANZAS -->
     <div id="finanzas" class="section">
         <div class="card">
-            <h2>Gastos y Cobros</h2>
+            <h2>💰 Caja y Movimientos</h2>
             <label>Concepto</label>
-            <input type="text" id="finConcepto" placeholder="Ej: Compra de hierros">
+            <input type="text" id="finConcepto" placeholder="Ej: Compra de hierros / Seña">
             <label>Monto ($)</label>
-            <input type="number" id="finMonto" placeholder="Ej: 120000">
+            <input type="number" id="finMonto" placeholder="Ej: 150000">
             <label>Tipo</label>
             <select id="finTipo">
                 <option value="gasto">🔻 Gasto</option>
@@ -160,8 +166,8 @@
     <!-- 5. PERSONAL -->
     <div id="personal" class="section">
         <div class="card">
-            <h2>Jornales de Personal</h2>
-            <label>Nombre del Trabajador</label>
+            <h2>👷 Jornales de Personal</h2>
+            <label>Trabajador</label>
             <input type="text" id="nombrePersonal" placeholder="Ej: Carlos Gomez">
             <label>Jornal Diario ($)</label>
             <input type="number" id="jornalPersonal" placeholder="Ej: 22000">
@@ -178,13 +184,13 @@
     <!-- 6. AGENDA -->
     <div id="agenda" class="section">
         <div class="card">
-            <h2>Agenda y Corralones</h2>
-            <label>Nombre</label>
+            <h2>📇 Agenda de Proveedores</h2>
+            <label>Nombre / Corralón</label>
             <input type="text" id="agNombre" placeholder="Ej: Corralón Central">
             <label>Teléfono</label>
             <input type="tel" id="agTelefono" placeholder="Ej: 3624...">
             <label>Notas / Precios</label>
-            <textarea id="agNotas" rows="2" placeholder="Presupuestos y referencias"></textarea>
+            <textarea id="agNotas" rows="2" placeholder="Referencias de precios"></textarea>
             <button class="btn btn-primary" onclick="agregarContacto()">Guardar Contacto</button>
         </div>
         <div class="card">
@@ -226,10 +232,8 @@
                 matTexto = `• Cal Fina: ${Math.ceil(superficie * 0.2)} bolsas\n• Cemento: ${Math.ceil(superficie * 0.03)} bolsas\n• Arena Fina: ${(superficie * 0.015).toFixed(2)} m³`;
             } else if (tipo === 'contrapiso') {
                 matTexto = `• Cemento: ${Math.ceil(superficie * 0.2)} bolsas\n• Cal: ${Math.ceil(superficie * 0.3)} bolsas\n• Cascote: ${(superficie * 0.09).toFixed(2)} m³\n• Arena: ${(superficie * 0.05).toFixed(2)} m³`;
-            } else if (tipo === 'porcelanato') {
-                matTexto = `• Pegamento: ${Math.ceil(superficie * 0.25)} bolsas\n• Pastina: ${(superficie * 0.3).toFixed(1)} kg`;
             } else {
-                matTexto = `• Cemento y áridos según dosificación de cimientos.`;
+                matTexto = `• Pegamento: ${Math.ceil(superficie * 0.25)} bolsas\n• Pastina: ${(superficie * 0.3).toFixed(1)} kg`;
             }
 
             ultimoPresupuestoTexto = `🏗️ *PRESUPUESTO - OBRAS PRO*\n👤 *Cliente:* ${cliente}\n📐 *Trabajo:* ${tipo.replaceAll('_', ' ').toUpperCase()} (${superficie} M²)\n--------------------------------\n📦 *Materiales Estimados:*\n${matTexto}\n--------------------------------\n💰 *Mano de Obra Total:* $${manoObraTotal.toLocaleString()}`;
@@ -264,11 +268,16 @@
             document.getElementById('stCantidad').value = '';
             renderStock();
         }
+        function eliminarStock(idx) {
+            stock.splice(idx, 1);
+            localStorage.setItem('obras_stock', JSON.stringify(stock));
+            renderStock();
+        }
         function renderStock() {
             const lista = document.getElementById('listaStock');
-            lista.innerHTML = '';
-            stock.forEach(s => {
-                lista.innerHTML += `<div class="item-row"><span>📦 ${s.nombre}</span><strong>Stock: ${s.cantidad}</strong></div>`;
+            lista.innerHTML = stock.length === 0 ? '<small style="color:var(--text-muted)">No hay stock registrado.</small>' : '';
+            stock.forEach((s, idx) => {
+                lista.innerHTML += `<div class="item-row"><span>📦 ${s.nombre} (<strong>${s.cantidad}</strong>)</span><button class="btn-danger-soft" onclick="eliminarStock(${idx})">🗑️ Borrar</button></div>`;
             });
         }
 
@@ -284,14 +293,19 @@
             document.getElementById('finMonto').value = '';
             renderFinanzas();
         }
+        function eliminarMovimiento(idx) {
+            movimientos.splice(idx, 1);
+            localStorage.setItem('obras_movs', JSON.stringify(movimientos));
+            renderFinanzas();
+        }
         function renderFinanzas() {
             const lista = document.getElementById('listaMovimientos');
-            lista.innerHTML = '';
+            lista.innerHTML = movimientos.length === 0 ? '<small style="color:var(--text-muted)">Sin movimientos registrados.</small>' : '';
             let total = 0;
-            movimientos.forEach(m => {
+            movimientos.forEach((m, idx) => {
                 if (m.tipo === 'ingreso') total += m.monto;
                 else total -= m.monto;
-                lista.innerHTML += `<div class="item-row"><span>${m.tipo === 'ingreso' ? '🟢' : '🔻'} ${m.conc}</span><strong>$${m.monto.toLocaleString()}</strong></div>`;
+                lista.innerHTML += `<div class="item-row"><span>${m.tipo === 'ingreso' ? '🟢' : '🔻'} ${m.conc}: <strong>$${m.monto.toLocaleString()}</strong></span><button class="btn-danger-soft" onclick="eliminarMovimiento(${idx})">🗑️</button></div>`;
             });
             const bal = document.getElementById('balanceDisplay');
             bal.innerText = `Ganancia Neta: $${total.toLocaleString()}`;
@@ -311,11 +325,16 @@
             document.getElementById('diasPersonal').value = '';
             renderPersonal();
         }
+        function eliminarPersonal(idx) {
+            personal.splice(idx, 1);
+            localStorage.setItem('obras_personal', JSON.stringify(personal));
+            renderPersonal();
+        }
         function renderPersonal() {
             const lista = document.getElementById('listaPersonal');
-            lista.innerHTML = '';
-            personal.forEach(p => {
-                lista.innerHTML += `<div class="item-row"><span>👷 ${p.nombre} (${p.dias} días)</span><strong>$${p.total.toLocaleString()}</strong></div>`;
+            lista.innerHTML = personal.length === 0 ? '<small style="color:var(--text-muted)">Sin personal cargado.</small>' : '';
+            personal.forEach((p, idx) => {
+                lista.innerHTML += `<div class="item-row"><span>👷 ${p.nombre} (${p.dias}d) - <strong>$${p.total.toLocaleString()}</strong></span><button class="btn-danger-soft" onclick="eliminarPersonal(${idx})">🗑️</button></div>`;
             });
         }
 
@@ -332,11 +351,16 @@
             document.getElementById('agNotas').value = '';
             renderAgenda();
         }
+        function eliminarAgenda(idx) {
+            agenda.splice(idx, 1);
+            localStorage.setItem('obras_agenda', JSON.stringify(agenda));
+            renderAgenda();
+        }
         function renderAgenda() {
             const lista = document.getElementById('listaAgenda');
-            lista.innerHTML = '';
-            agenda.forEach(a => {
-                lista.innerHTML += `<div class="item-row" style="flex-direction:column; align-items:flex-start;"><strong>👤 ${a.nombre} ${a.tel ? '- 📞 ' + a.tel : ''}</strong><small style="color:var(--text-muted);">${a.notas}</small></div>`;
+            lista.innerHTML = agenda.length === 0 ? '<small style="color:var(--text-muted)">Agenda vacía.</small>' : '';
+            agenda.forEach((a, idx) => {
+                lista.innerHTML += `<div class="item-row" style="flex-direction:row; align-items:flex-start;"><div><strong>👤 ${a.nombre}</strong> ${a.tel ? '- 📞 ' + a.tel : ''}<br><small style="color:var(--text-muted);">${a.notas}</small></div><button class="btn-danger-soft" onclick="eliminarAgenda(${idx})">🗑️</button></div>`;
             });
         }
 
