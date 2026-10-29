@@ -386,29 +386,30 @@
 
             if (trabajoSeleccionado === 'pared_hueco_12') {
                 nombreTrabajoReadable = "Pared Ladrillo Hueco 12 cm";
-                matTexto = `• Ladrillos Huecos (12x18x33): ${Math.round(superficie * 16)} un.\n• Cemento: ${Math.ceil(superficie * 0.25)} bolsas\n• Cal: ${Math.ceil(superficie * 0.35)} bolsas\n• Arena: ${(superficie * 0.04).toFixed(2)} m³`;
+                matTexto = `• Ladrillos Huecos (12x18x33): ${Math.round(superficie * 16)} un.\n• Cemento: ${Math.ceil(superficie * 0.3)} bolsas\n• Cal: ${Math.ceil(superficie * 0.4)} bolsas\n• Arena: ${(superficie * 0.07).toFixed(2)} m³`;
             } else if (trabajoSeleccionado === 'pared_hueco_18') {
                 nombreTrabajoReadable = "Pared Ladrillo Hueco 18 cm";
-                matTexto = `• Ladrillos Huecos (18x18x33): ${Math.round(superficie * 16)} un.\n• Cemento: ${Math.ceil(superficie * 0.35)} bolsas\n• Cal: ${Math.ceil(superficie * 0.5)} bolsas\n• Arena: ${(superficie * 0.06).toFixed(2)} m³`;
+                // Coeficientes mejorados de arena y ligantes para obra segura
+                matTexto = `• Ladrillos Huecos (18x18x33): ${Math.round(superficie * 16)} un.\n• Cemento: ${Math.ceil(superficie * 0.4)} bolsas\n• Cal: ${Math.ceil(superficie * 0.55)} bolsas\n• Arena: ${(superficie * 0.09).toFixed(2)} m³`;
             } else if (trabajoSeleccionado === 'pared_comun') {
                 nombreTrabajoReadable = "Pared Ladrillo Común 15 cm";
-                matTexto = `• Ladrillos Comunes: ${Math.round(superficie * 90)} un.\n• Cemento: ${Math.ceil(superficie * 0.4)} bolsas\n• Cal: ${Math.ceil(superficie * 0.6)} bolsas\n• Arena: ${(superficie * 0.08).toFixed(2)} m³`;
+                matTexto = `• Ladrillos Comunes: ${Math.round(superficie * 90)} un.\n• Cemento: ${Math.ceil(superficie * 0.45)} bolsas\n• Cal: ${Math.ceil(superficie * 0.65)} bolsas\n• Arena: ${(superficie * 0.10).toFixed(2)} m³`;
             } else if (trabajoSeleccionado === 'revoque_grueso') {
                 nombreTrabajoReadable = "Revoque Grueso";
-                matTexto = `• Cemento: ${Math.ceil(superficie * 0.1)} bolsas\n• Cal: ${Math.ceil(superficie * 0.25)} bolsas\n• Arena: ${(superficie * 0.03).toFixed(2)} m³`;
+                matTexto = `• Cemento: ${Math.ceil(superficie * 0.12)} bolsas\n• Cal: ${Math.ceil(superficie * 0.3)} bolsas\n• Arena: ${(superficie * 0.04).toFixed(2)} m³`;
             } else if (trabajoSeleccionado === 'revoque_fino') {
                 nombreTrabajoReadable = "Revoque Fino / Enlucido";
-                matTexto = `• Cal Fina: ${Math.ceil(superficie * 0.2)} bolsas\n• Cemento: ${Math.ceil(superficie * 0.03)} bolsas\n• Arena Fina: ${(superficie * 0.015).toFixed(2)} m³`;
+                matTexto = `• Cal Fina: ${Math.ceil(superficie * 0.25)} bolsas\n• Cemento: ${Math.ceil(superficie * 0.04)} bolsas\n• Arena Fina: ${(superficie * 0.02).toFixed(2)} m³`;
             } else if (trabajoSeleccionado === 'contrapiso') {
                 nombreTrabajoReadable = "Contrapiso con Cascote";
-                matTexto = `• Cemento: ${Math.ceil(superficie * 0.2)} bolsas\n• Cal: ${Math.ceil(superficie * 0.3)} bolsas\n• Cascote: ${(superficie * 0.09).toFixed(2)} m³\n• Arena: ${(superficie * 0.05).toFixed(2)} m³`;
+                matTexto = `• Cemento: ${Math.ceil(superficie * 0.22)} bolsas\n• Cal: ${Math.ceil(superficie * 0.35)} bolsas\n• Cascote: ${(superficie * 0.10).toFixed(2)} m³\n• Arena: ${(superficie * 0.06).toFixed(2)} m³`;
             } else {
                 nombreTrabajoReadable = "Colocación Porcelanato";
                 const m2PorCaja = parseFloat(document.getElementById('m2PorCaja').value) || 1.44;
                 const m2ConDesperdicio = superficie * 1.10; 
                 const totalCajas = Math.ceil(m2ConDesperdicio / m2PorCaja);
                 
-                matTexto = `• Superficie con 10% corte: ${m2ConDesperdicio.toFixed(2)} M²\n• 📦 Cajas de Porcelanato: ${totalCajas} cajas\n• Pegamento: ${Math.ceil(superficie * 0.25)} bolsas\n• Pastina: ${(superficie * 0.3).toFixed(1)} kg`;
+                matTexto = `• Superficie con 10% corte: ${m2ConDesperdicio.toFixed(2)} M²\n• 📦 Cajas de Porcelanato: ${totalCajas} cajas\n• Pegamento: ${Math.ceil(superficie * 0.28)} bolsas\n• Pastina: ${(superficie * 0.35).toFixed(1)} kg`;
             }
 
             ultimoPresupuestoTexto = `🏗️ *PRESUPUESTO - OBRAS PRO*\n👤 *Cliente:* ${cliente}\n📐 *Trabajo:* ${nombreTrabajoReadable} (${superficie} M²)\n--------------------------------\n📦 *Materiales Estimados:*\n${matTexto}\n--------------------------------\n💰 *Mano de Obra Total:* $${manoObraTotal.toLocaleString()}`;
@@ -443,10 +444,10 @@
             let cañoBaja = (aireSeleccionado === '4500' || aireSeleccionado === '6000') ? "1/2\" o 5/8\"" : "3/8\"";
             let termicaRecomendada = (aireSeleccionado === '6000') ? "20A (Cable 4 mm²)" : "10A - 16A (Cable 2.5 mm²)";
 
-            // Cómputo de gas refrigerante calculado siempre por metro de cañería
+            // Cómputo de gas progresivo desde el metro 1 en adelante
             let grsPorMetro = (aireSeleccionado === '4500' || aireSeleccionado === '6000') ? 25 : 15;
             let gramosTotales = metros * grsPorMetro;
-            let textoGasExtra = `\n⚠️ *Carga de Gas ${tipoGas}:* +${gramosTotales}g (${metros}m totales de cañería)`;
+            let textoGasExtra = `\n⚠️ *Carga de Gas ${tipoGas}:* ${gramosTotales}g (${metros}m de cañería)`;
 
             // Checklist de calidad seleccionado
             let checksTxt = "\n--------------------------------\n📋 *Garantía de Calidad Aplicada:*";
