@@ -135,25 +135,30 @@
         </div>
     </div>
 
-    <!-- 1.5. ESTRUCTURA DE HORMIGÓN ARMADO -->
+    <!-- 1.5. ESTRUCTURA DE HORMIGÓN ARMADO ACTUALIZADA -->
     <div id="hormigon" class="section">
         <div class="card">
-            <h2>🏛️ Cómputo de Hormigón Armado</h2>
+            <h2>🏛️ Estructura de Hormigón Armado</h2>
             <label>Cliente / Obra</label>
-            <input type="text" id="hormigonCliente" placeholder="Ej: Losa o Columnas Planta Baja">
+            <input type="text" id="hormigonCliente" placeholder="Ej: Planta Baja / Fundación">
 
-            <label>Seleccionar Elemento Estructural</label>
+            <label>Elemento Estructural</label>
             <div class="grid-trabajos">
-                <button type="button" class="trabajo-btn selected" onclick="seleccionarHormigon('columnas', this)">🏛️ Columnas / Vigas Estructurales (M³)</button>
-                <button type="button" class="trabajo-btn" onclick="seleccionarHormigon('losa', this)">🏠 Losa de Hormigón Armado (M³)</button>
-                <button type="button" class="trabajo-btn" onclick="seleccionarHormigon('cimientos', this)">🧱 Bases / Cimientos Corrido (M³)</button>
+                <button type="button" class="trabajo-btn selected" onclick="seleccionarHormigon('pilotines', this)">🔘 Pilotines (Se cotiza por UNIDAD)</button>
+                <button type="button" class="trabajo-btn" onclick="seleccionarHormigon('bases', this)">🏛️ Bases (Por M³)</button>
+                <button type="button" class="trabajo-btn" onclick="seleccionarHormigon('viga_fundacion', this)">📏 Viga de Fundación (Por M³)</button>
+                <button type="button" class="trabajo-btn" onclick="seleccionarHormigon('columnas', this)">🏛️ Columnas (Por M³)</button>
+                <button type="button" class="trabajo-btn" onclick="seleccionarHormigon('encadenado', this)">🏗️ Viga Encadenado Superior (Por M³)</button>
+                <button type="button" class="trabajo-btn" onclick="seleccionarHormigon('losa_alivianada', this)">🏠 Losa Alivianada (Por M³)</button>
             </div>
 
-            <label>Volumen Estimado (M³)</label>
-            <input type="number" id="hormigonVolumen" placeholder="Ej: 3.5">
+            <div id="labelCantidadHormigon">
+                <label id="lblUnidadMedida">Cantidad de Unidades</label>
+                <input type="number" id="hormigonCantidad" placeholder="Ej: 10">
+            </div>
 
-            <label>Mano de Obra por M³ ($)</label>
-            <input type="number" id="hormigonMano" placeholder="Ej: 45000">
+            <label id="lblManoObraTexto">Mano de Obra por Unidad ($)</label>
+            <input type="number" id="hormigonMano" placeholder="Ej: 15000">
 
             <button class="btn btn-primary" style="margin-top: 16px;" onclick="calcularHormigon()">🚀 Calcular Estructura</button>
 
@@ -357,7 +362,7 @@
         }
 
         let trabajoSeleccionado = 'pared_hueco_12';
-        let hormigonSeleccionado = 'columnas';
+        let hormigonSeleccionado = 'pilotines';
         let aireSeleccionado = '2250';
         let ultimoPresupuestoTexto = "";
         let ultimoHormigonTexto = "";
@@ -405,6 +410,16 @@
             const botones = document.querySelectorAll('#hormigon .trabajo-btn');
             botones.forEach(b => b.classList.remove('selected'));
             btn.classList.add('selected');
+
+            const lblUnidad = document.getElementById('lblUnidadMedida');
+            const lblMano = document.getElementById('lblManoObraTexto');
+            if (tipo === 'pilotines') {
+                lblUnidad.innerText = "Cantidad de Pilotines (Unidades)";
+                lblMano.innerText = "Mano de Obra por Unidad ($)";
+            } else {
+                lblUnidad.innerText = "Volumen Estimado (M³)";
+                lblMano.innerText = "Mano de Obra por M³ ($)";
+            }
         }
 
         function seleccionarAire(cap, btn) {
@@ -465,37 +480,67 @@
         function calcularHormigon() {
             vibrar(40);
             const cliente = document.getElementById('hormigonCliente').value || 'Cliente';
-            const volumen = parseFloat(document.getElementById('hormigonVolumen').value) || 0;
-            const manoObra = parseFloat(document.getElementById('hormigonMano').value) || 0;
+            const cantidadInput = parseFloat(document.getElementById('hormigonCantidad').value) || 0;
+            const valorUnitarioMano = parseFloat(document.getElementById('hormigonMano').value) || 0;
             
-            if (volumen <= 0 || manoObra <= 0) return alert('Completa volumen en M³ y mano de obra.');
+            if (cantidadInput <= 0 || valorUnitarioMano <= 0) return alert('Completa la cantidad y la mano de obra.');
 
             let nombreEstructura = "";
-            let hierroTxt = "";
+            let matTexto = "";
+            let manoObraTotal = 0;
 
-            const bolsasCemento = Math.ceil(volumen * 7.5);
-            const arenaM3 = (volumen * 0.55).toFixed(2);
-            const piedraM3 = (volumen * 0.75).toFixed(2);
+            if (hormigonSeleccionado === 'pilotines') {
+                nombreEstructura = `Pilotines (${cantidadInput} Unidades)`;
+                // Estimado promedio por pilotín estándar de 30cm diámetro x 2m profundidad (~0.14 m3 por unidad)
+                const volUnitario = 0.14; 
+                const volumenTotal = cantidadInput * volUnitario;
+                const bolsasCemento = Math.ceil(volumenTotal * 8);
+                const arenaM3 = (volumenTotal * 0.6).toFixed(2);
+                const piedraM3 = (volumenTotal * 0.75).toFixed(2);
+                const hierro12 = Math.round(cantidadInput * 12); // kg aprox por pilotín
 
-            if (hormigonSeleccionado === 'columnas') {
-                nombreEstructura = "Columnas / Vigas Estructurales";
-                const hierro12kg = Math.round(volumen * 85);
-                const hierro8kg = Math.round(volumen * 45);
-                hierroTxt = `• Hierro Ø 12 mm: ~${hierro12kg} kg\n• Hierro Ø 8 mm (Estribos): ~${hierro8kg} kg`;
-            } else if (hormigonSeleccionado === 'losa') {
-                nombreEstructura = "Losa de Hormigón Armado";
-                const hierro8kg = Math.round(volumen * 70);
-                const hierro6kg = Math.round(volumen * 30);
-                hierroTxt = `• Hierro Ø 8 mm: ~${hierro8kg} kg\n• Hierro Ø 6 mm: ~${hierro6kg} kg`;
+                matTexto = `• Volumen Total Estimado: ${volumenTotal.toFixed(2)} M³\n• Cemento: ${bolsasCemento} bolsas\n• Arena gruesa: ${arenaM3} m³\n• Piedra partida: ${piedraM3} m³\n• Hierro Ø 12 mm: ~${hierro12} kg`;
+                manoObraTotal = cantidadInput * valorUnitarioMano;
+
             } else {
-                nombreEstructura = "Bases / Cimientos Corrido";
-                const hierro12kg = Math.round(volumen * 55);
-                hierroTxt = `• Hierro Ø 12 mm / 10 mm: ~${hierro12kg} kg`;
+                let volumen = cantidadInput; // En este caso son M3 directos
+                let hierroTxt = "";
+                const bolsasCemento = Math.ceil(volumen * 7.5);
+                const arenaM3 = (volumen * 0.55).toFixed(2);
+                const piedraM3 = (volumen * 0.75).toFixed(2);
+
+                if (hormigonSeleccionado === 'bases') {
+                    nombreEstructura = `Bases de Hormigón (${volumen} M³)`;
+                    const hierro12 = Math.round(volumen * 60);
+                    hierroTxt = `• Hierro Ø 12 mm / 10 mm: ~${hierro12} kg`;
+                } else if (hormigonSeleccionado === 'viga_fundacion') {
+                    nombreEstructura = `Viga de Fundación (${volumen} M³)`;
+                    const hierro12 = Math.round(volumen * 80);
+                    const hierro8 = Math.round(volumen * 40);
+                    hierroTxt = `• Hierro Ø 12 mm: ~${hierro12} kg\n• Hierro Ø 8 mm (Estribos): ~${hierro8} kg`;
+                } else if (hormigonSeleccionado === 'columnas') {
+                    nombreEstructura = `Columnas (${volumen} M³)`;
+                    const hierro12 = Math.round(volumen * 85);
+                    const hierro8 = Math.round(volumen * 45);
+                    hierroTxt = `• Hierro Ø 12 mm: ~${hierro12} kg\n• Hierro Ø 8 mm (Estribos): ~${hierro8} kg`;
+                } else if (hormigonSeleccionado === 'encadenado') {
+                    nombreEstructura = `Viga Encadenado Superior (${volumen} M³)`;
+                    const hierro10 = Math.round(volumen * 75);
+                    const hierro6 = Math.round(volumen * 35);
+                    hierroTxt = `• Hierro Ø 10 mm: ~${hierro10} kg\n• Hierro Ø 6/8 mm (Estribos): ~${hierro6} kg`;
+                } else {
+                    nombreEstructura = `Losa Alivianada (${volumen} M³)`;
+                    const viguetasml = Math.round(volumen * 3.2);
+                    const telgoporun = Math.round(volumen * 2.2);
+                    const hierro6 = Math.round(volumen * 25);
+                    hierroTxt = `• Viguetas premoldeadas: ~${viguetasml} metros lineales\n• Saporitos / Telgopor: ~${telgoporun} unidades\n• Malla sima / Hierro Ø 6 mm: ~${hierro6} kg`;
+                }
+
+                matTexto = `• Cemento H21/H17: ${bolsasCemento} bolsas\n• Arena gruesa: ${arenaM3} m³\n• Piedra partida: ${piedraM3} m³\n${hierroTxt}`;
+                manoObraTotal = volumen * valorUnitarioMano;
             }
 
-            let manoObraTotal = volumen * manoObra;
-
-            ultimoHormigonTexto = `🏛️ *CÓMPUTO DE HORMIGÓN ARMADO*\n👤 *Cliente:* ${cliente}\n📐 *Elemento:* ${nombreEstructura} (${volumen} M³)\n--------------------------------\n📦 *Materiales Estimados:*\n• Cemento H21/H17: ${bolsasCemento} bolsas\n• Arena gruesa: ${arenaM3} m³\n• Piedra partida: ${piedraM3} m³\n${hierroTxt}\n--------------------------------\n💰 *Mano de Obra Total:* $${manoObraTotal.toLocaleString()}`;
+            ultimoHormigonTexto = `🏛️ *ESTRUCTURA DE HORMIGÓN*\n👤 *Cliente:* ${cliente}\n📐 *Elemento:* ${nombreEstructura}\n--------------------------------\n📦 *Materiales Estimados:*\n${matTexto}\n--------------------------------\n💰 *Mano de Obra Total:* $${manoObraTotal.toLocaleString()}`;
             
             const resDiv = document.getElementById('resultadoHormigon');
             resDiv.style.display = 'block';
@@ -532,7 +577,7 @@
             let cañoBaja = (aireSeleccionado === '4500' || aireSeleccionado === '6000') ? "1/2\" o 5/8\"" : "3/8\"";
             let termicaRecomendada = (aireSeleccionado === '6000') ? "20A (Cable 4 mm²)" : "10A - 16A (Cable 2.5 mm²)";
 
-            // Cómputo corregido a 150g/m para equipos chicos y 250g/m para grandes
+            // Cómputo corregido a 150g/m para equipos chicos y 250g/m para grandes (750g para 5 metros)[span_1](start_span)[span_1](end_span)
             let grsPorMetro = (aireSeleccionado === '4500' || aireSeleccionado === '6000') ? 250 : 150;
             let gramosTotales = metros * grsPorMetro;
             let textoGasExtra = `\n⚠️ *Carga de Gas ${tipoGas}:* ${gramosTotales}g (${metros}m de cañería)`;
@@ -702,7 +747,7 @@
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js?v=3').then((registration) => {
+                navigator.serviceWorker.register('sw.js?v=4').then((registration) => {
                     registration.update();
                     registration.onupdatefound = () => {
                         const installingWorker = registration.installing;
