@@ -17,30 +17,28 @@
             --success: #10b981;
             --border: #334155;
         }
-        body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg-main); color: var(--text-main); margin: 0; padding: 12px; }
+        body { font-family: system-ui, -apple-system, sans-serif; background-color: var(--bg-main); color: var(--text-main); margin: 0; padding: 15px; }
         header { text-align: center; margin-bottom: 15px; }
         h1 { color: var(--accent); font-size: 1.3rem; margin: 5px 0; }
         p.subtitle { color: var(--text-muted); font-size: 0.8rem; margin: 0; }
-        
-        .tabs { display: flex; gap: 5px; margin-bottom: 15px; background: var(--bg-card); padding: 5px; border-radius: 8px; border: 1px solid var(--border); }
-        .tab-btn { flex: 1; padding: 10px; background: none; border: none; color: var(--text-muted); font-weight: bold; font-size: 0.85rem; border-radius: 6px; cursor: pointer; text-align: center; }
+        .tabs { display: flex; gap: 5px; margin-bottom: 15px; background: var(--bg-card); padding: 5px; border-radius: 8px; }
+        .tab-btn { flex: 1; padding: 10px; background: none; border: none; color: var(--text-muted); font-weight: bold; border-radius: 6px; cursor: pointer; }
         .tab-btn.active { background: var(--accent); color: #000; }
-
         .section { display: none; }
         .section.active { display: block; }
-
-        .card { background: var(--bg-card); border: 1px solid var(--border); padding: 12px; border-radius: 10px; margin-bottom: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
-        label { display: block; margin-top: 8px; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; font-weight: bold; }
-        input, select { width: 100%; padding: 10px; margin-top: 4px; background: #0f172a; color: var(--text-main); border: 1px solid var(--border); border-radius: 6px; box-sizing: border-box; font-size: 0.95rem; }
-        
-        button.btn { width: 100%; padding: 12px; font-weight: bold; border: none; border-radius: 6px; margin-top: 10px; cursor: pointer; font-size: 0.95rem; }
+        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 15px; margin-bottom: 15px; }
+        label { display: block; margin-top: 8px; color: var(--text-muted); font-size: 0.85rem; }
+        input, select { width: 100%; padding: 10px; margin-top: 4px; background: var(--bg-main); border: 1px solid var(--border); color: var(--text-main); border-radius: 6px; box-sizing: border-box; }
+        button.btn { width: 100%; padding: 12px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; margin-top: 15px; }
         .btn-primary { background: var(--accent); color: #000; }
-        .btn-whatsapp { background: #25D366; color: white; }
-        .btn-danger { background: #ef4444; color: white; font-size: 0.75rem; padding: 6px; margin-top: 5px; }
-
-        .resumen-box { background: #0f172a; border-left: 4px solid var(--accent); padding: 10px; margin-top: 10px; border-radius: 4px; }
-        .item-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
-        .history-card { background: #111827; border: 1px solid var(--border); padding: 10px; border-radius: 6px; margin-bottom: 8px; font-size: 0.85rem; }
+        .resumen-box { background: var(--bg-main); border-left: 4px solid var(--accent); padding: 10px; margin-top: 10px; font-size: 0.9rem; border-radius: 4px; }
+        
+        /* Ocultar anuncios inyectados por AppsGeyser */
+        iframe[src*="appsgeyser"], div[id*="banner"], div[class*="banner"] {
+            display: none !important;
+            height: 0 !important;
+            visibility: hidden !important;
+        }
     </style>
 </head>
 <body>
@@ -50,287 +48,85 @@
         <p class="subtitle">Herramienta profesional para contratistas</p>
     </header>
 
-    <!-- PESTAÑAS DE NAVEGACIÓN -->
+    <!-- Pestañas de Navegación -->
     <div class="tabs">
         <button class="tab-btn active" onclick="cambiarTab('presupuesto', this)">Presupuestos</button>
         <button class="tab-btn" onclick="cambiarTab('historial', this)">Guardados</button>
         <button class="tab-btn" onclick="cambiarTab('gastos', this)">Gastos Diarios</button>
     </div>
 
-    <!-- SECCIÓN 1: PRESUPUESTOS Y MATERIALES -->
-    <div id="sec-presupuesto" class="section active">
+    <!-- Sección Presupuestos -->
+    <div id="presupuesto" class="section active">
         <div class="card">
             <label>Cliente / Obra</label>
             <input type="text" id="cliente" placeholder="Ej: Roberto Gomez">
-            
+
             <label>Tipo de Trabajo</label>
-            <select id="tipoTrabajo" onchange="actualizarPreciosSugeridos()">
+            <select id="tipoTrabajo">
                 <option value="pared">Construcción de Pared (M²)</option>
-                <option value="revoque">Revoque Grueso y Fino (M²)</option>
-                <option value="piso">Colocación de Pisos / Cerámicos (M²)</option>
-                <option value="losa">Losa de Hormigón / Techo (M²)</option>
+                <option value="revoque">Revoque Fino / Grueso (M²)</option>
+                <option value="piso">Colocación de Pisos (M²)</option>
             </select>
 
             <label>Superficie (M²)</label>
-            <input type="number" id="medidaM2" placeholder="Ej: 40">
+            <input type="number" id="superficie" placeholder="Ej: 40">
 
             <label>Valor Mano de Obra por M² ($)</label>
-            <input type="number" id="costoManoObra" placeholder="Ej: 8000">
-        </div>
+            <input type="number" id="valorMano" placeholder="Ej: 8000">
 
-        <button class="btn btn-primary" onclick="calcularPresupuesto()">⚙️ Calcular Cómputo y Presupuesto</button>
+            <button class="btn btn-primary" onclick="calcular()">⚙️ Calcular Cómputo y Presupuesto</button>
 
-        <div class="card" id="resultadoCard" style="display:none;">
-            <h3 style="color:var(--accent); margin-top:0;">Desglose Profesional</h3>
-            <div id="listaMateriales"></div>
-            
-            <div class="resumen-box">
-                <p style="margin:4px 0;"><strong>Materiales Estimados:</strong> $<span id="totalMateriales">0</span></p>
-                <p style="margin:4px 0;"><strong>Mano de Obra:</strong> $<span id="totalManoObra">0</span></p>
-                <h3 style="color:var(--success); margin:8px 0;">TOTAL GENERAL: $<span id="totalGeneral">0</span></h3>
-            </div>
-            
-            <button class="btn btn-primary" onclick="guardarPresupuestoLocal()" style="background:#3b82f6; color:#fff;">💾 Guardar Presupuesto</button>
-            <button class="btn btn-whatsapp" onclick="compartirWhatsApp()">📱 Enviar por WhatsApp</button>
+            <div id="resultado" class="resumen-box" style="display:none;"></div>
         </div>
     </div>
 
-    <!-- SECCIÓN 2: HISTORIAL -->
-    <div id="sec-historial" class="section">
+    <!-- Sección Historial -->
+    <div id="historial" class="section">
         <div class="card">
-            <h3 style="margin-top:0; color:var(--accent);">Presupuestos Guardados</h3>
-            <div id="contenedorHistorial">
-                <p style="color:var(--text-muted); font-size:0.85rem;">No hay presupuestos guardados todavía.</p>
-            </div>
+            <p style="color: var(--text-muted); text-align: center;">Tus presupuestos guardados aparecerán aquí.</p>
         </div>
     </div>
 
-    <!-- SECCIÓN 3: GASTOS DIARIOS DE OBRA -->
-    <div id="sec-gastos" class="section">
+    <!-- Sección Gastos Diarios -->
+    <div id="gastos" class="section">
         <div class="card">
-            <h3 style="margin-top:0; color:var(--accent);">Control de Gastos de Compra</h3>
-            <label>Detalle del Gasto (Corralón, flete, etc.)</label>
-            <input type="text" id="gastoDetalle" placeholder="Ej: 3 Bolsas de cemento extra">
-            
-            <label>Monto ($)</label>
-            <input type="number" id="gastoMonto" placeholder="Ej: 25000">
-            
-            <button class="btn btn-primary" onclick="agregarGasto()">➕ Registrar Gasto</button>
-        </div>
-
-        <div class="card">
-            <h3 style="margin-top:0;">Gastos Registrados</h3>
-            <div id="listaGastos">
-                <p style="color:var(--text-muted); font-size:0.85rem;">Sin gastos cargados hoy.</p>
-            </div>
-            <h4 style="margin-bottom:0; text-align:right; color:#ef4444;">Total Gastado: $<span id="totalGastosAcumulado">0</span></h4>
+            <p style="color: var(--text-muted); text-align: center;">Control de gastos de materiales y movilidad.</p>
         </div>
     </div>
 
     <script>
-        // Precios estimativos de referencia por unidad
-        const PRECIOS_INSUMOS = {
-            ladrilloHec: 280,
-            cemento: 9200,
-            cal: 6500,
-            arenaM3: 45000,
-            pegamento: 12000,
-            hierro: 3500
-        };
-
-        let ultimoCalculo = null;
-        let listaGastosArray = [];
-        let historialArray = [];
-
-        // Cargar datos guardados si existen
-        window.onload = function() {
-            if(localStorage.getItem('historial_obras')) {
-                historialArray = JSON.parse(localStorage.getItem('historial_obras'));
-                renderHistorial();
-            }
-            if(localStorage.getItem('gastos_obras')) {
-                listaGastosArray = JSON.parse(localStorage.getItem('gastos_obras'));
-                renderGastos();
-            }
-        };
-
         function cambiarTab(tabId, btn) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById('sec-' + tabId).classList.add('active');
+            document.getElementById(tabId).classList.add('active');
             btn.classList.add('active');
         }
 
-        function calcularPresupuesto() {
-            const cliente = document.getElementById("cliente").value || "Cliente General";
-            const tipo = document.getElementById("tipoTrabajo").value;
-            const m2 = parseFloat(document.getElementById("medidaM2").value) || 0;
-            const costoManoM2 = parseFloat(document.getElementById("costoManoObra").value) || 0;
+        function calcular() {
+            const superficie = parseFloat(document.getElementById('superficie').value) || 0;
+            const valorMano = parseFloat(document.getElementById('valorMano').value) || 0;
+            const cliente = document.getElementById('cliente').value || 'Sin nombre';
 
-            if (m2 <= 0) {
-                alert("Por favor ingresa una cantidad de Metros Cuadrados (M²) válida.");
+            if (superficie <= 0 || valorMano <= 0) {
+                alert('Por favor completa los valores de superficie y mano de obra.');
                 return;
             }
 
-            let htmlMateriales = "";
-            let costoMateriales = 0;
+            // Cálculos básicos estimativos de materiales para pared
+            const ladrillos = Math.round(superficie * 90);
+            const cementoBolsas = Math.ceil(superficie * 0.35);
+            const arenaMetros = (superficie * 0.08).toFixed(2);
+            const totalManoObra = superficie * valorMano;
 
-            if (tipo === "pared") {
-                const ladrillos = Math.ceil(m2 * 12.5);
-                const cemento = Math.ceil(m2 * 0.12);
-                const arena = (m2 * 0.022).toFixed(2);
-                
-                const subL = ladrillos * PRECIOS_INSUMOS.ladrilloHec;
-                const subC = cemento * PRECIOS_INSUMOS.cemento;
-                const subA = parseFloat(arena) * PRECIOS_INSUMOS.arenaM3;
-                costoMateriales = subL + subC + subA;
-
-                htmlMateriales = `
-                    <div class="item-row"><span>Ladrillos (${ladrillos} un):</span> <strong>$${subL.toLocaleString()}</strong></div>
-                    <div class="item-row"><span>Cemento (${cemento} bolsas):</span> <strong>$${subC.toLocaleString()}</strong></div>
-                    <div class="item-row"><span>Arena (${arena} m³):</span> <strong>$${subA.toLocaleString()}</strong></div>
-                `;
-            } else if (tipo === "revoque") {
-                const cemento = Math.ceil(m2 * 0.08);
-                const cal = Math.ceil(m2 * 0.1);
-                const arena = (m2 * 0.018).toFixed(2);
-
-                const subC = cemento * PRECIOS_INSUMOS.cemento;
-                const subCal = cal * PRECIOS_INSUMOS.cal;
-                const subA = parseFloat(arena) * PRECIOS_INSUMOS.arenaM3;
-                costoMateriales = subC + subCal + subA;
-
-                htmlMateriales = `
-                    <div class="item-row"><span>Cemento (${cemento} bols):</span> <strong>$${subC.toLocaleString()}</strong></div>
-                    <div class="item-row"><span>Cal (${cal} bols):</span> <strong>$${subCal.toLocaleString()}</strong></div>
-                    <div class="item-row"><span>Arena Fina (${arena} m³):</span> <strong>$${subA.toLocaleString()}</strong></div>
-                `;
-            } else if (tipo === "piso") {
-                const pegamento = Math.ceil(m2 / 4); // 1 bolsa cada 4m2 aprox
-                const subP = pegamento * PRECIOS_INSUMOS.pegamento;
-                costoMateriales = subP;
-
-                htmlMateriales = `
-                    <div class="item-row"><span>Pegamento Cerámico (${pegamento} bols):</span> <strong>$${subP.toLocaleString()}</strong></div>
-                    <div class="item-row"><span>*Cerámicos / Porcelanato:</span> <span style="color:var(--accent);">A cotizar según elección</span></div>
-                `;
-            } else if (tipo === "losa") {
-                const cemento = Math.ceil(m2 * 0.35);
-                const hierro = Math.ceil(m2 * 4.5);
-                const subC = cemento * PRECIOS_INSUMOS.cemento;
-                const subH = hierro * PRECIOS_INSUMOS.hierro;
-                costoMateriales = subC + subH;
-
-                htmlMateriales = `
-                    <div class="item-row"><span>Cemento (${cemento} bols):</span> <strong>$${subC.toLocaleString()}</strong></div>
-                    <div class="item-row"><span>Hierro estrutural (${hierro} kg):</span> <strong>$${subH.toLocaleString()}</strong></div>
-                `;
-            }
-
-            const totalManoObra = m2 * costoManoM2;
-            const totalGeneral = costoMateriales + totalManoObra;
-
-            document.getElementById("listaMateriales").innerHTML = htmlMateriales;
-            document.getElementById("totalMateriales").innerText = costoMateriales.toLocaleString();
-            document.getElementById("totalManoObra").innerText = totalManoObra.toLocaleString();
-            document.getElementById("totalGeneral").innerText = totalGeneral.toLocaleString();
-
-            document.getElementById("resultadoCard").style.display = "block";
-
-            // Guardar en variable temporal para exportar o registrar
-            ultimoCalculo = {
-                fecha: new Date().toLocaleDateString(),
-                cliente,
-                tipo,
-                m2,
-                totalGeneral: totalGeneral.toLocaleString()
-            };
-        }
-
-        function guardarPresupuestoLocal() {
-            if(!ultimoCalculo) return;
-            historialArray.unshift(ultimoCalculo);
-            localStorage.setItem('historial_obras', JSON.stringify(historialArray));
-            renderHistorial();
-            alert("¡Presupuesto guardado con éxito en la memoria del teléfono!");
-        }
-
-        function renderHistorial() {
-            const contenedor = document.getElementById("contenedorHistorial");
-            if(historialArray.length === 0) {
-                contenedor.innerHTML = `<p style="color:var(--text-muted); font-size:0.85rem;">No hay presupuestos guardados.</p>`;
-                return;
-            }
-            let html = "";
-            historialArray.forEach((item, index) => {
-                html += `
-                    <div class="history-card">
-                        <div style="display:flex; justify-content:space-between; color:var(--accent); font-weight:bold;">
-                            <span>${item.cliente}</span>
-                            <span>$${item.totalGeneral}</span>
-                        </div>
-                        <div style="color:var(--text-muted); margin-top:3px;">
-                            Trabajo: ${item.tipo.toUpperCase()} (${item.m2} M²) - ${item.fecha}
-                        </div>
-                        <button class="btn btn-danger" onclick="borrarHistorial(${index})">Eliminar registro</button>
-                    </div>
-                `;
-            });
-            contenedor.innerHTML = html;
-        }
-
-        function borrarHistorial(index) {
-            historialArray.splice(index, 1);
-            localStorage.setItem('historial_obras', JSON.stringify(historialArray));
-            renderHistorial();
-        }
-
-        function agregarGasto() {
-            const detalle = document.getElementById("gastoDetalle").value;
-            const monto = parseFloat(document.getElementById("gastoMonto").value) || 0;
-            if(!detalle || monto <= 0) {
-                alert("Completa el detalle y el monto del gasto.");
-                return;
-            }
-            listaGastosArray.unshift({detalle, monto});
-            localStorage.setItem('gastos_obras', JSON.stringify(listaGastosArray));
-            document.getElementById("gastoDetalle").value = "";
-            document.getElementById("gastoMonto").value = "";
-            renderGastos();
-        }
-
-        function renderGastos() {
-            const contenedor = document.getElementById("listaGastos");
-            if(listaGastosArray.length === 0) {
-                contenedor.innerHTML = `<p style="color:var(--text-muted); font-size:0.85rem;">Sin gastos cargados.</p>`;
-                document.getElementById("totalGastosAcumulado").innerText = "0";
-                return;
-            }
-            let html = "";
-            let total = 0;
-            listaGastosArray.forEach((g, i) => {
-                total += g.monto;
-                html += `
-                    <div class="item-row">
-                        <span>${g.detalle}</span>
-                        <strong>$${g.monto.toLocaleString()} <span style="color:red; cursor:pointer;" onclick="borrarGasto(${i})">❌</span></strong>
-                    </div>
-                `;
-            });
-            contenedor.innerHTML = html;
-            document.getElementById("totalGastosAcumulado").innerText = total.toLocaleString();
-        }
-
-        function borrarGasto(i) {
-            listaGastosArray.splice(i, 1);
-            localStorage.setItem('gastos_obras', JSON.stringify(listaGastosArray));
-            renderGastos();
-        }
-
-        function compartirWhatsApp() {
-            if(!ultimoCalculo) return;
-            const texto = `Hola *${ultimoCalculo.cliente}*, te comparto el presupuesto estimado de obra (${ultimoCalculo.tipo.toUpperCase()} - ${ultimoCalculo.m2} M²):\n\n*Total Estimado: $${ultimoCalculo.totalGeneral}*\n\nGenerado con Gestión de Obras Pro.`;
-            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(texto)}`, '_blank');
+            const resDiv = document.getElementById('resultado');
+            resDiv.style.display = 'block';
+            resDiv.innerHTML = `
+                <strong>Cliente:</strong> ${cliente}<br>
+                <strong>🧱 Ladrillos estimados:</strong> ${ladrillos} unidades<br>
+                <strong>📦 Cemento:</strong> ${cementoBolsas} bolsas<br>
+                <strong>砂 Arena:</strong> ${arenaMetros} m³<br>
+                <strong>💰 Total Mano de Obra:</strong> $${totalManoObra.toLocaleString()}
+            `;
         }
     </script>
 </body>
