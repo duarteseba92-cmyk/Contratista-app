@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Obras Pro - Contratista</title>
+    <title>Gestión de Obras Pro</title>
     <meta name="theme-color" content="#0f172a">
     <link rel="manifest" href="manifest.json">
     <style>
@@ -15,86 +15,158 @@
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --success: #10b981;
+            --danger: #ef4444;
             --border: #334155;
         }
-        body { font-family: system-ui, -apple-system, sans-serif; background-color: var(--bg-main); color: var(--text-main); margin: 0; padding: 15px; }
-        header { text-align: center; margin-bottom: 15px; }
+        body { font-family: system-ui, -apple-system, sans-serif; background-color: var(--bg-main); color: var(--text-main); margin: 0; padding: 12px; }
+        header { text-align: center; margin-bottom: 12px; }
         h1 { color: var(--accent); font-size: 1.3rem; margin: 5px 0; }
         p.subtitle { color: var(--text-muted); font-size: 0.8rem; margin: 0; }
-        .tabs { display: flex; gap: 5px; margin-bottom: 15px; background: var(--bg-card); padding: 5px; border-radius: 8px; }
-        .tab-btn { flex: 1; padding: 10px; background: none; border: none; color: var(--text-muted); font-weight: bold; border-radius: 6px; cursor: pointer; }
+        
+        .tabs { display: flex; gap: 4px; margin-bottom: 15px; background: var(--bg-card); padding: 4px; border-radius: 8px; overflow-x: auto; }
+        .tab-btn { flex: 1; min-width: 80px; padding: 10px 5px; background: none; border: none; color: var(--text-muted); font-weight: bold; border-radius: 6px; cursor: pointer; font-size: 0.75rem; text-align: center; white-space: nowrap; }
         .tab-btn.active { background: var(--accent); color: #000; }
+        
         .section { display: none; }
         .section.active { display: block; }
-        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 15px; margin-bottom: 15px; }
-        label { display: block; margin-top: 8px; color: var(--text-muted); font-size: 0.85rem; }
-        input, select { width: 100%; padding: 10px; margin-top: 4px; background: var(--bg-main); border: 1px solid var(--border); color: var(--text-main); border-radius: 6px; box-sizing: border-box; }
-        button.btn { width: 100%; padding: 12px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; margin-top: 15px; }
-        .btn-primary { background: var(--accent); color: #000; }
-        .resumen-box { background: var(--bg-main); border-left: 4px solid var(--accent); padding: 10px; margin-top: 10px; font-size: 0.9rem; border-radius: 4px; }
+        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 14px; margin-bottom: 15px; }
+        h2 { font-size: 1.05rem; margin-top: 0; color: var(--accent); }
         
-        /* Ocultar anuncios inyectados por AppsGeyser */
-        iframe[src*="appsgeyser"], div[id*="banner"], div[class*="banner"] {
-            display: none !important;
-            height: 0 !important;
-            visibility: hidden !important;
-        }
+        label { display: block; margin-top: 8px; color: var(--text-muted); font-size: 0.8rem; }
+        input, select, textarea { width: 100%; padding: 10px; margin-top: 4px; background: var(--bg-main); border: 1px solid var(--border); color: var(--text-main); border-radius: 6px; box-sizing: border-box; font-size: 0.9rem; }
+        
+        .btn-group { display: flex; gap: 8px; margin-top: 12px; }
+        button.btn { width: 100%; padding: 12px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; }
+        .btn-primary { background: var(--accent); color: #000; }
+        .btn-whatsapp { background: #25D366; color: white; }
+        .btn-danger { background: var(--danger); color: white; }
+        
+        .resumen-box { background: var(--bg-main); border-left: 4px solid var(--accent); padding: 12px; margin-top: 12px; font-size: 0.85rem; border-radius: 4px; line-height: 1.5; }
+        .item-list { margin-top: 10px; }
+        .item-row { display: flex; justify-content: space-between; align-items: center; background: var(--bg-main); padding: 8px 12px; border-radius: 6px; margin-bottom: 6px; font-size: 0.85rem; border: 1px solid var(--border); }
+        .balance-total { font-size: 1.1rem; font-weight: bold; text-align: center; padding: 10px; background: var(--bg-main); border-radius: 6px; margin-bottom: 10px; color: var(--success); }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>🏗️ Gestión de Obras Pro</h1>
-        <p class="subtitle">Herramienta profesional para contratistas</p>
+        <h1>🏗️ ObrasPro - Gestión Total</h1>
+        <p class="subtitle">Presupuestos, Gastos, Personal y Clientes</p>
     </header>
 
     <!-- Pestañas de Navegación -->
     <div class="tabs">
-        <button class="tab-btn active" onclick="cambiarTab('presupuesto', this)">Presupuestos</button>
-        <button class="tab-btn" onclick="cambiarTab('historial', this)">Guardados</button>
-        <button class="tab-btn" onclick="cambiarTab('gastos', this)">Gastos Diarios</button>
+        <button class="tab-btn active" onclick="cambiarTab('presupuesto', this)">📋 Cotizar</button>
+        <button class="tab-btn" onclick="cambiarTab('finanzas', this)">💰 Finanzas</button>
+        <button class="tab-btn" onclick="cambiarTab('personal', this)">👷 Personal</button>
+        <button class="tab-btn" onclick="cambiarTab('agenda', this)">📇 Agenda</button>
     </div>
 
-    <!-- Sección Presupuestos -->
+    <!-- 1. SECCIÓN PRESUPUESTOS -->
     <div id="presupuesto" class="section active">
         <div class="card">
+            <h2>Crear Presupuesto</h2>
             <label>Cliente / Obra</label>
-            <input type="text" id="cliente" placeholder="Ej: Roberto Gomez">
+            <input type="text" id="cliente" placeholder="Ej: Juan Pérez - Obra Centro">
 
             <label>Tipo de Trabajo</label>
             <select id="tipoTrabajo">
-                <option value="pared">Construcción de Pared (M²)</option>
-                <option value="revoque">Revoque Fino / Grueso (M²)</option>
-                <option value="piso">Colocación de Pisos (M²)</option>
+                <option value="pared">Pared de Ladrillo (M²)</option>
+                <option value="revoque">Revoque Grueso / Fino (M²)</option>
+                <option value="piso">Colocación de Piso / Contrapiso (M²)</option>
+                <option value="techo">Techado / Chapa (M²)</option>
             </select>
 
-            <label>Superficie (M²)</label>
-            <input type="number" id="superficie" placeholder="Ej: 40">
+            <label>Superficie Total (M²)</label>
+            <input type="number" id="superficie" placeholder="Ej: 45">
 
-            <label>Valor Mano de Obra por M² ($)</label>
-            <input type="number" id="valorMano" placeholder="Ej: 8000">
+            <label>Mano de Obra por M² ($)</label>
+            <input type="number" id="valorMano" placeholder="Ej: 8500">
 
-            <button class="btn btn-primary" onclick="calcular()">⚙️ Calcular Cómputo y Presupuesto</button>
+            <button class="btn btn-primary" onclick="calcularPresupuesto()">⚙️ Calcular Cómputo</button>
 
             <div id="resultado" class="resumen-box" style="display:none;"></div>
+            
+            <div id="accionesPresupuesto" class="btn-group" style="display:none;">
+                <button class="btn btn-whatsapp" onclick="enviarWhatsApp()">📲 Enviar por WhatsApp</button>
+                <button class="btn btn-primary" onclick="guardarPresupuesto()">💾 Guardar Obra</button>
+            </div>
         </div>
     </div>
 
-    <!-- Sección Historial -->
-    <div id="historial" class="section">
+    <!-- 2. SECCIÓN FINANZAS Y GASTOS -->
+    <div id="finanzas" class="section">
         <div class="card">
-            <p style="color: var(--text-muted); text-align: center;">Tus presupuestos guardados aparecerán aquí.</p>
+            <h2>Control de Gastos y Entregas</h2>
+            <label>Concepto (Material / Seña)</label>
+            <input type="text" id="finConcepto" placeholder="Ej: Compra Cemento / Seña cliente">
+
+            <label>Monto ($)</label>
+            <input type="number" id="finMonto" placeholder="Ej: 45000">
+
+            <label>Tipo de Registro</label>
+            <select id="finTipo">
+                <option value="gasto">🔻 Gasto (Material/Flete/Herramienta)</option>
+                <option value="ingreso">🟢 Ingreso (Seña/Cobro de Obra)</option>
+            </select>
+
+            <button class="btn btn-primary" onclick="agregarMovimiento()">➕ Registrar Movimiento</button>
+        </div>
+
+        <div class="card">
+            <h2>Balance General</h2>
+            <div id="balanceDisplay" class="balance-total">Ganancia Limpia: $0</div>
+            <div id="listaMovimientos" class="item-list"></div>
         </div>
     </div>
 
-    <!-- Sección Gastos Diarios -->
-    <div id="gastos" class="section">
+    <!-- 3. SECCIÓN PERSONAL -->
+    <div id="personal" class="section">
         <div class="card">
-            <p style="color: var(--text-muted); text-align: center;">Control de gastos de materiales y movilidad.</p>
+            <h2>Registro de Trabajadores</h2>
+            <label>Nombre del Ayudante / Oficial</label>
+            <input type="text" id="nombrePersonal" placeholder="Ej: Pedro Ramos">
+
+            <label>Pago por Día / Jornal ($)</label>
+            <input type="number" id="jornalPersonal" placeholder="Ej: 18000">
+
+            <label>Días Trabajados en la Semana</label>
+            <input type="number" id="diasPersonal" placeholder="Ej: 5">
+
+            <button class="btn btn-primary" onclick="agregarPersonal()">👷 Calcular Pago Semanal</button>
+        </div>
+
+        <div class="card">
+            <h2>Planilla de Pagos</h2>
+            <div id="listaPersonal" class="item-list"></div>
+        </div>
+    </div>
+
+    <!-- 4. SECCIÓN AGENDA & PROVEEDORES -->
+    <div id="agenda" class="section">
+        <div class="card">
+            <h2>Guardar Contacto / Proveedor</h2>
+            <label>Nombre o Corralón</label>
+            <input type="text" id="agNombre" placeholder="Ej: Corralón El Materiales">
+
+            <label>Teléfono</label>
+            <input type="tel" id="agTelefono" placeholder="Ej: 3624123456">
+
+            <label>Notas / Precios de Referencia</label>
+            <textarea id="agNotas" rows="2" placeholder="Ej: Cemento $9500 la bolsa. Entrega en el día."></textarea>
+
+            <button class="btn btn-primary" onclick="agregarContacto()">📇 Guardar en Agenda</button>
+        </div>
+
+        <div class="card">
+            <h2>Contactos y Precios Guardados</h2>
+            <div id="listaAgenda" class="item-list"></div>
         </div>
     </div>
 
     <script>
+        let ultimoPresupuestoTexto = "";
+
         function cambiarTab(tabId, btn) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -102,32 +174,156 @@
             btn.classList.add('active');
         }
 
-        function calcular() {
+        // LÓGICA PRESUPUESTOS
+        function calcularPresupuesto() {
+            const cliente = document.getElementById('cliente').value || 'Cliente';
             const superficie = parseFloat(document.getElementById('superficie').value) || 0;
             const valorMano = parseFloat(document.getElementById('valorMano').value) || 0;
-            const cliente = document.getElementById('cliente').value || 'Sin nombre';
+            const tipo = document.getElementById('tipoTrabajo').value;
 
             if (superficie <= 0 || valorMano <= 0) {
-                alert('Por favor completa los valores de superficie y mano de obra.');
+                alert('Ingresa superficie y mano de obra válidas.');
                 return;
             }
 
-            // Cálculos básicos estimativos de materiales para pared
-            const ladrillos = Math.round(superficie * 90);
-            const cementoBolsas = Math.ceil(superficie * 0.35);
-            const arenaMetros = (superficie * 0.08).toFixed(2);
-            const totalManoObra = superficie * valorMano;
+            let matTexto = "";
+            let manoObraTotal = superficie * valorMano;
+
+            if (tipo === 'pared') {
+                matTexto = `• Ladrillos: ${Math.round(superficie * 90)} un.\n• Cemento: ${Math.ceil(superficie * 0.35)} bolsas\n• Arena: ${(superficie * 0.08).toFixed(2)} m³`;
+            } else if (tipo === 'revoque') {
+                matTexto = `• Cemento: ${Math.ceil(superficie * 0.15)} bolsas\n• Cal: ${Math.ceil(superficie * 0.25)} bolsas\n• Arena: ${(superficie * 0.05).toFixed(2)} m³`;
+            } else if (tipo === 'piso') {
+                matTexto = `• Cemento: ${Math.ceil(superficie * 0.25)} bolsas\n• Malla/Hierro: Según plano\n• Arena/Cascote: ${(superficie * 0.1).toFixed(2)} m³`;
+            } else {
+                matTexto = `• Chapas: Según medida\n• Tirantes/Tornillos: Según estructura`;
+            }
+
+            ultimoPresupuestoTexto = `🏗️ *PRESUPUESTO DE OBRA*\n` +
+                `👤 *Cliente:* ${cliente}\n` +
+                `📐 *Superficie:* ${superficie} M²\n` +
+                `--------------------------------\n` +
+                `📦 *Materiales Estimados:*\n${matTexto}\n` +
+                `--------------------------------\n` +
+                `💰 *Total Mano de Obra:* $${manoObraTotal.toLocaleString()}`;
 
             const resDiv = document.getElementById('resultado');
             resDiv.style.display = 'block';
-            resDiv.innerHTML = `
-                <strong>Cliente:</strong> ${cliente}<br>
-                <strong>🧱 Ladrillos estimados:</strong> ${ladrillos} unidades<br>
-                <strong>📦 Cemento:</strong> ${cementoBolsas} bolsas<br>
-                <strong>砂 Arena:</strong> ${arenaMetros} m³<br>
-                <strong>💰 Total Mano de Obra:</strong> $${totalManoObra.toLocaleString()}
-            `;
+            resDiv.innerText = ultimoPresupuestoTexto;
+            document.getElementById('accionesPresupuesto').style.display = 'flex';
         }
+
+        function enviarWhatsApp() {
+            if (!ultimoPresupuestoTexto) return;
+            const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(ultimoPresupuestoTexto)}`;
+            window.open(url, '_blank');
+        }
+
+        // LÓGICA FINANZAS
+        let movimientos = JSON.parse(localStorage.getItem('obras_movs')) || [];
+
+        function agregarMovimiento() {
+            const conc = document.getElementById('finConcepto').value;
+            const monto = parseFloat(document.getElementById('finMonto').value) || 0;
+            const tipo = document.getElementById('finTipo').value;
+
+            if (!conc || monto <= 0) return alert('Completa concepto y monto.');
+
+            movimientos.push({ conc, monto, tipo });
+            localStorage.setItem('obras_movs', JSON.stringify(movimientos));
+            document.getElementById('finConcepto').value = '';
+            document.getElementById('finMonto').value = '';
+            renderFinanzas();
+        }
+
+        function renderFinanzas() {
+            const lista = document.getElementById('listaMovimientos');
+            lista.innerHTML = '';
+            let total = 0;
+
+            movimientos.forEach((m, idx) => {
+                if (m.tipo === 'ingreso') total += m.monto;
+                else total -= m.monto;
+
+                lista.innerHTML += `
+                    <div class="item-row">
+                        <span>${m.tipo === 'ingreso' ? '🟢' : '🔻'} ${m.conc}</span>
+                        <strong>$${m.monto.toLocaleString()}</strong>
+                    </div>
+                `;
+            });
+
+            const balDisplay = document.getElementById('balanceDisplay');
+            balDisplay.innerText = `Utilidad Neta: $${total.toLocaleString()}`;
+            balDisplay.style.color = total >= 0 ? 'var(--success)' : 'var(--danger)';
+        }
+
+        // LÓGICA PERSONAL
+        let personal = JSON.parse(localStorage.getItem('obras_personal')) || [];
+
+        function agregarPersonal() {
+            const nombre = document.getElementById('nombrePersonal').value;
+            const jornal = parseFloat(document.getElementById('jornalPersonal').value) || 0;
+            const dias = parseFloat(document.getElementById('diasPersonal').value) || 0;
+
+            if (!nombre || jornal <= 0 || dias <= 0) return alert('Completa todos los datos.');
+
+            personal.push({ nombre, total: jornal * dias, dias });
+            localStorage.setItem('obras_personal', JSON.stringify(personal));
+            document.getElementById('nombrePersonal').value = '';
+            document.getElementById('jornalPersonal').value = '';
+            document.getElementById('diasPersonal').value = '';
+            renderPersonal();
+        }
+
+        function renderPersonal() {
+            const lista = document.getElementById('listaPersonal');
+            lista.innerHTML = '';
+            personal.forEach(p => {
+                lista.innerHTML += `
+                    <div class="item-row">
+                        <span>👷 ${p.nombre} (${p.dias} días)</span>
+                        <strong>A pagar: $${p.total.toLocaleString()}</strong>
+                    </div>
+                `;
+            });
+        }
+
+        // LÓGICA AGENDA
+        let agenda = JSON.parse(localStorage.getItem('obras_agenda')) || [];
+
+        function agregarContacto() {
+            const nombre = document.getElementById('agNombre').value;
+            const tel = document.getElementById('agTelefono').value;
+            const notas = document.getElementById('agNotas').value;
+
+            if (!nombre) return alert('Ingresa un nombre.');
+
+            agenda.push({ nombre, tel, notas });
+            localStorage.setItem('obras_agenda', JSON.stringify(agenda));
+            document.getElementById('agNombre').value = '';
+            document.getElementById('agTelefono').value = '';
+            document.getElementById('agNotas').value = '';
+            renderAgenda();
+        }
+
+        function renderAgenda() {
+            const lista = document.getElementById('listaAgenda');
+            lista.innerHTML = '';
+            agenda.forEach(a => {
+                lista.innerHTML += `
+                    <div class="item-row" style="flex-direction:column; align-items:flex-start;">
+                        <strong>👤 ${a.nombre} ${a.tel ? '- 📞 ' + a.tel : ''}</strong>
+                        <small style="color:var(--text-muted);">${a.notas}</small>
+                    </div>
+                `;
+            });
+        }
+
+        // Carga inicial
+        renderFinanzas();
+        renderPersonal();
+        renderAgenda();
     </script>
 </body>
 </html>
