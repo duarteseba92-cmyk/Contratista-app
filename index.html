@@ -27,8 +27,6 @@ button{cursor:pointer}
 .btn{border:1px solid var(--line);background:var(--panel2);color:var(--text);padding:9px 12px;border-radius:10px;font-weight:700;transition:.18s;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:13px}
 .btn:hover{filter:brightness(1.12);transform:translateY(-1px)}
 .btn.primary{background:var(--gold);border-color:var(--gold);color:#171717}
-.btn.success{background:#0c5a48;border-color:#167b63;color:#d9fff4}
-.btn.danger{background:#401b29;border-color:#713044;color:#ffc3cf}
 .btn.small{padding:5px 8px;font-size:11px;border-radius:8px}
 .layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:16px;margin-top:14px;width:100%}
 .sidebar{align-self:start;position:sticky;top:14px;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:8px;box-shadow:var(--shadow)}
@@ -80,7 +78,6 @@ td strong{font-weight:800}
 .footer-note{font-size:10px;color:var(--muted);text-align:center;padding:12px}
 .hidden{display:none!important}
 
-/* Ajuste móvil para APK */
 @media(max-width:850px){
   body{padding-bottom:calc(68px + env(safe-area-inset-bottom))}
   .app{padding:8px}
@@ -187,7 +184,7 @@ td strong{font-weight:800}
 </section>
 
 <section class="page" id="hormigon">
-  <div class="pagehead"><div><h2>Hormigón y albañilería</h2><p>Cálculo de estructuras, muros y pisos</p></div></div>
+  <div class="pagehead"><div><h2>Hormigón y albañilería</h2><p>Cálculo de mezclas, estructuras, muros y pisos</p></div></div>
   <div class="grid2">
     <div class="card">
       <h3>Calculadora de obra</h3>
@@ -197,38 +194,40 @@ td strong{font-weight:800}
             <div class="h-choice-group">
               <h4>Pisos y Bases</h4>
               <div class="h-choice-grid">
-                <button type="button" class="h-choice active" onclick="elegirTipoObra('contrapiso', this)">Contrapiso</button>
-                <button type="button" class="h-choice" onclick="elegirTipoObra('platea', this)">Platea</button>
-                <button type="button" class="h-choice" onclick="elegirTipoObra('carpeta', this)">Carpeta / Piso</button>
+                <button type="button" class="h-choice active" onclick="elegirTipoObra('contrapiso', this)">Contrapiso de cascote</button>
+                <button type="button" class="h-choice" onclick="elegirTipoObra('platea', this)">Platea de hormigón</button>
+                <button type="button" class="h-choice" onclick="elegirTipoObra('carpeta', this)">Carpeta niveladora</button>
               </div>
             </div>
             <div class="h-choice-group">
               <h4>Muros y Paredes</h4>
               <div class="h-choice-grid">
                 <button type="button" class="h-choice" onclick="elegirTipoObra('pared_comun', this)">Pared Ladrillo Común</button>
-                <button type="button" class="h-choice" onclick="elegirTipoObra('pared_hueco', this)">Pared Ladrillo Hueco</button>
-                <button type="button" class="h-choice" onclick="elegirTipoObra('bloque_cemento', this)">Bloques de Cemento</button>
+                <button type="button" class="h-choice" onclick="elegirTipoObra('pared_hueco_8', this)">Ladrillo Hueco (8x18x33)</button>
+                <button type="button" class="h-choice" onclick="elegirTipoObra('pared_hueco_12', this)">Ladrillo Hueco (12x18x33)</button>
+                <button type="button" class="h-choice" onclick="elegirTipoObra('bloque_cemento', this)">Bloque de Hormigón</button>
               </div>
             </div>
             <div class="h-choice-group">
-              <h4>Estructuras</h4>
+              <h4>Estructuras Armadas</h4>
               <div class="h-choice-grid">
-                <button type="button" class="h-choice" onclick="elegirTipoObra('losa', this)">Losa hormigón</button>
-                <button type="button" class="h-choice" onclick="elegirTipoObra('viga_columna', this)">Viga / Columna</button>
+                <button type="button" class="h-choice" onclick="elegirTipoObra('losa', this)">Losa de Hormigón</button>
+                <button type="button" class="h-choice" onclick="elegirTipoObra('viga_columna', this)">Vigas / Columnas</button>
               </div>
             </div>
           </div>
           <select id="hTipo" class="h-tipo-source" onchange="actualizarSeleccionVisual()">
-            <option value="contrapiso">Contrapiso</option>
-            <option value="platea">Platea</option>
-            <option value="carpeta">Carpeta / Piso</option>
+            <option value="contrapiso">Contrapiso de cascote</option>
+            <option value="platea">Platea de hormigón</option>
+            <option value="carpeta">Carpeta niveladora</option>
             <option value="pared_comun">Pared Ladrillo Común</option>
-            <option value="pared_hueco">Pared Ladrillo Hueco</option>
-            <option value="bloque_cemento">Bloques de Cemento</option>
-            <option value="losa">Losa hormigón</option>
-            <option value="viga_columna">Viga / Columna</option>
+            <option value="pared_hueco_8">Ladrillo Hueco (8x18x33)</option>
+            <option value="pared_hueco_12">Ladrillo Hueco (12x18x33)</option>
+            <option value="bloque_cemento">Bloque de Hormigón</option>
+            <option value="losa">Losa de Hormigón</option>
+            <option value="viga_columna">Vigas / Columnas</option>
           </select>
-          <div id="hSeleccionTexto" class="h-selected">Seleccionado: Contrapiso</div>
+          <div id="hSeleccionTexto" class="h-selected">Seleccionado: Contrapiso de cascote</div>
         </div>
         <div class="field"><label id="lblLargo">Largo (m)</label><input id="hLargo" type="number" step="0.01" placeholder="0"></div>
         <div class="field"><label id="lblAncho">Ancho (m)</label><input id="hAncho" type="number" step="0.01" placeholder="0"></div>
@@ -241,17 +240,20 @@ td strong{font-weight:800}
     <div class="card">
       <h3>Precios de insumos</h3>
       <div class="formgrid">
-        <div class="field full"><label>Dosificación</label>
+        <div class="field full"><label>Dosificación / Mezcla</label>
           <select id="hDosificacion">
-            <option value="300">Mezcla estándar</option>
-            <option value="350">Hormigón reforzado H-25</option>
-            <option value="250">Mortero común</option>
+            <option value="h17">Hormigón H-17 (1:2.5:4 Cemento/Arena/Piedra)</option>
+            <option value="h21">Hormigón H-21 Estructural (1:2:3 Cemento/Arena/Piedra)</option>
+            <option value="contrapiso_pobre">Contrapiso Pobre (1/4 Cemento : 1 Cal : 4 Arena : 8 Cascote)</option>
+            <option value="mortero_asiento">Mortero Asiento Ladrillos (1/2 Cemento : 1 Cal : 4 Arena)</option>
+            <option value="carpeta_cemento">Carpeta Cemento Pura (1 Cemento : 3 Arena)</option>
           </select>
         </div>
-        <div class="field"><label>Cemento ($/bolsa)</label><input id="hCemento" type="number" placeholder="0"></div>
+        <div class="field"><label>Cemento ($/bolsa 50kg)</label><input id="hCemento" type="number" placeholder="0"></div>
+        <div class="field"><label>Cal ($/bolsa 25kg)</label><input id="hCal" type="number" placeholder="0"></div>
         <div class="field"><label>Arena ($/m³)</label><input id="hArena" type="number" placeholder="0"></div>
-        <div class="field"><label>Piedra ($/m³)</label><input id="hPiedra" type="number" placeholder="0"></div>
-        <div class="field"><label>Ladrillo/Bloque ($/u)</label><input id="hLadrilloPrecio" type="number" placeholder="0"></div>
+        <div class="field"><label>Piedra / Cascote ($/m³)</label><input id="hPiedra" type="number" placeholder="0"></div>
+        <div class="field"><label>Ladrillo / Bloque ($/u)</label><input id="hLadrilloPrecio" type="number" placeholder="0"></div>
       </div>
     </div>
   </div>
@@ -276,4 +278,382 @@ td strong{font-weight:800}
     <div class="card">
       <h3>Registro de instalación</h3>
       <div class="formgrid">
-        <div class="
+        <div class="field"><label>Cliente</label><input id="cCliente" placeholder="Cliente"></div>
+        <div class="field"><label>Teléfono</label><input id="cTelefono" placeholder="Teléfono"></div>
+        <div class="field full"><label>Dirección</label><input id="cDireccion" placeholder="Dirección"></div>
+        <div class="field"><label>Equipo</label><select id="cEquipo"><option>Split</option><option>Inverter</option><option>Otro</option></select></div>
+        <div class="field"><label>Capacidad</label><select id="cCapacidad"><option>2500 fg</option><option>3000 fg</option><option>4500 fg</option><option>6000 fg</option></select></div>
+        <div class="field full"><label>Trabajo</label><textarea id="cTrabajo" placeholder="Descripción..."></textarea></div>
+        <div class="field"><label>Materiales ($)</label><input id="cMateriales" type="number" placeholder="0"></div>
+        <div class="field"><label>Mano de obra ($)</label><input id="cMano" type="number" placeholder="0"></div>
+      </div>
+      <div class="actions"><button class="btn primary" onclick="guardarClimatizacion()">Guardar</button></div>
+    </div>
+  </div>
+  <div class="card"><h3>Instalaciones</h3><div id="listaClimatizacion" class="empty">Sin instalaciones.</div></div>
+</section>
+
+<section class="page" id="obras">
+  <div class="pagehead"><div><h2>Gestión de obras</h2><p>Registro y avances</p></div></div>
+  <div class="card">
+    <h3>Nueva obra</h3>
+    <div class="formgrid">
+      <div class="field"><label>Nombre</label><input id="oNombre" placeholder="Obra"></div>
+      <div class="field"><label>Cliente</label><input id="oCliente" placeholder="Cliente"></div>
+      <div class="field"><label>Teléfono</label><input id="oTelefono" placeholder="Teléfono"></div>
+      <div class="field"><label>Fecha</label><input id="oFecha" type="date"></div>
+      <div class="field full"><label>Dirección</label><input id="oDireccion" placeholder="Ubicación"></div>
+      <div class="field"><label>Presupuesto ($)</label><input id="oPresupuesto" type="number" placeholder="0"></div>
+      <div class="field"><label>Estado</label><select id="oEstado"><option>En planificación</option><option>En ejecución</option><option>Finalizada</option></select></div>
+      <div class="field full"><label>Detalle</label><textarea id="oDetalle" placeholder="Observaciones..."></textarea></div>
+    </div>
+    <div class="actions"><button class="btn primary" onclick="guardarObra()">Guardar obra</button></div>
+  </div>
+  <div class="card"><h3>Obras</h3><div id="listaObras" class="empty">Sin obras registradas.</div></div>
+</section>
+
+<section class="page" id="recibos">
+  <div class="pagehead"><div><h2>Recibos</h2><p>Comprobantes de cobro y pago</p></div></div>
+  <div class="card">
+    <h3>Generar recibo</h3>
+    <div class="formgrid">
+      <div class="field"><label>Persona</label><input id="rCliente" placeholder="Nombre"></div>
+      <div class="field"><label>Fecha</label><input id="rFecha" type="date"></div>
+      <div class="field"><label>Concepto</label><input id="rConcepto" placeholder="Motivo"></div>
+      <div class="field"><label>Importe ($)</label><input id="rImporte" type="number" placeholder="0"></div>
+      <div class="field"><label>Método</label><select id="rMetodo"><option>Efectivo</option><option>Transferencia</option></select></div>
+      <div class="field"><label>Tipo</label><select id="rTipo"><option value="ingreso">Cobro</option><option value="egreso">Pago</option></select></div>
+    </div>
+    <div class="actions"><button class="btn primary" onclick="guardarRecibo()">Guardar</button></div>
+    <div id="rVista" class="result hidden"></div>
+  </div>
+  <div class="card"><h3>Historial</h3><div id="listaRecibos" class="empty">Sin recibos.</div></div>
+</section>
+
+<section class="page" id="stock">
+  <div class="pagehead"><div><h2>Stock</h2><p>Control de materiales</p></div></div>
+  <div class="cards">
+    <div class="metric"><div class="label">Productos</div><div class="value" id="sTotal">0</div></div>
+    <div class="metric gold"><div class="label">Unidades</div><div class="value" id="sUnidades">0</div></div>
+    <div class="metric red"><div class="label">Stock bajo</div><div class="value" id="sBajo">0</div></div>
+    <div class="metric green"><div class="label">Valor total</div><div class="value" id="sValor">$0</div></div>
+  </div>
+  <div class="card">
+    <h3>Agregar insumo</h3>
+    <div class="formgrid">
+      <div class="field"><label>Material</label><input id="sNombre" placeholder="Ej. Cemento"></div>
+      <div class="field"><label>Categoría</label><select id="sCategoria"><option>Construcción</option><option>Electricidad</option><option>Plomería</option></select></div>
+      <div class="field"><label>Unidad</label><select id="sUnidad"><option>Bolsa</option><option>m²</option><option>m³</option><option>Unidad</option></select></div>
+      <div class="field"><label>Cantidad</label><input id="sCantidad" type="number" placeholder="0"></div>
+      <div class="field"><label>Costo ($)</label><input id="sCosto" type="number" placeholder="0"></div>
+      <div class="field"><label>Minimo</label><input id="sMinimo" type="number" value="1"></div>
+    </div>
+    <div class="actions"><button class="btn primary" onclick="guardarStock()">Guardar</button></div>
+  </div>
+  <div class="card"><h3>Inventario</h3><div id="listaStock" class="empty">Sin inventario.</div></div>
+</section>
+
+<section class="page" id="finanzas">
+  <div class="pagehead"><div><h2>Finanzas</h2><p>Control de caja</p></div></div>
+  <div class="cards">
+    <div class="metric green"><div class="label">Ingresos</div><div class="value" id="fIngresos">$0</div></div>
+    <div class="metric red"><div class="label">Gastos</div><div class="value" id="fGastos">$0</div></div>
+    <div class="metric gold"><div class="label">Saldo</div><div class="value" id="fSaldo">$0</div></div>
+    <div class="metric"><div class="label">Movimientos</div><div class="value" id="fMovimientos">0</div></div>
+  </div>
+  <div class="card">
+    <h3>Nuevo movimiento</h3>
+    <div class="formgrid">
+      <div class="field"><label>Tipo</label><select id="fTipo"><option value="ingreso">🟢 Ingreso</option><option value="gasto">🔻 Gasto</option></select></div>
+      <div class="field"><label>Fecha</label><input id="fFecha" type="date"></div>
+      <div class="field"><label>Concepto</label><input id="fConcepto" placeholder="Motivo"></div>
+      <div class="field"><label>Importe ($)</label><input id="fImporte" type="number" placeholder="0"></div>
+    </div>
+    <div class="actions"><button class="btn primary" onclick="guardarMovimiento()">Registrar</button></div>
+  </div>
+  <div class="card"><h3>Historial de caja</h3><div id="listaFinanzas" class="empty">Sin movimientos.</div></div>
+</section>
+
+<section class="page" id="personal">
+  <div class="pagehead"><div><h2>Personal</h2><p>Trabajadores</p></div></div>
+  <div class="card">
+    <h3>Agregar operario</h3>
+    <div class="formgrid">
+      <div class="field"><label>Nombre</label><input id="peNombre" placeholder="Nombre completo"></div>
+      <div class="field"><label>Teléfono</label><input id="peTelefono" placeholder="Teléfono"></div>
+      <div class="field"><label>Especialidad</label><input id="peEspecialidad" placeholder="Rubro"></div>
+      <div class="field"><label>Jornal ($)</label><input id="peJornal" type="number" placeholder="0"></div>
+    </div>
+    <div class="actions"><button class="btn primary" onclick="guardarPersonal()">Guardar</button></div>
+  </div>
+  <div class="card"><h3>Lista de personal</h3><div id="listaPersonal" class="empty">Sin registros.</div></div>
+</section>
+
+<section class="page" id="proveedores">
+  <div class="pagehead"><div><h2>Proveedores</h2><p>Contactos de compras</p></div></div>
+  <div class="card">
+    <h3>Agregar proveedor</h3>
+    <div class="formgrid">
+      <div class="field"><label>Empresa</label><input id="prNombre" placeholder="Razón social"></div>
+      <div class="field"><label>Contacto</label><input id="prContacto" placeholder="Nombre de contacto"></div>
+      <div class="field"><label>Teléfono</label><input id="prTelefono" placeholder="Teléfono"></div>
+      <div class="field"><label>Rubro</label><input id="prRubro" placeholder="Materiales..."></div>
+    </div>
+    <div class="actions"><button class="btn primary" onclick="guardarProveedor()">Guardar</button></div>
+  </div>
+  <div class="card"><h3>Agenda de proveedores</h3><div id="listaProveedores" class="empty">Sin proveedores.</div></div>
+</section>
+
+</main>
+</div>
+
+<nav class="bottomnav">
+  <button class="active" onclick="irA('dashboard',this)"><span>▦</span>Inicio</button>
+  <button onclick="irA('presupuestos',this)"><span>▤</span>Presup.</button>
+  <button onclick="irA('hormigon',this)"><span>▧</span>Hormigón</button>
+  <button onclick="irA('climatizacion',this)"><span>❄</span>Aire</button>
+  <button onclick="irA('obras',this)"><span>⌂</span>Obras</button>
+  <button onclick="irA('stock',this)"><span>▤</span>Stock</button>
+  <button onclick="irA('finanzas',this)"><span>＄</span>Caja</button>
+</nav>
+<div class="footer-note">ObrasPro Total Premium</div>
+
+<script>
+let datos = { presupuestos:[], hormigon:[], climatizacion:[], obras:[], recibos:[], stock:[], finanzas:[], personal:[], proveedores:[], actividad:[] };
+function nuevoEstado(){ return { presupuestos:[], hormigon:[], climatizacion:[], obras:[], recibos:[], stock:[], finanzas:[], personal:[], proveedores:[], actividad:[] }; }
+let ultimoPresupuesto=null, ultimoRecibo=null;
+
+function cargarDatos(){ try{ const g=localStorage.getItem("obraspro_total_data_v1"); if(g) datos=Object.assign(nuevoEstado(),JSON.parse(g)); }catch(e){} }
+function guardarDatos(){ try{ localStorage.setItem("obraspro_total_data_v1",JSON.stringify(datos)); actualizarDashboard(); return true; }catch(e){ return false; } }
+function fechaHoy(){ return new Date().toISOString().split("T")[0]; }
+function numero(id){ const el=document.getElementById(id); return el?parseFloat(el.value)||0:0; }
+function valor(id){ const el=document.getElementById(id); return el?el.value.trim():""; }
+function mostrar(id,texto){ const el=document.getElementById(id); if(el){el.textContent=texto; el.classList.remove("hidden");} }
+function dinero(v){ return "$"+Number(v||0).toLocaleString("es-AR",{minimumFractionDigits:0,maximumFractionDigits:2}); }
+function escapar(s){ return s?String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])):""; }
+function actividad(t){ datos.actividad.unshift({texto:t,fecha:fechaHoy()}); if(datos.actividad.length>20) datos.actividad.pop(); }
+
+function irA(idPagina,btn){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.querySelectorAll(".sidebar .navbtn, .bottomnav button").forEach(b=>b.classList.remove("active"));
+  const p=document.getElementById(idPagina); if(p) p.classList.add("active");
+  if(btn) btn.classList.add("active");
+  window.scrollTo({top:0,behavior:"smooth"});
+  renderizarPagina(idPagina);
+}
+
+function renderizarPagina(id){
+  if(id==="dashboard") actualizarDashboard();
+  if(id==="presupuestos") renderPresupuestos();
+  if(id==="climatizacion") renderClimatizacion();
+  if(id==="obras") renderObras();
+  if(id==="recibos") renderRecibos();
+  if(id==="stock") renderStock();
+  if(id==="finanzas") renderFinanzas();
+  if(id==="personal") renderPersonal();
+  if(id==="proveedores") renderProveedores();
+}
+
+function actualizarDashboard(){
+  const p=(id,v)=>{ const x=document.getElementById(id); if(x) x.textContent=v; };
+  p("dashPresupuestos",datos.presupuestos.length);
+  p("dashObras",datos.obras.filter(o=>o.estado==="En ejecución").length);
+  p("dashIngresos",dinero(datos.finanzas.filter(m=>m.tipo==="ingreso").reduce((a,m)=>a+m.importe,0)));
+  p("dashStock",datos.stock.reduce((a,s)=>a+s.cantidad,0).toLocaleString("es-AR"));
+  const act=document.getElementById("dashActividad");
+  if(act) act.innerHTML=datos.actividad.length?datos.actividad.slice(0,5).map(a=>`<div style="padding:4px 0;border-bottom:1px solid var(--line);font-size:11px"><strong>${escapar(a.fecha)}</strong>: ${escapar(a.texto)}</div>`).join(""):`<div class="empty">Sin movimientos registrados.</div>`;
+}
+
+function elegirTipoObra(tipo,btn){
+  const sel=document.getElementById("hTipo"); if(sel) sel.value=tipo;
+  document.querySelectorAll(".h-choice").forEach(b=>b.classList.remove("active"));
+  if(btn) btn.classList.add("active");
+  actualizarSeleccionVisual();
+}
+
+function actualizarSeleccionVisual(){
+  const tipo=valor("hTipo"), txt=document.getElementById("hSeleccionTexto");
+  const lL=document.getElementById("lblLargo"), lA=document.getElementById("lblAncho"), lE=document.getElementById("lblEspesor");
+  let n="Elemento";
+  if(tipo==='contrapiso'){ n="Contrapiso de cascote"; if(lL)lL.textContent="Largo (m)"; if(lA)lA.textContent="Ancho (m)"; if(lE)lE.textContent="Espesor (m)"; }
+  else if(tipo==='platea'){ n="Platea de hormigón"; if(lL)lL.textContent="Largo (m)"; if(lA)lA.textContent="Ancho (m)"; if(lE)lE.textContent="Espesor (m)"; }
+  else if(tipo==='carpeta'){ n="Carpeta niveladora"; if(lL)lL.textContent="Largo (m)"; if(lA)lA.textContent="Ancho (m)"; if(lE)lE.textContent="Espesor (m)"; }
+  else if(tipo==='pared_comun'){ n="Pared Ladrillo Común"; if(lL)lL.textContent="Largo muro (m)"; if(lA)lA.textContent="Alto muro (m)"; if(lE)lE.textContent="Espesor (m)"; }
+  else if(tipo==='pared_hueco_8'){ n="Ladrillo Hueco (8x18x33)"; if(lL)lL.textContent="Largo muro (m)"; if(lA)lA.textContent="Alto muro (m)"; if(lE)lE.textContent="Espesor (m)"; }
+  else if(tipo==='pared_hueco_12'){ n="Ladrillo Hueco (12x18x33)"; if(lL)lL.textContent="Largo muro (m)"; if(lA)lA.textContent="Alto muro (m)"; if(lE)lE.textContent="Espesor (m)"; }
+  else if(tipo==='bloque_cemento'){ n="Bloque de Hormigón"; if(lL)lL.textContent="Largo muro (m)"; if(lA)lA.textContent="Alto muro (m)"; if(lE)lE.textContent="Espesor (m)"; }
+  else if(tipo==='losa'){ n="Losa de Hormigón"; if(lL)lL.textContent="Largo (m)"; if(lA)lA.textContent="Ancho (m)"; if(lE)lE.textContent="Espesor (m)"; }
+  else if(tipo==='viga_columna'){ n="Vigas / Columnas"; if(lL)lL.textContent="Largo (m)"; if(lA)lA.textContent="Base (m)"; if(lE)lE.textContent="Alto (m)"; }
+  if(txt) txt.textContent="Seleccionado: "+n;
+}
+
+function calcularPresupuesto(){
+  const m=numero("pCostoMat"), mo=numero("pMano"), d=numero("pDesperdicio"), g=numero("pGanancia");
+  const extra=m*d/100, c=m+extra+mo, u=c*g/100, tot=c+u;
+  ultimoPresupuesto={ cliente:valor("pCliente"), telefono:valor("pTelefono"), trabajo:valor("pTrabajo"), direccion:valor("pDireccion"), materiales:m, mano:mo, desperdicio:d, extra, ganancia:g, costo:c, utilidad:u, total:tot, detalleMat:valor("pDetalleMat"), detalleMano:valor("pDetalleMano"), notas:valor("pNotas"), fecha:fechaHoy() };
+  mostrar("pResultado",`Materiales: ${dinero(m)}\nDesperdicio: ${dinero(extra)}\nMano de obra: ${dinero(mo)}\nGanancia: ${dinero(u)}\nPRECIO FINAL: ${dinero(tot)}`);
+  const comp=document.getElementById("pComputo");
+  if(comp) comp.textContent=`Materiales: ${dinero(m)}\nMano obra: ${dinero(mo)}\nTOTAL: ${dinero(tot)}`;
+}
+
+function guardarPresupuesto(){
+  if(!ultimoPresupuesto) calcularPresupuesto();
+  if(!ultimoPresupuesto || ultimoPresupuesto.total<=0) return alert("Ingresá importes.");
+  datos.presupuestos.unshift({...ultimoPresupuesto, id:Date.now()});
+  actividad("Presupuesto: "+(ultimoPresupuesto.cliente||"Cliente"));
+  guardarDatos(); alert("Presupuesto guardado.");
+}
+
+function renderPresupuestos(){
+  const el=document.getElementById("listaPresupuestos"); if(!el) return;
+  el.innerHTML=datos.presupuestos.length?`<div class="tablewrap"><table><tr><th>Fecha</th><th>Cliente</th><th>Trabajo</th><th>Total</th></tr>${datos.presupuestos.map(p=>`<tr><td>${escapar(p.fecha)}</td><td>${escapar(p.cliente)}</td><td>${escapar(p.trabajo)}</td><td><strong>${dinero(p.total)}</strong></td></tr>`).join("")}</table></div>`:`<div class="empty">Sin presupuestos guardados.</div>`;
+}
+
+function calcularHormigon(){
+  const t=valor("hTipo"), p1=numero("hLargo"), p2=numero("hAncho"), p3=numero("hEspesor"), d=numero("hDesperdicio"), dos=valor("hDosificacion");
+  if(!p1||!p2) return alert("Completá las medidas.");
+  let txt="", cTot=0;
+
+  const prCem=numero("hCemento"), prCal=numero("hCal"), prAre=numero("hArena"), prPie=numero("hPiedra"), prLad=numero("hLadrilloPrecio");
+
+  if(t.includes("pared")||t.includes("bloque")){
+    const sup=p1*p2, supF=sup*(1+d/100);
+    let cant=0, cemR=0, calR=0, areR=0;
+    if(t==='pared_comun'){ cant=supF*60; cemR=supF*3.2; calR=supF*0.45; areR=supF*0.035; }
+    else if(t==='pared_hueco_8'||t==='pared_hueco_12'){ cant=supF*15; cemR=supF*2.5; calR=supF*0.35; areR=supF*0.025; }
+    else if(t==='bloque_cemento'){ cant=supF*12.5; cemR=supF*2.2; calR=supF*0.3; areR=supF*0.022; }
+
+    const bolsasCem=cemR/50, bolsasCal=calR/25;
+    cTot=(cant*prLad)+(bolsasCem*prCem)+(bolsasCal*prCal)+(areR*prAre);
+
+    txt=`Muro: ${sup.toFixed(2)} m² (con desperdicio: ${supF.toFixed(2)} m²)
+Ladrillos / Bloques: ${Math.ceil(cant)} unidades
+Cemento estim.: ${bolsasCem.toFixed(1)} bolsas (50kg)
+Cal estim.: ${bolsasCal.toFixed(1)} bolsas (25kg)
+Arena estim.: ${areR.toFixed(2)} m³
+---------------------------------
+Costo total materiales: ${dinero(cTot)}`;
+  } else {
+    const esp=p3||0.12, vol=p1*p2*esp, volF=vol*(1+d/100);
+    let cKg=0, calKg=0, arM3=0, pieM3=0;
+
+    if(dos==='contrapiso_pobre'||t==='contrapiso'){
+      cKg=volF*105; calKg=volF*100; arM3=volF*0.45; pieM3=volF*0.85; 
+    } else if(dos==='carpeta_cemento'||t==='carpeta'){
+      cKg=volF*450; calKg=0; arM3=volF*1.05; pieM3=0;
+    } else if(dos==='h21'||t==='losa'||t==='viga_columna'||t==='platea'){
+      cKg=volF*350; calKg=0; arM3=volF*0.65; pieM3=volF*0.68;
+    } else {
+      cKg=volF*300; calKg=0; arM3=volF*0.7; pieM3=volF*0.7;
+    }
+
+    const bCem=cKg/50, bCal=calKg/25;
+    cTot=(bCem*prCem)+(bCal*prCal)+(arM3*prAre)+(pieM3*prPie);
+
+    txt=`Volumen: ${vol.toFixed(2)} m³ (con desperdicio: ${volF.toFixed(2)} m³)
+Cemento: ${bCem.toFixed(1)} bolsas (50kg)
+${calKg>0?`Cal: ${bCal.toFixed(1)} bolsas (25kg)\n`:''}Arena: ${arM3.toFixed(2)} m³
+${pieM3>0?`Piedra/Cascote: ${pieM3.toFixed(2)} m³\n`:''}---------------------------------
+Costo total materiales: ${dinero(cTot)}`;
+  }
+  mostrar("hResultado",txt);
+}
+
+function calcularFrigorias(){
+  const l=numero("cLargo"), a=numero("cAncho"), alt=numero("cAlto")||2.7, p=numero("cPersonas")||1;
+  if(!l||!a) return alert("Completá largo y ancho.");
+  const vol=l*a*alt, tot=(vol*50+Math.max(0,p-1)*150)*numero("cSol")*numero("cEquipos");
+  const op=[2250,2500,3000,3500,4500,5000,5500,6000,7000,9000,12000];
+  const el=op.find(x=>x>=tot)||12000;
+  mostrar("cResultado",`Superficie: ${(l*a).toFixed(2)} m² | Volumen: ${vol.toFixed(2)} m³\nDemanda estimada: ${Math.ceil(tot)} fg\nEquipo recomendado: ${el} fg`);
+}
+
+function guardarClimatizacion(){
+  if(!valor("cCliente")) return alert("Ingresá el cliente.");
+  datos.climatizacion.unshift({ id:Date.now(), cliente:valor("cCliente"), telefono:valor("cTelefono"), direccion:valor("cDireccion"), equipo:valor("cEquipo"), capacidad:valor("cCapacidad"), trabajo:valor("cTrabajo"), materiales:numero("cMateriales"), mano:numero("cMano"), fecha:fechaHoy() });
+  actividad("Climatización: "+valor("cCliente")); guardarDatos(); alert("Instalación guardada.");
+}
+function renderClimatizacion(){ const el=document.getElementById("listaClimatizacion"); if(el) el.innerHTML=datos.climatizacion.length?`<div class="tablewrap"><table><tr><th>Fecha</th><th>Cliente</th><th>Equipo</th><th>Trabajo</th></tr>${datos.climatizacion.map(x=>`<tr><td>${escapar(x.fecha)}</td><td>${escapar(x.cliente)}</td><td>${escapar(x.equipo)} ${escapar(x.capacidad)}</td><td>${escapar(x.trabajo)}</td></tr>`).join("")}</table></div>`:`<div class="empty">Sin instalaciones.</div>`; }
+
+function guardarObra(){
+  if(!valor("oNombre")) return alert("Ingresá nombre de obra.");
+  datos.obras.unshift({ id:Date.now(), nombre:valor("oNombre"), cliente:valor("oCliente"), telefono:valor("oTelefono"), fecha:valor("oFecha")||fechaHoy(), direccion:valor("oDireccion"), presupuesto:numero("oPresupuesto"), estado:valor("oEstado"), detalle:valor("oDetalle") });
+  actividad("Obra: "+valor("oNombre")); guardarDatos(); alert("Obra guardada.");
+}
+function renderObras(){ const el=document.getElementById("listaObras"); if(el) el.innerHTML=datos.obras.length?`<div class="tablewrap"><table><tr><th>Obra</th><th>Cliente</th><th>Fecha</th><th>Estado</th></tr>${datos.obras.map(o=>`<tr><td><strong>${escapar(o.nombre)}</strong></td><td>${escapar(o.cliente)}</td><td>${escapar(o.fecha)}</td><td><span class="pill">${escapar(o.estado)}</span></td></tr>`).join("")}</table></div>`:`<div class="empty">Sin obras registradas.</div>`; }
+
+function guardarRecibo(){
+  const imp=numero("rImporte"); if(!valor("rCliente")||!imp) return alert("Completá cliente e importe.");
+  ultimoRecibo={ id:Date.now(), cliente:valor("rCliente"), fecha:valor("rFecha")||fechaHoy(), concepto:valor("rConcepto"), importe:imp, metodo:valor("rMetodo"), tipo:valor("rTipo") };
+  datos.recibos.unshift(ultimoRecibo); actividad("Recibo: "+dinero(imp)); guardarDatos(); mostrar("rVista",`RECIBO - ${ultimoRecibo.fecha}\nPersona: ${ultimoRecibo.cliente}\nImporte: ${dinero(imp)}`); alert("Recibo guardado.");
+}
+function renderRecibos(){ const el=document.getElementById("listaRecibos"); if(el) el.innerHTML=datos.recibos.length?`<div class="tablewrap"><table><tr><th>Fecha</th><th>Persona</th><th>Tipo</th><th>Importe</th></tr>${datos.recibos.map(r=>`<tr><td>${escapar(r.fecha)}</td><td>${escapar(r.cliente)}</td><td>${r.tipo==="ingreso"?"Cobro":"Pago"}</td><td>${dinero(r.importe)}</td></tr>`).join("")}</table></div>`:`<div class="empty">Sin recibos.</div>`; }
+
+function guardarStock(){
+  const n=valor("sNombre"); if(!n) return alert("Ingresá nombre.");
+  datos.stock.unshift({ id:Date.now(), nombre:n, categoria:valor("sCategoria"), unidad:valor("sUnidad"), cantidad:numero("sCantidad"), costo:numero("sCosto"), minimo:numero("sMinimo") });
+  actividad("Stock: "+n); guardarDatos(); alert("Material guardado.");
+}
+function renderStock(){
+  const el=document.getElementById("listaStock"); if(!el) return;
+  const p=(id,v)=>{ const x=document.getElementById(id); if(x) x.textContent=v; };
+  p("sTotal",datos.stock.length); p("sUnidades",datos.stock.reduce((a,s)=>a+s.cantidad,0));
+  p("sBajo",datos.stock.filter(s=>s.cantidad<=s.minimo).length); p("sValor",dinero(datos.stock.reduce((a,s)=>a+s.cantidad*s.costo,0)));
+  el.innerHTML=datos.stock.length?`<div class="tablewrap"><table><tr><th>Material</th><th>Cantidad</th><th>Costo unit.</th></tr>${datos.stock.map(s=>`<tr><td><strong>${escapar(s.nombre)}</strong></td><td>${s.cantidad} ${escapar(s.unidad)}</td><td>${dinero(s.costo)}</td></tr>`).join("")}</table></div>`:`<div class="empty">Sin inventario.</div>`;
+}
+
+function guardarMovimiento(){
+  const imp=numero("fImporte"); if(!valor("fConcepto")||!imp) return alert("Completá datos.");
+  datos.finanzas.unshift({ id:Date.now(), tipo:valor("fTipo"), fecha:valor("fFecha")||fechaHoy(), concepto:valor("fConcepto"), importe:imp });
+  actividad("Caja: "+valor("fConcepto")); guardarDatos(); alert("Movimiento guardado.");
+}
+function renderFinanzas(){
+  const el=document.getElementById("listaFinanzas"); if(!el) return;
+  const ing=datos.finanzas.filter(m=>m.tipo==="ingreso").reduce((a,m)=>a+m.importe,0);
+  const gas=datos.finanzas.filter(m=>m.tipo==="gasto").reduce((a,m)=>a+m.importe,0);
+  const p=(id,v)=>{ const x=document.getElementById(id); if(x) x.textContent=v; };
+  p("fIngresos",dinero(ing)); p("fGastos",dinero(gas)); p("fSaldo",dinero(ing-gas)); p("fMovimientos",datos.finanzas.length);
+  el.innerHTML=datos.finanzas.length?`<div class="tablewrap"><table><tr><th>Fecha</th><th>Tipo</th><th>Concepto</th><th>Importe</th></tr>${datos.finanzas.map(m=>`<tr><td>${escapar(m.fecha)}</td><td><span class="pill ${m.tipo==="ingreso"?"ok":""}">${m.tipo==="ingreso"?"Ingreso":"Gasto"}</span></td><td>${escapar(m.concepto)}</td><td>${dinero(m.importe)}</td></tr>`).join("")}</table></div>`:`<div class="empty">Sin movimientos.</div>`;
+}
+
+function guardarPersonal(){
+  if(!valor("peNombre")) return alert("Ingresá nombre.");
+  datos.personal.unshift({ id:Date.now(), nombre:valor("peNombre"), telefono:valor("peTelefono"), especialidad:valor("peEspecialidad"), jornal:numero("peJornal") });
+  actividad("Personal: "+valor("peNombre")); guardarDatos(); alert("Trabajador guardado.");
+}
+function renderPersonal(){ const el=document.getElementById("listaPersonal"); if(el) el.innerHTML=datos.personal.length?`<div class="tablewrap"><table><tr><th>Nombre</th><th>Rubro</th><th>Jornal</th></tr>${datos.personal.map(p=>`<tr><td>${escapar(p.nombre)}</td><td>${escapar(p.especialidad)}</td><td>${dinero(p.jornal)}</td></tr>`).join("")}</table></div>`:`<div class="empty">Sin registros.</div>`; }
+
+function guardarProveedor(){
+  if(!valor("prNombre")) return alert("Ingresá empresa.");
+  datos.proveedores.unshift({ id:Date.now(), nombre:valor("prNombre"), contacto:valor("prContacto"), telefono:valor("prTelefono"), rubro:valor("prRubro") });
+  actividad("Proveedor: "+valor("prNombre")); guardarDatos(); alert("Proveedor guardado.");
+}
+function renderProveedores(){ const el=document.getElementById("listaProveedores"); if(el) el.innerHTML=datos.proveedores.length?`<div class="tablewrap"><table><tr><th>Empresa</th><th>Contacto</th><th>Rubro</th></tr>${datos.proveedores.map(p=>`<tr><td><strong>${escapar(p.nombre)}</strong></td><td>${escapar(p.contacto)}</td><td>${escapar(p.rubro)}</td></tr>`).join("")}</table></div>`:`<div class="empty">Sin proveedores.</div>`; }
+
+function exportarDatos(){
+  try{
+    const blob=new Blob([JSON.stringify(datos,null,2)],{type:"application/json"});
+    const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="ObrasPro_respaldo_"+fechaHoy()+".json";
+    document.body.appendChild(a); a.click(); a.remove(); alert("Copia exportada.");
+  }catch(e){ alert("Error al exportar."); }
+}
+
+function importarDatos(e){
+  const file=e.target.files&&e.target.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=()=>{
+    try{
+      const imp=JSON.parse(reader.result);
+      if(!imp||typeof imp!=="object") throw new Error();
+      datos=Object.assign(nuevoEstado(),imp); guardarDatos(); alert("Datos restaurados.");
+    }catch(err){ alert("Archivo no válido."); }
+  };
+  reader.readAsText(file);
+}
+
+window.addEventListener("DOMContentLoaded",()=>{
+  cargarDatos(); actualizarDashboard(); actualizarSeleccionVisual();
+});
+</script>
+</body>
+</html>
