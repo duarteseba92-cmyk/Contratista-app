@@ -118,7 +118,7 @@ td strong{font-weight:800}
 <aside class="sidebar">
   <button class="navbtn active" onclick="irA('dashboard',this)"><span class="navicon">▦</span>Panel principal</button>
   <button class="navbtn" onclick="irA('presupuestos',this)"><span class="navicon">▤</span>Presupuestos</button>
-  <button class="navbtn" onclick="irA('hormigon',this)"><span class="navicon">▧</span>Hormigón y albañilería</button>
+  <button class="navbtn" onclick="irA('hormigon',this)"><span class="navicon">▧</span>Albañilería y Superficies</button>
   <button class="navbtn" onclick="irA('climatizacion',this)"><span class="navicon">❄</span>Climatización</button>
   <button class="navbtn" onclick="irA('obras',this)"><span class="navicon">⌂</span>Obras</button>
   <button class="navbtn" onclick="irA('recibos',this)"><span class="navicon">▣</span>Recibos</button>
@@ -140,7 +140,7 @@ td strong{font-weight:800}
   <div class="grid2">
     <div class="card"><h3>Accesos rápidos</h3><div class="quickgrid">
       <button class="quick" onclick="irA('presupuestos')">Presupuestos<small>Crear y calcular</small></button>
-      <button class="quick" onclick="irA('hormigon')">Albañilería<small>Cómputo métrico</small></button>
+      <button class="quick" onclick="irA('hormigon')">Albañilería & m²<small>Pisos, pintura, muros</small></button>
       <button class="quick" onclick="irA('climatizacion')">Climatización<small>Equipos y aire</small></button>
       <button class="quick" onclick="irA('obras')">Obras<small>Seguimiento</small></button>
       <button class="quick" onclick="irA('stock')">Materiales<small>Inventario</small></button>
@@ -183,77 +183,69 @@ td strong{font-weight:800}
   <div class="card"><h3>Presupuestos guardados</h3><div id="listaPresupuestos" class="empty">Sin presupuestos guardados.</div></div>
 </section>
 
+<!-- SECCIÓN ALBAÑILERÍA, PISOS Y PINTURA POR M² -->
 <section class="page" id="hormigon">
-  <div class="pagehead"><div><h2>Hormigón y albañilería</h2><p>Cálculo de mezclas, estructuras, muros y pisos</p></div></div>
+  <div class="pagehead"><div><h2>Albañilería y Superficies (m²)</h2><p>Cálculo de pisos, porcelanatos, pintura, muros y estructuras</p></div></div>
   <div class="grid2">
     <div class="card">
-      <h3>Calculadora de obra</h3>
+      <h3>Calculadora por Metro Cuadrado</h3>
       <div class="formgrid">
-        <div class="field full"><label>Elemento a calcular</label>
+        <div class="field full"><label>Categoría y tipo de trabajo</label>
           <div class="h-choice-wrap">
             <div class="h-choice-group">
-              <h4>Pisos y Bases</h4>
+              <h4>Pisos y Revestimientos (m²)</h4>
               <div class="h-choice-grid">
-                <button type="button" class="h-choice active" onclick="elegirTipoObra('contrapiso', this)">Contrapiso de cascote</button>
-                <button type="button" class="h-choice" onclick="elegirTipoObra('platea', this)">Platea de hormigón</button>
-                <button type="button" class="h-choice" onclick="elegirTipoObra('carpeta', this)">Carpeta niveladora</button>
+                <button type="button" class="h-choice active" onclick="elegirTipoObra('porcelanato', this)">Porcelanato / Cerámica</button>
+                <button type="button" class="h-choice" onclick="elegirTipoObra('carpeta', this)">Carpeta Niveladora</button>
+                <button type="button" class="h-choice" onclick="elegirTipoObra('contrapiso', this)">Contrapiso</button>
               </div>
             </div>
             <div class="h-choice-group">
-              <h4>Muros y Paredes</h4>
+              <h4>Terminaciones y Pintura (m²)</h4>
+              <div class="h-choice-grid">
+                <button type="button" class="h-choice" onclick="elegirTipoObra('pintura_latex', this)">Pintura Látex / Paredes</button>
+                <button type="button" class="h-choice" onclick="elegirTipoObra('revoque', this)">Revoque Grueso / Fino</button>
+              </div>
+            </div>
+            <div class="h-choice-group">
+              <h4>Muros y Estructuras</h4>
               <div class="h-choice-grid">
                 <button type="button" class="h-choice" onclick="elegirTipoObra('pared_comun', this)">Pared Ladrillo Común</button>
-                <button type="button" class="h-choice" onclick="elegirTipoObra('pared_hueco_8', this)">Ladrillo Hueco (8x18x33)</button>
-                <button type="button" class="h-choice" onclick="elegirTipoObra('pared_hueco_12', this)">Ladrillo Hueco (12x18x33)</button>
-                <button type="button" class="h-choice" onclick="elegirTipoObra('bloque_cemento', this)">Bloque de Hormigón</button>
-              </div>
-            </div>
-            <div class="h-choice-group">
-              <h4>Estructuras Armadas</h4>
-              <div class="h-choice-grid">
-                <button type="button" class="h-choice" onclick="elegirTipoObra('losa', this)">Losa de Hormigón</button>
-                <button type="button" class="h-choice" onclick="elegirTipoObra('viga_columna', this)">Vigas / Columnas</button>
+                <button type="button" class="h-choice" onclick="elegirTipoObra('pared_hueco_12', this)">Ladrillo Hueco (12cm)</button>
+                <button type="button" class="h-choice" onclick="elegirTipoObra('losa_hormigon', this)">Losa / Platea (m³)</button>
               </div>
             </div>
           </div>
           <select id="hTipo" class="h-tipo-source" onchange="actualizarSeleccionVisual()">
-            <option value="contrapiso">Contrapiso de cascote</option>
-            <option value="platea">Platea de hormigón</option>
-            <option value="carpeta">Carpeta niveladora</option>
+            <option value="porcelanato">Porcelanato / Cerámica</option>
+            <option value="carpeta">Carpeta Niveladora</option>
+            <option value="contrapiso">Contrapiso</option>
+            <option value="pintura_latex">Pintura Látex / Paredes</option>
+            <option value="revoque">Revoque Grueso / Fino</option>
             <option value="pared_comun">Pared Ladrillo Común</option>
-            <option value="pared_hueco_8">Ladrillo Hueco (8x18x33)</option>
-            <option value="pared_hueco_12">Ladrillo Hueco (12x18x33)</option>
-            <option value="bloque_cemento">Bloque de Hormigón</option>
-            <option value="losa">Losa de Hormigón</option>
-            <option value="viga_columna">Vigas / Columnas</option>
+            <option value="pared_hueco_12">Ladrillo Hueco (12cm)</option>
+            <option value="losa_hormigon">Losa / Platea (m³)</option>
           </select>
-          <div id="hSeleccionTexto" class="h-selected">Seleccionado: Contrapiso de cascote</div>
+          <div id="hSeleccionTexto" class="h-selected">Seleccionado: Porcelanato / Cerámica</div>
         </div>
-        <div class="field"><label id="lblLargo">Largo (m)</label><input id="hLargo" type="number" step="0.01" placeholder="0"></div>
-        <div class="field"><label id="lblAncho">Ancho (m)</label><input id="hAncho" type="number" step="0.01" placeholder="0"></div>
-        <div class="field"><label id="lblEspesor">Espesor/Alto (m)</label><input id="hEspesor" type="number" step="0.01" placeholder="0"></div>
-        <div class="field"><label>Desperdicio (%)</label><input id="hDesperdicio" type="number" value="10"></div>
+
+        <div class="field"><label id="lblLargo">Superficie (m²)</label><input id="hLargo" type="number" step="0.01" placeholder="Ej. 45 m² o Largo"></div>
+        <div class="field"><label id="lblAncho">Ancho / Altura (m)</label><input id="hAncho" type="number" step="0.01" placeholder="Opcional si usas m² directos"></div>
+        <div class="field" id="fieldEspesor"><label id="lblEspesor">Espesor (m) / Manos de pintura</label><input id="hEspesor" type="number" step="0.01" value="2"></div>
+        <div class="field"><label>Desperdicio / Merma (%)</label><input id="hDesperdicio" type="number" value="10"></div>
       </div>
-      <div class="actions"><button class="btn primary" onclick="calcularHormigon()">Calcular</button></div>
+      <div class="actions"><button class="btn primary" onclick="calcularHormigon()">Calcular Materiales</button></div>
       <div id="hResultado" class="result hidden"></div>
     </div>
     <div class="card">
-      <h3>Precios de insumos</h3>
+      <h3>Precios Unitarios de Insumos</h3>
       <div class="formgrid">
-        <div class="field full"><label>Dosificación / Mezcla</label>
-          <select id="hDosificacion">
-            <option value="h17">Hormigón H-17 (1:2.5:4 Cemento/Arena/Piedra)</option>
-            <option value="h21">Hormigón H-21 Estructural (1:2:3 Cemento/Arena/Piedra)</option>
-            <option value="contrapiso_pobre">Contrapiso Pobre (1/4 Cemento : 1 Cal : 4 Arena : 8 Cascote)</option>
-            <option value="mortero_asiento">Mortero Asiento Ladrillos (1/2 Cemento : 1 Cal : 4 Arena)</option>
-            <option value="carpeta_cemento">Carpeta Cemento Pura (1 Cemento : 3 Arena)</option>
-          </select>
-        </div>
         <div class="field"><label>Cemento ($/bolsa 50kg)</label><input id="hCemento" type="number" placeholder="0"></div>
         <div class="field"><label>Cal ($/bolsa 25kg)</label><input id="hCal" type="number" placeholder="0"></div>
         <div class="field"><label>Arena ($/m³)</label><input id="hArena" type="number" placeholder="0"></div>
         <div class="field"><label>Piedra / Cascote ($/m³)</label><input id="hPiedra" type="number" placeholder="0"></div>
-        <div class="field"><label>Ladrillo / Bloque ($/u)</label><input id="hLadrilloPrecio" type="number" placeholder="0"></div>
+        <div class="field"><label>Pegamento cerámico / Ladrillo ($)</label><input id="hPegamento" type="number" placeholder="0"></div>
+        <div class="field"><label>Pintura / Revestimiento ($/litro o u)</label><input id="hPinturaPrecio" type="number" placeholder="0"></div>
       </div>
     </div>
   </div>
@@ -410,7 +402,7 @@ td strong{font-weight:800}
 <nav class="bottomnav">
   <button class="active" onclick="irA('dashboard',this)"><span>▦</span>Inicio</button>
   <button onclick="irA('presupuestos',this)"><span>▤</span>Presup.</button>
-  <button onclick="irA('hormigon',this)"><span>▧</span>Hormigón</button>
+  <button onclick="irA('hormigon',this)"><span>▧</span>Albañilería</button>
   <button onclick="irA('climatizacion',this)"><span>❄</span>Aire</button>
   <button onclick="irA('obras',this)"><span>⌂</span>Obras</button>
   <button onclick="irA('stock',this)"><span>▤</span>Stock</button>
@@ -475,15 +467,14 @@ function actualizarSeleccionVisual(){
   const tipo=valor("hTipo"), txt=document.getElementById("hSeleccionTexto");
   const lL=document.getElementById("lblLargo"), lA=document.getElementById("lblAncho"), lE=document.getElementById("lblEspesor");
   let n="Elemento";
-  if(tipo==='contrapiso'){ n="Contrapiso de cascote"; if(lL)lL.textContent="Largo (m)"; if(lA)lA.textContent="Ancho (m)"; if(lE)lE.textContent="Espesor (m)"; }
-  else if(tipo==='platea'){ n="Platea de hormigón"; if(lL)lL.textContent="Largo (m)"; if(lA)lA.textContent="Ancho (m)"; if(lE)lE.textContent="Espesor (m)"; }
-  else if(tipo==='carpeta'){ n="Carpeta niveladora"; if(lL)lL.textContent="Largo (m)"; if(lA)lA.textContent="Ancho (m)"; if(lE)lE.textContent="Espesor (m)"; }
+  if(tipo==='porcelanato'){ n="Porcelanato / Cerámica (m²)"; if(lL)lL.textContent="Superficie a cubrir (m²)"; if(lA)lA.textContent="Ancho / Largo opcional (m)"; if(lE)lE.textContent="Pegamento (bolsas x 30kg)"; }
+  else if(tipo==='carpeta'){ n="Carpeta Niveladora (m²)"; if(lL)lL.textContent="Superficie (m²)"; if(lA)lA.textContent="Ancho opcional (m)"; if(lE)lE.textContent="Espesor (m, ej: 0.02)"; }
+  else if(tipo==='contrapiso'){ n="Contrapiso (m² o m³)"; if(lL)lL.textContent="Superficie (m²)"; if(lA)lA.textContent="Ancho opcional (m)"; if(lE)lE.textContent="Espesor (m, ej: 0.10)"; }
+  else if(tipo==='pintura_latex'){ n="Pintura Látex / Paredes (m²)"; if(lL)lL.textContent="Superficie de paredes (m²)"; if(lA)lA.textContent="Ancho opcional (m)"; if(lE)lE.textContent="Cantidad de manos"; }
+  else if(tipo==='revoque'){ n="Revoque Grueso / Fino (m²)"; if(lL)lL.textContent="Superficie (m²)"; if(lA)lA.textContent="Ancho opcional (m)"; if(lE)lE.textContent="Espesor total (m)"; }
   else if(tipo==='pared_comun'){ n="Pared Ladrillo Común"; if(lL)lL.textContent="Largo muro (m)"; if(lA)lA.textContent="Alto muro (m)"; if(lE)lE.textContent="Espesor (m)"; }
-  else if(tipo==='pared_hueco_8'){ n="Ladrillo Hueco (8x18x33)"; if(lL)lL.textContent="Largo muro (m)"; if(lA)lA.textContent="Alto muro (m)"; if(lE)lE.textContent="Espesor (m)"; }
-  else if(tipo==='pared_hueco_12'){ n="Ladrillo Hueco (12x18x33)"; if(lL)lL.textContent="Largo muro (m)"; if(lA)lA.textContent="Alto muro (m)"; if(lE)lE.textContent="Espesor (m)"; }
-  else if(tipo==='bloque_cemento'){ n="Bloque de Hormigón"; if(lL)lL.textContent="Largo muro (m)"; if(lA)lA.textContent="Alto muro (m)"; if(lE)lE.textContent="Espesor (m)"; }
-  else if(tipo==='losa'){ n="Losa de Hormigón"; if(lL)lL.textContent="Largo (m)"; if(lA)lA.textContent="Ancho (m)"; if(lE)lE.textContent="Espesor (m)"; }
-  else if(tipo==='viga_columna'){ n="Vigas / Columnas"; if(lL)lL.textContent="Largo (m)"; if(lA)lA.textContent="Base (m)"; if(lE)lE.textContent="Alto (m)"; }
+  else if(tipo==='pared_hueco_12'){ n="Ladrillo Hueco (12cm)"; if(lL)lL.textContent="Largo muro (m)"; if(lA)lA.textContent="Alto muro (m)"; if(lE)lE.textContent="Espesor (m)"; }
+  else if(tipo==='losa_hormigon'){ n="Losa / Platea (Volumen m³)"; if(lL)lL.textContent="Largo (m)"; if(lA)lA.textContent="Ancho (m)"; if(lE)lE.textContent="Espesor (m)"; }
   if(txt) txt.textContent="Seleccionado: "+n;
 }
 
@@ -510,53 +501,91 @@ function renderPresupuestos(){
 }
 
 function calcularHormigon(){
-  const t=valor("hTipo"), p1=numero("hLargo"), p2=numero("hAncho"), p3=numero("hEspesor"), d=numero("hDesperdicio"), dos=valor("hDosificacion");
-  if(!p1||!p2) return alert("Completá las medidas.");
+  const t=valor("hTipo");
+  let val1=numero("hLargo"), val2=numero("hAncho");
+  const p3=numero("hEspesor"), d=numero("hDesperdicio");
+
+  // Si ingresó ancho y largo, calculamos m² automáticos si corresponde
+  let supM2 = val1;
+  if(val2 > 0 && (t.includes('porcelanato') || t.includes('carpeta') || t.includes('contrapiso') || t.includes('pintura') || t.includes('revoque'))) {
+    if(val1 > 0 && val2 > 0 && val1 < 20 && val2 < 20) { 
+      // Probablemente sean medidas lineales (largo x ancho)
+      supM2 = val1 * val2;
+    }
+  }
+
+  const prCem=numero("hCemento"), prCal=numero("hCal"), prAre=numero("hArena"), prPie=numero("hPiedra"), prPeg=numero("hPegamento"), prPin=numero("hPinturaPrecio");
   let txt="", cTot=0;
 
-  const prCem=numero("hCemento"), prCal=numero("hCal"), prAre=numero("hArena"), prPie=numero("hPiedra"), prLad=numero("hLadrilloPrecio");
-
-  if(t.includes("pared")||t.includes("bloque")){
-    const sup=p1*p2, supF=sup*(1+d/100);
-    let cant=0, cemR=0, calR=0, areR=0;
-    if(t==='pared_comun'){ cant=supF*60; cemR=supF*3.2; calR=supF*0.45; areR=supF*0.035; }
-    else if(t==='pared_hueco_8'||t==='pared_hueco_12'){ cant=supF*15; cemR=supF*2.5; calR=supF*0.35; areR=supF*0.025; }
-    else if(t==='bloque_cemento'){ cant=supF*12.5; cemR=supF*2.2; calR=supF*0.3; areR=supF*0.022; }
-
-    const bolsasCem=cemR/50, bolsasCal=calR/25;
-    cTot=(cant*prLad)+(bolsasCem*prCem)+(bolsasCal*prCal)+(areR*prAre);
-
-    txt=`Muro: ${sup.toFixed(2)} m² (con desperdicio: ${supF.toFixed(2)} m²)
-Ladrillos / Bloques: ${Math.ceil(cant)} unidades
-Cemento estim.: ${bolsasCem.toFixed(1)} bolsas (50kg)
-Cal estim.: ${bolsasCal.toFixed(1)} bolsas (25kg)
-Arena estim.: ${areR.toFixed(2)} m³
+  if(t==='porcelanato'){
+    const supF = supM2 * (1 + d/100);
+    const bolsasPegamento = Math.ceil(supF / 4.5); // aprox 1 bolsa cada 4-5 m²
+    const pastinaKg = Math.ceil(supF * 0.3);
+    cTot = (bolsasPegamento * (prPeg || 8000)) + (supF * 1500); // 1500 ref pastina/extras
+    txt = `Superficie porcelanato/cerámica: ${supM2.toFixed(2)} m² (con ${d}% desperdicio: ${supF.toFixed(2)} m²)
+Pegamento cerámico estimado: ${bolsasPegamento} bolsas (30kg)
+Pastina estimada: ${pastinaKg} kg
 ---------------------------------
-Costo total materiales: ${dinero(cTot)}`;
-  } else {
-    const esp=p3||0.12, vol=p1*p2*esp, volF=vol*(1+d/100);
-    let cKg=0, calKg=0, arM3=0, pieM3=0;
+Costo estimado materiales: ${dinero(cTot)}`;
+  } 
+  else if(t==='pintura_latex'){
+    const manos = p3 || 2;
+    const rendimientoLitroPorM2 = 10; // 10 m² por litro por mano aprox
+    const litrosTotales = (supM2 * manos) / rendimientoLitroPorM2;
+    const baldes20L = Math.ceil(litrosTotales / 20);
+    cTot = litrosTotales * (prPin || 6000);
+    txt = `Superficie a pintar: ${supM2.toFixed(2)} m² (${manos} manos)
+Litros estimados de látex: ${litrosTotales.toFixed(1)} litros
+Equivalente en baldes de 20L: ${baldes20L} baldes
+---------------------------------
+Costo estimado pintura: ${dinero(cTot)}`;
+  }
+  else if(t==='carpeta' || t==='contrapiso'){
+    const esp = p3 || (t==='carpeta'? 0.02 : 0.10);
+    const vol = supM2 * esp;
+    const volF = vol * (1 + d/100);
+    const cKg = t==='carpeta'? volF * 450 : volF * 105;
+    const calKg = t==='carpeta'? 0 : volF * 100;
+    const arM3 = t==='carpeta'? volF * 1.05 : volF * 0.45;
+    const pieCascote = t==='carpeta'? 0 : volF * 0.85;
 
-    if(dos==='contrapiso_pobre'||t==='contrapiso'){
-      cKg=volF*105; calKg=volF*100; arM3=volF*0.45; pieM3=volF*0.85; 
-    } else if(dos==='carpeta_cemento'||t==='carpeta'){
-      cKg=volF*450; calKg=0; arM3=volF*1.05; pieM3=0;
-    } else if(dos==='h21'||t==='losa'||t==='viga_columna'||t==='platea'){
-      cKg=volF*350; calKg=0; arM3=volF*0.65; pieM3=volF*0.68;
-    } else {
-      cKg=volF*300; calKg=0; arM3=volF*0.7; pieM3=volF*0.7;
-    }
+    const bCem = cKg / 50, bCal = calKg / 25;
+    cTot = (bCem * prCem) + (bCal * prCal) + (arM3 * prAre) + (pieCascote * prPie);
 
-    const bCem=cKg/50, bCal=calKg/25;
-    cTot=(bCem*prCem)+(bCal*prCal)+(arM3*prAre)+(pieM3*prPie);
-
-    txt=`Volumen: ${vol.toFixed(2)} m³ (con desperdicio: ${volF.toFixed(2)} m³)
+    txt = `Superficie: ${supM2.toFixed(2)} m² | Espesor: ${esp} m (Volumen: ${volF.toFixed(2)} m³)
 Cemento: ${bCem.toFixed(1)} bolsas (50kg)
 ${calKg>0?`Cal: ${bCal.toFixed(1)} bolsas (25kg)\n`:''}Arena: ${arM3.toFixed(2)} m³
-${pieM3>0?`Piedra/Cascote: ${pieM3.toFixed(2)} m³\n`:''}---------------------------------
+${pieCascote>0?`Piedra/Cascote: ${pieCascote.toFixed(2)} m³\n`:''}---------------------------------
 Costo total materiales: ${dinero(cTot)}`;
   }
-  mostrar("hResultado",txt);
+  else if(t.includes("pared")){
+    const sup = val1 * val2, supF = sup * (1 + d/100);
+    const cant = supF * (t==='pared_comun'? 60 : 15);
+    const cemR = supF * (t==='pared_comun'? 3.2 : 2.5);
+    const calR = supF * 0.4;
+    const areR = supF * 0.03;
+    const bCem = cemR / 50, bCal = calR / 25;
+    cTot = (cant * (prPeg||350)) + (bCem * prCem) + (bCal * prCal) + (areR * prAre);
+
+    txt = `Muro: ${sup.toFixed(2)} m² (con desperdicio: ${supF.toFixed(2)} m²)
+Ladrillos estimados: ${Math.ceil(cant)} unidades
+Cemento: ${bCem.toFixed(1)} bolsas | Cal: ${bCal.toFixed(1)} bolsas | Arena: ${areR.toFixed(2)} m³
+---------------------------------
+Costo total materiales: ${dinero(cTot)}`;
+  }
+  else {
+    // Losa o volumen directo en m³
+    const vol = val1 * val2 * (p3 || 0.15), volF = vol * (1 + d/100);
+    const bCem = (volF * 300) / 50, ar = volF * 0.7, pie = volF * 0.7;
+    cTot = (bCem * prCem) + (ar * prAre) + (pie * prPie);
+    txt = `Volumen de hormigón: ${volF.toFixed(2)} m³
+Cemento: ${bCem.toFixed(1)} bolsas (50kg)
+Arena: ${ar.toFixed(2)} m³ | Piedra: ${pie.toFixed(2)} m³
+---------------------------------
+Costo total materiales: ${dinero(cTot)}`;
+  }
+
+  mostrar("hResultado", txt);
 }
 
 function calcularFrigorias(){
