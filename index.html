@@ -2,96 +2,108 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta name="theme-color" content="#0b1020">
 <title>ObrasPro Total Premium</title>
 <link rel="manifest" href="manifest.json">
 <style>
 :root{--bg:#090e1a;--panel:#111a2d;--panel2:#17233b;--input:#0d1628;--line:#293957;--text:#f3f6fc;--muted:#9aa9c2;--gold:#f5ad27;--gold2:#ffd27a;--green:#2dd4a0;--red:#fb7185;--blue:#66b8ff;--radius:18px;--shadow:0 16px 40px #0005}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:radial-gradient(ellipse at top right,#17233b 0,transparent 42%),var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding-bottom:92px}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;max-width:100vw;overflow-x:hidden;scroll-behavior:smooth}
+body{background:radial-gradient(ellipse at top right,#17233b 0,transparent 42%),var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding-bottom:92px}
 button,input,select,textarea{font:inherit}
 button{cursor:pointer}
-.app{max-width:1400px;margin:auto;padding:18px}
-.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;background:#10192beF;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.app{max-width:1400px;margin:auto;padding:12px;width:100%}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px;background:#10192beF;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);position:relative;overflow:hidden;width:100%}
 .topbar:before{content:"";position:absolute;inset:0 0 auto;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
-.brand{display:flex;align-items:center;gap:13px}
-.brandmark{display:grid;place-items:center;width:48px;height:48px;border-radius:15px;background:linear-gradient(135deg,#f7bd4e,#d88709);color:#111827;font-weight:900;font-size:22px}
-.brand h1{font-size:clamp(19px,3vw,27px);line-height:1.1;margin:0;letter-spacing:-.5px}
-.brand p{margin:5px 0 0;color:var(--muted);font-size:12px;letter-spacing:1.2px;text-transform:uppercase}
-.top-actions{display:flex;gap:8px;flex-wrap:wrap}
-.btn{border:1px solid var(--line);background:var(--panel2);color:var(--text);padding:10px 14px;border-radius:12px;font-weight:700;transition:.18s;display:inline-flex;align-items:center;justify-content:center;gap:7px}
+.brand{display:flex;align-items:center;gap:10px}
+.brandmark{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#f7bd4e,#d88709);color:#111827;font-weight:900;font-size:20px;flex-shrink:0}
+.brand h1{font-size:clamp(17px,4vw,24px);line-height:1.1;margin:0;letter-spacing:-.5px}
+.brand p{margin:2px 0 0;color:var(--muted);font-size:10px;letter-spacing:1px;text-transform:uppercase}
+.top-actions{display:flex;gap:6px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--panel2);color:var(--text);padding:9px 12px;border-radius:10px;font-weight:700;transition:.18s;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:13px}
 .btn:hover{filter:brightness(1.12);transform:translateY(-1px)}
 .btn.primary{background:var(--gold);border-color:var(--gold);color:#171717}
 .btn.success{background:#0c5a48;border-color:#167b63;color:#d9fff4}
 .btn.danger{background:#401b29;border-color:#713044;color:#ffc3cf}
-.btn.small{padding:6px 9px;font-size:12px;border-radius:9px}
-.btn.ghost{background:transparent}
-.layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:18px;margin-top:18px}
-.sidebar{align-self:start;position:sticky;top:14px;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:10px;box-shadow:var(--shadow)}
-.navbtn{width:100%;display:flex;align-items:center;gap:11px;text-align:left;padding:12px;border:1px solid transparent;background:transparent;color:var(--muted);border-radius:12px;font-weight:700;margin:2px 0}
-.navbtn .navicon{width:26px;text-align:center;color:var(--gold);font-size:17px}
+.btn.small{padding:5px 8px;font-size:11px;border-radius:8px}
+.layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:16px;margin-top:14px;width:100%}
+.sidebar{align-self:start;position:sticky;top:14px;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:8px;box-shadow:var(--shadow)}
+.navbtn{width:100%;display:flex;align-items:center;gap:10px;text-align:left;padding:10px;border:1px solid transparent;background:transparent;color:var(--muted);border-radius:10px;font-weight:700;margin:2px 0;font-size:13px}
+.navbtn .navicon{width:22px;text-align:center;color:var(--gold);font-size:16px}
 .navbtn.active,.navbtn:hover{background:#f5ad2718;border-color:#f5ad2740;color:var(--text)}
-.main{min-width:0}
-.page{display:none;animation:appear .2s ease}
+.main{min-width:0;width:100%}
+.page{display:none;animation:appear .2s ease;width:100%}
 .page.active{display:block}
 @keyframes appear{from{opacity:.4;transform:translateY(5px)}to{opacity:1;transform:none}}
-.pagehead{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:4px 2px 16px}
-.pagehead h2{margin:0;font-size:clamp(22px,3vw,30px);letter-spacing:-.7px}
-.pagehead p{margin:4px 0 0;color:var(--muted);font-size:13px}
-.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:16px}
-.metric{background:linear-gradient(145deg,var(--panel),#10192a);border:1px solid var(--line);border-radius:17px;padding:16px;min-width:0;box-shadow:0 8px 22px #0002}
-.metric .label{font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
-.metric .value{font-size:clamp(20px,2.5vw,29px);font-weight:850;letter-spacing:-.8px;margin-top:7px;overflow-wrap:anywhere}
-.metric .hint{font-size:11px;color:var(--muted);margin-top:4px}
+.pagehead{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;margin:4px 2px 14px}
+.pagehead h2{margin:0;font-size:clamp(20px,4vw,28px);letter-spacing:-.7px}
+.pagehead p{margin:2px 0 0;color:var(--muted);font-size:12px}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:14px;width:100%}
+.metric{background:linear-gradient(145deg,var(--panel),#10192a);border:1px solid var(--line);border-radius:15px;padding:14px;min-width:0;box-shadow:0 8px 22px #0002}
+.metric .label{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.metric .value{font-size:clamp(18px,3vw,26px);font-weight:850;letter-spacing:-.8px;margin-top:5px;overflow-wrap:anywhere}
+.metric .hint{font-size:10px;color:var(--muted);margin-top:2px}
 .metric.gold .value{color:var(--gold2)}
 .metric.green .value{color:var(--green)}
 .metric.red .value{color:var(--red)}
-.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin-bottom:14px;box-shadow:0 10px 26px #0002;min-width:0}
-.card h3{font-size:16px;margin:0 0 14px;padding-bottom:11px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:8px}
-.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.field{min-width:0}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;width:100%}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:12px;box-shadow:0 10px 26px #0002;min-width:0;width:100%}
+.card h3{font-size:15px;margin:0 0 12px;padding-bottom:10px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:8px}
+.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;width:100%}
+.field{min-width:0;width:100%}
 .field.full{grid-column:1/-1}
-label{display:block;color:var(--muted);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.65px;margin-bottom:6px}
-input,select,textarea{width:100%;background:var(--input);border:1px solid var(--line);color:var(--text);padding:11px 12px;border-radius:11px;outline:none;min-width:0}
+label{display:block;color:var(--muted);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px}
+input,select,textarea{width:100%;background:var(--input);border:1px solid var(--line);color:var(--text);padding:10px;border-radius:10px;outline:none;min-width:0}
 input:focus,select:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px #f5ad2718}
-textarea{resize:vertical;min-height:82px}
-input::placeholder,textarea::placeholder{color:#687994}
-.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
+textarea{resize:vertical;min-height:75px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
 .actions .btn{flex:1}
-.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:13px}
-table{width:100%;border-collapse:collapse;min-width:600px;font-size:13px}
-th,td{padding:11px 12px;text-align:left;border-bottom:1px solid #29395799;vertical-align:top}
-th{background:#17233b;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.7px;white-space:nowrap}
-tr:last-child td{border-bottom:0}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;width:100%}
+table{width:100%;border-collapse:collapse;min-width:500px;font-size:12px}
+th,td{padding:10px;text-align:left;border-bottom:1px solid #29395799;vertical-align:top}
+th{background:#17233b;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.6px;white-space:nowrap}
 td strong{font-weight:800}
 .muted{color:var(--muted)}
-.pill{display:inline-flex;align-items:center;padding:3px 8px;border-radius:99px;font-size:11px;font-weight:800;background:#24314a;color:#d6e1f3}
+.pill{display:inline-flex;align-items:center;padding:3px 7px;border-radius:99px;font-size:10px;font-weight:800;background:#24314a;color:#d6e1f3}
 .pill.ok{background:#103e35;color:#81f4d0}
-.pill.warn{background:#4a3512;color:#ffdc8a}
-.pill.bad{background:#451e2b;color:#ffb8c6}
-.empty{padding:24px;text-align:center;color:var(--muted);font-size:13px}
-.notice{padding:12px 14px;border:1px solid #8a641f;background:#392b12;color:#ffe1a0;border-radius:12px;font-size:12px;margin:10px 0}
-.result{white-space:pre-wrap;background:#0b1425;border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:13px;padding:15px;margin-top:14px;overflow-wrap:anywhere;font-size:13px}
-.quickgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-.quick{padding:14px;background:var(--panel2);border:1px solid var(--line);border-radius:13px;text-align:left;color:var(--text);font-weight:800}
-.quick small{display:block;color:var(--muted);font-weight:500;margin-top:4px}
+.empty{padding:20px;text-align:center;color:var(--muted);font-size:12px}
+.notice{padding:10px 12px;border:1px solid #8a641f;background:#392b12;color:#ffe1a0;border-radius:10px;font-size:11px;margin:8px 0}
+.result{white-space:pre-wrap;background:#0b1425;border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:11px;padding:12px;margin-top:12px;overflow-wrap:anywhere;font-size:12px}
+.quickgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.quick{padding:12px;background:var(--panel2);border:1px solid var(--line);border-radius:11px;text-align:left;color:var(--text);font-weight:800;font-size:12px}
+.quick small{display:block;color:var(--muted);font-weight:500;margin-top:3px;font-size:10px}
 .bottomnav{display:none}
-.footer-note{font-size:11px;color:var(--muted);text-align:center;padding:16px}
-.checkrow{display:flex;align-items:flex-start;gap:8px;background:var(--input);border:1px solid var(--line);padding:10px;border-radius:10px;font-size:12px;color:var(--text)}
-.checkrow input{width:auto;margin-top:3px;accent-color:var(--gold)}
+.footer-note{font-size:10px;color:var(--muted);text-align:center;padding:12px}
 .hidden{display:none!important}
 
-/* Selector de tipo de cálculo / estructura (Hormigón y Albañilería) */
-.h-choice-wrap{display:grid;gap:12px;margin:6px 0 10px}
-.h-choice-group{border:1px solid var(--line);background:#0d1728;border-radius:13px;padding:11px}
-.h-choice-group h4{margin:0 0 9px;color:var(--gold2);font-size:13px}
-.h-choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
-.h-choice{min-height:43px;padding:9px 10px;border-radius:10px;border:1px solid var(--line);background:var(--panel2);color:var(--text);text-align:left;font-size:12px;font-weight:700;line-height:1.3}
-.h-choice.active{border-color:var(--gold);background:#f5ad2722;box-shadow:0 0 0 1px var(--gold) inset}
-.h-selected{margin-top:9px;padding:10px 12px;border-radius:10px;background:#f5ad2718;color:var(--gold2);font-size:12px;font-weight:800}
+/* Ajuste móvil para APK */
+@media(max-width:850px){
+  body{padding-bottom:calc(68px + env(safe-area-inset-bottom))}
+  .app{padding:8px}
+  .layout{display:block;margin-top:10px}
+  .sidebar{display:none}
+  .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .grid2,.formgrid{grid-template-columns:1fr}
+  .topbar{flex-direction:column;align-items:flex-start}
+  .top-actions{width:100%;justify-content:flex-start;margin-top:6px}
+  .bottomnav{display:flex;position:fixed;z-index:1000;bottom:0;left:0;right:0;overflow-x:auto;gap:2px;padding:5px 4px calc(5px + env(safe-area-inset-bottom));background:#0c1425f5;backdrop-filter:blur(16px);border-top:1px solid var(--line)}
+  .bottomnav button{flex:1;min-width:52px;border:0;background:transparent;color:var(--muted);font-size:9px;font-weight:800;padding:5px 2px;border-radius:8px;display:flex;flex-direction:column;align-items:center;gap:2px}
+  .bottomnav button span{font-size:16px}
+  .bottomnav button.active{color:var(--gold);background:#f5ad2718}
+  .actions .btn{flex-basis:100%}
+}
+
+.h-choice-wrap{display:grid;gap:10px;margin:6px 0 10px}
+.h-choice-group{border:1px solid var(--line);background:#0d1728;border-radius:11px;padding:9px}
+.h-choice-group h4{margin:0 0 7px;color:var(--gold2);font-size:12px}
+.h-choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.h-choice{min-height:38px;padding:7px 8px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);color:var(--text);text-align:left;font-size:11px;font-weight:700}
+.h-choice.active{border-color:var(--gold);background:#f5ad2722}
+.h-selected{margin-top:8px;padding:8px 10px;border-radius:8px;background:#f5ad2718;color:var(--gold2);font-size:11px;font-weight:800}
 .h-tipo-source{position:absolute!important;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none!important;left:-9999px!important}
 </style>
 </head>
@@ -100,13 +112,13 @@ td strong{font-weight:800}
 <header class="topbar">
   <div class="brand"><div class="brandmark">OP</div><div><h1>ObrasPro Total</h1><p>Gestión profesional de obras</p></div></div>
   <div class="top-actions">
-    <button class="btn" onclick="exportarDatos()">Exportar copia</button>
-    <button class="btn" onclick="document.getElementById('importFile').click()">Restaurar</button>
+    <button class="btn small" onclick="exportarDatos()">Exportar copia</button>
+    <button class="btn small" onclick="document.getElementById('importFile').click()">Restaurar</button>
     <input id="importFile" type="file" accept="application/json,.json" class="hidden" onchange="importarDatos(event)">
   </div>
 </header>
 <div class="layout">
-<aside class="sidebar" id="sidebar">
+<aside class="sidebar">
   <button class="navbtn active" onclick="irA('dashboard',this)"><span class="navicon">▦</span>Panel principal</button>
   <button class="navbtn" onclick="irA('presupuestos',this)"><span class="navicon">▤</span>Presupuestos</button>
   <button class="navbtn" onclick="irA('hormigon',this)"><span class="navicon">▧</span>Hormigón y albañilería</button>
@@ -123,67 +135,64 @@ td strong{font-weight:800}
 <section class="page active" id="dashboard">
   <div class="pagehead"><div><h2>Panel principal</h2><p>Resumen general de tu actividad</p></div><span class="pill ok">Sistema activo</span></div>
   <div class="cards">
-    <div class="metric gold"><div class="label">Presupuestos</div><div class="value" id="dashPresupuestos">0</div><div class="hint">Presupuestos registrados</div></div>
-    <div class="metric green"><div class="label">Obras activas</div><div class="value" id="dashObras">0</div><div class="hint">Trabajos en seguimiento</div></div>
+    <div class="metric gold"><div class="label">Presupuestos</div><div class="value" id="dashPresupuestos">0</div><div class="hint">Registrados</div></div>
+    <div class="metric green"><div class="label">Obras activas</div><div class="value" id="dashObras">0</div><div class="hint">En ejecución</div></div>
     <div class="metric"><div class="label">Ingresos</div><div class="value" id="dashIngresos">$0</div><div class="hint">Total registrado</div></div>
-    <div class="metric"><div class="label">Materiales</div><div class="value" id="dashStock">0</div><div class="hint">Productos en inventario</div></div>
+    <div class="metric"><div class="label">Materiales</div><div class="value" id="dashStock">0</div><div class="hint">En inventario</div></div>
   </div>
   <div class="grid2">
     <div class="card"><h3>Accesos rápidos</h3><div class="quickgrid">
-      <button class="quick" onclick="irA('presupuestos')">Nuevo presupuesto<small>Calcular materiales y mano de obra</small></button>
-      <button class="quick" onclick="irA('hormigon')">Hormigón / Muros<small>Cómputo de materiales</small></button>
-      <button class="quick" onclick="irA('climatizacion')">Climatización<small>Equipos y cálculo</small></button>
-      <button class="quick" onclick="irA('obras')">Registrar obra<small>Seguimiento de trabajos</small></button>
-      <button class="quick" onclick="irA('stock')">Materiales<small>Control de inventario</small></button>
-      <button class="quick" onclick="irA('finanzas')">Caja<small>Ingresos y gastos</small></button>
+      <button class="quick" onclick="irA('presupuestos')">Presupuestos<small>Crear y calcular</small></button>
+      <button class="quick" onclick="irA('hormigon')">Albañilería<small>Cómputo métrico</small></button>
+      <button class="quick" onclick="irA('climatizacion')">Climatización<small>Equipos y aire</small></button>
+      <button class="quick" onclick="irA('obras')">Obras<small>Seguimiento</small></button>
+      <button class="quick" onclick="irA('stock')">Materiales<small>Inventario</small></button>
+      <button class="quick" onclick="irA('finanzas')">Caja<small>Ingresos/gastos</small></button>
     </div></div>
-    <div class="card"><h3>Actividad reciente</h3><div id="dashActividad" class="empty">Todavía no hay movimientos registrados.</div></div>
+    <div class="card"><h3>Actividad reciente</h3><div id="dashActividad" class="empty">Todavía no hay movimientos.</div></div>
   </div>
-  <div class="card"><h3>Estado del sistema</h3><p class="muted">Tus datos se guardan en este dispositivo. Realizá una copia de seguridad periódica con el botón Exportar copia.</p><div class="notice">Antes de actualizar o reinstalar la aplicación, exportá una copia de seguridad para evitar perder tus registros.</div></div>
 </section>
 
 <section class="page" id="presupuestos">
-  <div class="pagehead"><div><h2>Presupuestos</h2><p>Calculá costos, materiales, mano de obra y precio final</p></div></div>
-  <div class="grid2 budget-grid">
-    <div class="card budget-form-card">
+  <div class="pagehead"><div><h2>Presupuestos</h2><p>Calculá costos y precios finales</p></div></div>
+  <div class="grid2">
+    <div class="card">
       <h3>Crear presupuesto</h3>
       <div class="formgrid">
-        <div class="field full"><label>Nombre del cliente</label><input id="pCliente" placeholder="Nombre y apellido"></div>
-        <div class="field"><label>Teléfono</label><input id="pTelefono" type="tel" placeholder="Número de contacto"></div>
-        <div class="field full"><label>Descripción del trabajo</label><input id="pTrabajo" placeholder="Ej. Instalación eléctrica, refacción, construcción"></div>
-        <div class="field full"><label>Dirección de la obra</label><input id="pDireccion" placeholder="Dirección o localidad"></div>
-        <div class="field"><label>Costo de materiales ($)</label><input id="pCostoMat" type="number" min="0" step="0.01" placeholder="0"></div>
-        <div class="field"><label>Mano de obra ($) (Opcional)</label><input id="pMano" type="number" min="0" step="0.01" placeholder="0"></div>
-        <div class="field"><label>Desperdicio (%)</label><input id="pDesperdicio" type="number" min="0" step="0.1" value="0"></div>
-        <div class="field"><label>Ganancia (%)</label><input id="pGanancia" type="number" min="0" step="0.1" value="30"></div>
-        <div class="field full"><label>Detalle de materiales y precios</label><textarea id="pDetalleMat" placeholder="Ej. Cemento: $..., arena: $..., ladrillos: $..."></textarea></div>
-        <div class="field full"><label>Detalle de mano de obra</label><textarea id="pDetalleMano" placeholder="Ej. Colocación, instalación, terminaciones..."></textarea></div>
-        <div class="field full"><label>Observaciones / condiciones</label><textarea id="pNotas" placeholder="Plazos, forma de pago, validez del presupuesto..."></textarea></div>
+        <div class="field full"><label>Cliente</label><input id="pCliente" placeholder="Nombre completo"></div>
+        <div class="field"><label>Teléfono</label><input id="pTelefono" type="tel" placeholder="Contacto"></div>
+        <div class="field full"><label>Trabajo</label><input id="pTrabajo" placeholder="Descripción del trabajo"></div>
+        <div class="field full"><label>Dirección</label><input id="pDireccion" placeholder="Ubicación de la obra"></div>
+        <div class="field"><label>Materiales ($)</label><input id="pCostoMat" type="number" min="0" placeholder="0"></div>
+        <div class="field"><label>Mano de obra ($)</label><input id="pMano" type="number" min="0" placeholder="0"></div>
+        <div class="field"><label>Desperdicio (%)</label><input id="pDesperdicio" type="number" value="0"></div>
+        <div class="field"><label>Ganancia (%)</label><input id="pGanancia" type="number" value="30"></div>
+        <div class="field full"><label>Detalle de materiales</label><textarea id="pDetalleMat" placeholder="Listado de insumos..."></textarea></div>
+        <div class="field full"><label>Detalle mano de obra</label><textarea id="pDetalleMano" placeholder="Tareas a realizar..."></textarea></div>
+        <div class="field full"><label>Observaciones</label><textarea id="pNotas" placeholder="Condiciones, pago..."></textarea></div>
       </div>
-      <div class="actions budget-actions">
-        <button class="btn primary" onclick="calcularPresupuesto()">Calcular presupuesto</button>
-        <button class="btn" onclick="guardarPresupuesto()">Guardar presupuesto</button>
+      <div class="actions">
+        <button class="btn primary" onclick="calcularPresupuesto()">Calcular</button>
+        <button class="btn" onclick="guardarPresupuesto()">Guardar</button>
       </div>
       <div id="pResultado" class="result hidden"></div>
     </div>
-    <div class="card budget-ref-card">
+    <div class="card">
       <h3>Resumen del cálculo</h3>
-      <div id="pComputo" class="muted">Completá los costos y calculá el presupuesto para ver el detalle.</div>
-      <div class="notice">El cálculo contempla el costo de materiales, desperdicio, mano de obra y margen de ganancia.</div>
+      <div id="pComputo" class="muted">Completá los datos para calcular.</div>
       <div id="pDocumento"></div>
     </div>
   </div>
-  <div class="card"><h3>Presupuestos guardados</h3><div id="listaPresupuestos" class="empty">Todavía no hay presupuestos guardados.</div></div>
+  <div class="card"><h3>Presupuestos guardados</h3><div id="listaPresupuestos" class="empty">Sin presupuestos guardados.</div></div>
 </section>
 
-<!-- HORMIGÓN Y ALBAÑILERÍA (Con todas las categorías de pisos, muros y paredes) -->
 <section class="page" id="hormigon">
-  <div class="pagehead"><div><h2>Hormigón y albañilería</h2><p>Cálculo de materiales para estructuras, muros y pisos</p></div></div>
+  <div class="pagehead"><div><h2>Hormigón y albañilería</h2><p>Cálculo de estructuras, muros y pisos</p></div></div>
   <div class="grid2">
     <div class="card">
-      <h3>Calculadora de obra gris</h3>
+      <h3>Calculadora de obra</h3>
       <div class="formgrid">
-        <div class="field full"><label>Categoría y tipo de elemento</label>
+        <div class="field full"><label>Elemento a calcular</label>
           <div class="h-choice-wrap">
             <div class="h-choice-group">
               <h4>Pisos y Bases</h4>
@@ -204,7 +213,7 @@ td strong{font-weight:800}
             <div class="h-choice-group">
               <h4>Estructuras</h4>
               <div class="h-choice-grid">
-                <button type="button" class="h-choice" onclick="elegirTipoObra('losa', this)">Losa de hormigón</button>
+                <button type="button" class="h-choice" onclick="elegirTipoObra('losa', this)">Losa hormigón</button>
                 <button type="button" class="h-choice" onclick="elegirTipoObra('viga_columna', this)">Viga / Columna</button>
               </div>
             </div>
@@ -216,48 +225,55 @@ td strong{font-weight:800}
             <option value="pared_comun">Pared Ladrillo Común</option>
             <option value="pared_hueco">Pared Ladrillo Hueco</option>
             <option value="bloque_cemento">Bloques de Cemento</option>
-            <option value="losa">Losa de hormigón</option>
+            <option value="losa">Losa hormigón</option>
             <option value="viga_columna">Viga / Columna</option>
           </select>
           <div id="hSeleccionTexto" class="h-selected">Seleccionado: Contrapiso</div>
         </div>
-
-        <div class="field"><label id="lblLargo">Largo (metros)</label><input id="hLargo" type="number" min="0" step="0.01" placeholder="0"></div>
-        <div class="field"><label id="lblAncho">Ancho / Espesor (m)</label><input id="hAncho" type="number" min="0" step="0.01" placeholder="0"></div>
-        <div class="field"><label id="lblEspesor">Espesor / Altura (m)</label><input id="hEspesor" type="number" min="0" step="0.01" placeholder="0"></div>
-        <div class="field"><label>Desperdicio (%)</label><input id="hDesperdicio" type="number" min="0" value="10" step="1"></div>
+        <div class="field"><label id="lblLargo">Largo (m)</label><input id="hLargo" type="number" step="0.01" placeholder="0"></div>
+        <div class="field"><label id="lblAncho">Ancho (m)</label><input id="hAncho" type="number" step="0.01" placeholder="0"></div>
+        <div class="field"><label id="lblEspesor">Espesor/Alto (m)</label><input id="hEspesor" type="number" step="0.01" placeholder="0"></div>
+        <div class="field"><label>Desperdicio (%)</label><input id="hDesperdicio" type="number" value="10"></div>
       </div>
-      <div class="actions"><button class="btn primary" onclick="calcularHormigon()">Calcular materiales</button></div>
+      <div class="actions"><button class="btn primary" onclick="calcularHormigon()">Calcular</button></div>
       <div id="hResultado" class="result hidden"></div>
     </div>
     <div class="card">
-      <h3>Precios de materiales</h3>
+      <h3>Precios de insumos</h3>
       <div class="formgrid">
-        <div class="field full"><label>Dosificación / Mezcla</label>
+        <div class="field full"><label>Dosificación</label>
           <select id="hDosificacion">
-            <option value="300">Hormigón / Mezcla estándar</option>
-            <option value="350">Hormigón H-25 reforzado</option>
-            <option value="250">Mortero tradicional</option>
+            <option value="300">Mezcla estándar</option>
+            <option value="350">Hormigón reforzado H-25</option>
+            <option value="250">Mortero común</option>
           </select>
         </div>
-        <div class="field"><label>Precio cemento ($/bolsa)</label><input id="hCemento" type="number" min="0" placeholder="0"></div>
-        <div class="field"><label>Precio arena ($/m³)</label><input id="hArena" type="number" min="0" placeholder="0"></div>
-        <div class="field"><label>Precio piedra ($/m³)</label><input id="hPiedra" type="number" min="0" placeholder="0"></div>
-        <div class="field"><label>Precio ladrillo/bloque ($/u)</label><input id="hLadrilloPrecio" type="number" min="0" placeholder="0"></div>
-        <div class="field"><label>Precio agua / aditivos ($)</label><input id="hAgua" type="number" min="0" placeholder="0"></div>
+        <div class="field"><label>Cemento ($/bolsa)</label><input id="hCemento" type="number" placeholder="0"></div>
+        <div class="field"><label>Arena ($/m³)</label><input id="hArena" type="number" placeholder="0"></div>
+        <div class="field"><label>Piedra ($/m³)</label><input id="hPiedra" type="number" placeholder="0"></div>
+        <div class="field"><label>Ladrillo/Bloque ($/u)</label><input id="hLadrilloPrecio" type="number" placeholder="0"></div>
       </div>
-      <div class="notice">Cómputo métrico adaptado para pisos, contrapisos, carpetas y muros de ladrillos o bloques.</div>
     </div>
   </div>
 </section>
 
 <section class="page" id="climatizacion">
-  <div class="pagehead"><div><h2>Climatización</h2><p>Cálculo orientativo y registro de equipos de aire acondicionado</p></div></div>
+  <div class="pagehead"><div><h2>Climatización</h2><p>Equipos de aire acondicionado</p></div></div>
   <div class="grid2">
     <div class="card">
-      <h3>Calculadora de frigorías</h3>
+      <h3>Cálculo de frigorías</h3>
       <div class="formgrid">
-        <div class="field"><label>Largo del ambiente (m)</label><input id="cLargo" type="number" min="0" step="0.1" placeholder="0"></div>
-        <div class="field"><label>Ancho del ambiente (m)</label><input id="cAncho" type="number" min="0" step="0.1" placeholder="0"></div>
-        <div class="field"><label>Altura (m)</label><input id="cAlto" type="number" min="0" step="0.1" value="2.7"></div>
-      
+        <div class="field"><label>Largo (m)</label><input id="cLargo" type="number" step="0.1" placeholder="0"></div>
+        <div class="field"><label>Ancho (m)</label><input id="cAncho" type="number" step="0.1" placeholder="0"></div>
+        <div class="field"><label>Altura (m)</label><input id="cAlto" type="number" value="2.7"></div>
+        <div class="field"><label>Personas</label><input id="cPersonas" type="number" value="2"></div>
+        <div class="field"><label>Sol</label><select id="cSol"><option value="1">Normal</option><option value="1.1">Moderado</option><option value="1.2">Mucho</option></select></div>
+        <div class="field"><label>Equipos</label><select id="cEquipos"><option value="1">Pocos</option><option value="1.1">Muchos</option></select></div>
+      </div>
+      <div class="actions"><button class="btn primary" onclick="calcularFrigorias()">Calcular</button></div>
+      <div id="cResultado" class="result hidden"></div>
+    </div>
+    <div class="card">
+      <h3>Registro de instalación</h3>
+      <div class="formgrid">
+        <div class="
