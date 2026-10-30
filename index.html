@@ -84,54 +84,15 @@ td strong{font-weight:800}
 .checkrow input{width:auto;margin-top:3px;accent-color:var(--gold)}
 .hidden{display:none!important}
 
-/* Presupuestos: formulario ordenado y legible */
-#presupuestos .budget-grid{grid-template-columns:minmax(0,1.55fr) minmax(250px,.8fr);align-items:start;gap:16px}
-#presupuestos .budget-form-card{border-top:3px solid var(--gold)}
-#presupuestos .budget-form-card h3,#presupuestos .budget-ref-card h3{font-size:17px}
-#presupuestos .budget-section-title{grid-column:1/-1;color:#d8e3f5;font-size:13px;font-weight:800;letter-spacing:.1px;text-transform:none;border:0;border-left:3px solid var(--gold);background:linear-gradient(90deg,#f5ad2712,transparent 80%);border-radius:0 8px 8px 0;padding:10px 12px;margin-top:7px}
-#presupuestos .field label{font-size:11px;letter-spacing:.35px;text-transform:none;color:#c2cee1}
-#presupuestos input,#presupuestos select,#presupuestos textarea{min-height:44px}
-#presupuestos #pCantidad,#presupuestos #pCostoMat,#presupuestos #pMano{font-variant-numeric:tabular-nums}
-#presupuestos .budget-help{font-size:12px;color:var(--muted);margin:-5px 0 12px}
-#presupuestos .budget-ref-card{position:sticky;top:12px}
-#presupuestos #pComputo{white-space:pre-line;line-height:1.75;padding:12px;background:var(--input);border:1px solid var(--line);border-radius:12px;min-height:90px}
-#presupuestos .budget-actions .btn{min-height:46px}
-#presupuestos #pResultado{font-size:13px;line-height:1.75}
-@media(max-width:720px){#presupuestos .budget-grid{grid-template-columns:1fr;gap:10px}#presupuestos .budget-ref-card{position:static}#presupuestos .budget-actions .btn{flex-basis:100%}#presupuestos .budget-section-title{margin-top:8px}}
-@media(max-width:1000px){.layout{grid-template-columns:190px minmax(0,1fr)}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.quickgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:720px){body{padding-bottom:calc(76px + env(safe-area-inset-bottom))}.app{padding:10px}.topbar{padding:14px;border-radius:17px;align-items:flex-start}.brandmark{width:42px;height:42px}.brand p{font-size:10px;letter-spacing:.7px}.top-actions{max-width:118px}.top-actions .btn{padding:8px;font-size:11px}.layout{display:block;margin-top:12px}.sidebar{display:none}.pagehead{align-items:flex-start;flex-direction:column}.cards{gap:8px}.metric{padding:12px;border-radius:14px}.metric .value{font-size:22px}.card{padding:14px;border-radius:15px}.grid2{grid-template-columns:1fr}.formgrid{gap:10px}.bottomnav{display:flex;position:fixed;z-index:1000;bottom:0;left:0;right:0;overflow-x:auto;gap:3px;padding:7px 5px calc(7px + env(safe-area-inset-bottom));background:#0c1425f5;backdrop-filter:blur(18px);border-top:1px solid var(--line)}.bottomnav button{flex:1;min-width:58px;border:0;background:transparent;color:var(--muted);font-size:10px;font-weight:800;padding:6px 2px;border-radius:10px;display:flex;flex-direction:column;align-items:center;gap:3px}.bottomnav button span{font-size:18px}.bottomnav button.active{color:var(--gold);background:#f5ad2718}.quickgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.actions .btn{flex-basis:100%}.pagehead .btn{width:100%}}
-@media(max-width:390px){.brand h1{font-size:17px}.brandmark{width:36px;height:36px}.top-actions{max-width:92px}.top-actions .btn{font-size:10px;padding:7px 5px}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.metric .value{font-size:19px}.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}}
-@media print{body{background:white;color:#111;padding:0}.topbar,.sidebar,.bottomnav,.top-actions,.actions,.btn{display:none!important}.app{max-width:none;padding:0}.layout{display:block}.page{display:none!important}.page.active{display:block!important}.card,.metric{background:white;color:#111;box-shadow:none;border:1px solid #ccc}.muted,label{color:#444}.result{background:white;color:#111}.pagehead h2{color:#111}}
-
-/* Presupuesto emitido: documento visual premium */
-#presupuestos .quote-document{white-space:normal;background:#0d1729;border:1px solid #344663;border-radius:18px;padding:0;overflow:hidden;margin-top:16px;font-size:14px;line-height:1.5}
-#presupuestos .quote-head{padding:22px;background:linear-gradient(120deg,#1c2c47,#10192a);border-bottom:1px solid #344663;display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
-#presupuestos .quote-brand{font-size:11px;letter-spacing:1.8px;color:#f5ad27;font-weight:900;text-transform:uppercase}
-#presupuestos .quote-title{font-size:23px;line-height:1.15;font-weight:900;margin-top:7px;color:#fff}
-#presupuestos .quote-date{font-size:12px;color:#c2cee1;text-align:right;white-space:nowrap}
-#presupuestos .quote-body{padding:18px 22px}
-#presupuestos .quote-section{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#f5c45d;font-weight:900;margin:5px 0 10px}
-#presupuestos .quote-info{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
-#presupuestos .quote-info-item{background:#111f34;border:1px solid #293957;border-radius:11px;padding:11px 13px;min-width:0}
-#presupuestos .quote-info-item small{display:block;color:#9aa9c2;font-size:10px;text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px}
-#presupuestos .quote-info-item strong{display:block;overflow-wrap:anywhere;font-size:14px;color:#f3f6fc}
-#presupuestos .quote-table{width:100%;border-collapse:collapse;min-width:0;font-size:13px;margin-bottom:18px}
-#presupuestos .quote-table th{background:#1b2a42;color:#b8c7dd;padding:10px;text-align:left;font-size:10px}
-#presupuestos .quote-table td{padding:10px;border-bottom:1px solid #293957;color:#e7edf7}
-#presupuestos .quote-money{margin-left:auto;max-width:360px}
-#presupuestos .quote-money-row{display:flex;justify-content:space-between;gap:15px;padding:7px 0;border-bottom:1px solid #293957;color:#c7d2e4;font-size:13px}
-#presupuestos .quote-money-row strong{color:#fff;text-align:right;font-variant-numeric:tabular-nums}
-#presupuestos .quote-total{margin-top:12px;padding:15px;background:linear-gradient(120deg,#4a3512,#30250f);border:1px solid #8a641f;border-radius:13px;display:flex;justify-content:space-between;align-items:center;gap:12px}
-#presupuestos .quote-total span{font-size:11px;font-weight:900;letter-spacing:.8px;color:#ffdf95;text-transform:uppercase}
-#presupuestos .quote-total strong{font-size:clamp(21px,4vw,29px);font-weight:950;color:#ffd27a;text-align:right;overflow-wrap:anywhere}
-#presupuestos .quote-notes{margin-top:18px;padding:12px 14px;border:1px solid #293957;border-radius:11px;color:#c7d2e4;font-size:12px;overflow-wrap:anywhere}
-#presupuestos .quote-foot{padding:12px 22px;background:#0a1220;color:#91a2bc;font-size:10px;border-top:1px solid #293957}
-@media(max-width:520px){#presupuestos .quote-head{padding:16px;flex-direction:column}#presupuestos .quote-date{text-align:left}#presupuestos .quote-body{padding:14px}#presupuestos .quote-info{grid-template-columns:1fr}#presupuestos .quote-money{max-width:none}#presupuestos .quote-total{align-items:flex-start;flex-direction:column}#presupuestos .quote-total strong{text-align:left}}
-@media print{#presupuestos .quote-document{background:#fff!important;color:#111!important;border:1px solid #bbb!important}#presupuestos .quote-head,#presupuestos .quote-foot{background:#f3f5f8!important;color:#222!important}#presupuestos .quote-brand,#presupuestos .quote-section,#presupuestos .quote-total span{color:#75510a!important}#presupuestos .quote-title,#presupuestos .quote-info-item strong,#presupuestos .quote-table td,#presupuestos .quote-money-row strong{color:#111!important}#presupuestos .quote-info-item,#presupuestos .quote-total,#presupuestos .quote-notes{background:#fff!important;color:#111!important;border-color:#ccc!important}#presupuestos .quote-date,#presupuestos .quote-foot,#presupuestos .quote-notes,#presupuestos .quote-money-row{color:#333!important}#presupuestos .quote-total strong{color:#111!important}#presupuestos .quote-table th{background:#eee!important;color:#222!important}}
-
-/* Selector de hormigón visible y cómodo en celular */
-.h-choice-wrap{display:grid;gap:12px;margin:6px 0 10px}.h-choice-group{border:1px solid var(--line);background:#0d1728;border-radius:13px;padding:11px}.h-choice-group h4{margin:0 0 9px;color:var(--gold2);font-size:13px}.h-choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.h-choice{min-height:43px;padding:9px 10px;border-radius:10px;border:1px solid var(--line);background:var(--panel2);color:var(--text);text-align:left;font-size:12px;font-weight:700;line-height:1.3}.h-choice.active{border-color:var(--gold);background:#f5ad2722;box-shadow:0 0 0 1px var(--gold) inset}.h-selected{margin-top:9px;padding:10px 12px;border-radius:10px;background:#f5ad2718;color:var(--gold2);font-size:12px;font-weight:800}.h-tipo-source{position:absolute!important;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none!important;left:-9999px!important}
-@media(max-width:390px){.h-choice-grid{grid-template-columns:1fr}.h-choice{font-size:13px}}
+/* Selector de tipo de cálculo / estructura (Hormigón y Albañilería) */
+.h-choice-wrap{display:grid;gap:12px;margin:6px 0 10px}
+.h-choice-group{border:1px solid var(--line);background:#0d1728;border-radius:13px;padding:11px}
+.h-choice-group h4{margin:0 0 9px;color:var(--gold2);font-size:13px}
+.h-choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.h-choice{min-height:43px;padding:9px 10px;border-radius:10px;border:1px solid var(--line);background:var(--panel2);color:var(--text);text-align:left;font-size:12px;font-weight:700;line-height:1.3}
+.h-choice.active{border-color:var(--gold);background:#f5ad2722;box-shadow:0 0 0 1px var(--gold) inset}
+.h-selected{margin-top:9px;padding:10px 12px;border-radius:10px;background:#f5ad2718;color:var(--gold2);font-size:12px;font-weight:800}
+.h-tipo-source{position:absolute!important;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none!important;left:-9999px!important}
 </style>
 </head>
 <body>
@@ -148,7 +109,7 @@ td strong{font-weight:800}
 <aside class="sidebar" id="sidebar">
   <button class="navbtn active" onclick="irA('dashboard',this)"><span class="navicon">▦</span>Panel principal</button>
   <button class="navbtn" onclick="irA('presupuestos',this)"><span class="navicon">▤</span>Presupuestos</button>
-  <button class="navbtn" onclick="irA('hormigon',this)"><span class="navicon">▧</span>Hormigón y estructuras</button>
+  <button class="navbtn" onclick="irA('hormigon',this)"><span class="navicon">▧</span>Hormigón y albañilería</button>
   <button class="navbtn" onclick="irA('climatizacion',this)"><span class="navicon">❄</span>Climatización</button>
   <button class="navbtn" onclick="irA('obras',this)"><span class="navicon">⌂</span>Obras</button>
   <button class="navbtn" onclick="irA('recibos',this)"><span class="navicon">▣</span>Recibos</button>
@@ -170,7 +131,7 @@ td strong{font-weight:800}
   <div class="grid2">
     <div class="card"><h3>Accesos rápidos</h3><div class="quickgrid">
       <button class="quick" onclick="irA('presupuestos')">Nuevo presupuesto<small>Calcular materiales y mano de obra</small></button>
-      <button class="quick" onclick="irA('hormigon')">Hormigón<small>Cómputo de estructuras</small></button>
+      <button class="quick" onclick="irA('hormigon')">Hormigón / Muros<small>Cómputo de materiales</small></button>
       <button class="quick" onclick="irA('climatizacion')">Climatización<small>Equipos y cálculo</small></button>
       <button class="quick" onclick="irA('obras')">Registrar obra<small>Seguimiento de trabajos</small></button>
       <button class="quick" onclick="irA('stock')">Materiales<small>Control de inventario</small></button>
@@ -187,12 +148,10 @@ td strong{font-weight:800}
     <div class="card budget-form-card">
       <h3>Crear presupuesto</h3>
       <div class="formgrid">
-        <div class="budget-section-title">Datos del cliente y del trabajo</div>
-        <div class="field"><label>Nombre del cliente</label><input id="pCliente" placeholder="Nombre y apellido"></div>
+        <div class="field full"><label>Nombre del cliente</label><input id="pCliente" placeholder="Nombre y apellido"></div>
         <div class="field"><label>Teléfono</label><input id="pTelefono" type="tel" placeholder="Número de contacto"></div>
         <div class="field full"><label>Descripción del trabajo</label><input id="pTrabajo" placeholder="Ej. Instalación eléctrica, refacción, construcción"></div>
         <div class="field full"><label>Dirección de la obra</label><input id="pDireccion" placeholder="Dirección o localidad"></div>
-        <div class="budget-section-title">Costos y cálculo</div>
         <div class="field"><label>Costo de materiales ($)</label><input id="pCostoMat" type="number" min="0" step="0.01" placeholder="0"></div>
         <div class="field"><label>Mano de obra ($) (Opcional)</label><input id="pMano" type="number" min="0" step="0.01" placeholder="0"></div>
         <div class="field"><label>Desperdicio (%)</label><input id="pDesperdicio" type="number" min="0" step="0.1" value="0"></div>
@@ -217,48 +176,77 @@ td strong{font-weight:800}
   <div class="card"><h3>Presupuestos guardados</h3><div id="listaPresupuestos" class="empty">Todavía no hay presupuestos guardados.</div></div>
 </section>
 
+<!-- HORMIGÓN Y ALBAÑILERÍA (Con todas las categorías de pisos, muros y paredes) -->
 <section class="page" id="hormigon">
-  <div class="pagehead"><div><h2>Hormigón y estructuras</h2><p>Cálculo orientativo de materiales para estructuras</p></div></div>
+  <div class="pagehead"><div><h2>Hormigón y albañilería</h2><p>Cálculo de materiales para estructuras, muros y pisos</p></div></div>
   <div class="grid2">
     <div class="card">
-      <h3>Calculadora de hormigón</h3>
+      <h3>Calculadora de obra gris</h3>
       <div class="formgrid">
-        <div class="field full"><label>Tipo de estructura</label>
-          <select id="hTipo">
-            <option value="losa">Losa</option>
-            <option value="zapata">Zapata</option>
-            <option value="columna">Columna</option>
-            <option value="viga">Viga</option>
+        <div class="field full"><label>Categoría y tipo de elemento</label>
+          <div class="h-choice-wrap">
+            <div class="h-choice-group">
+              <h4>Pisos y Bases</h4>
+              <div class="h-choice-grid">
+                <button type="button" class="h-choice active" onclick="elegirTipoObra('contrapiso', this)">Contrapiso</button>
+                <button type="button" class="h-choice" onclick="elegirTipoObra('platea', this)">Platea</button>
+                <button type="button" class="h-choice" onclick="elegirTipoObra('carpeta', this)">Carpeta / Piso</button>
+              </div>
+            </div>
+            <div class="h-choice-group">
+              <h4>Muros y Paredes</h4>
+              <div class="h-choice-grid">
+                <button type="button" class="h-choice" onclick="elegirTipoObra('pared_comun', this)">Pared Ladrillo Común</button>
+                <button type="button" class="h-choice" onclick="elegirTipoObra('pared_hueco', this)">Pared Ladrillo Hueco</button>
+                <button type="button" class="h-choice" onclick="elegirTipoObra('bloque_cemento', this)">Bloques de Cemento</button>
+              </div>
+            </div>
+            <div class="h-choice-group">
+              <h4>Estructuras</h4>
+              <div class="h-choice-grid">
+                <button type="button" class="h-choice" onclick="elegirTipoObra('losa', this)">Losa de hormigón</button>
+                <button type="button" class="h-choice" onclick="elegirTipoObra('viga_columna', this)">Viga / Columna</button>
+              </div>
+            </div>
+          </div>
+          <select id="hTipo" class="h-tipo-source" onchange="actualizarSeleccionVisual()">
             <option value="contrapiso">Contrapiso</option>
             <option value="platea">Platea</option>
-            <option value="escalera">Escalera</option>
-            <option value="personalizado">Volumen personalizado</option>
+            <option value="carpeta">Carpeta / Piso</option>
+            <option value="pared_comun">Pared Ladrillo Común</option>
+            <option value="pared_hueco">Pared Ladrillo Hueco</option>
+            <option value="bloque_cemento">Bloques de Cemento</option>
+            <option value="losa">Losa de hormigón</option>
+            <option value="viga_columna">Viga / Columna</option>
           </select>
+          <div id="hSeleccionTexto" class="h-selected">Seleccionado: Contrapiso</div>
         </div>
-        <div class="field"><label>Largo (metros)</label><input id="hLargo" type="number" min="0" step="0.01" placeholder="0"></div>
-        <div class="field"><label>Ancho (metros)</label><input id="hAncho" type="number" min="0" step="0.01" placeholder="0"></div>
-        <div class="field"><label>Espesor / altura (metros)</label><input id="hEspesor" type="number" min="0" step="0.01" placeholder="0"></div>
+
+        <div class="field"><label id="lblLargo">Largo (metros)</label><input id="hLargo" type="number" min="0" step="0.01" placeholder="0"></div>
+        <div class="field"><label id="lblAncho">Ancho / Espesor (m)</label><input id="hAncho" type="number" min="0" step="0.01" placeholder="0"></div>
+        <div class="field"><label id="lblEspesor">Espesor / Altura (m)</label><input id="hEspesor" type="number" min="0" step="0.01" placeholder="0"></div>
         <div class="field"><label>Desperdicio (%)</label><input id="hDesperdicio" type="number" min="0" value="10" step="1"></div>
       </div>
       <div class="actions"><button class="btn primary" onclick="calcularHormigon()">Calcular materiales</button></div>
       <div id="hResultado" class="result hidden"></div>
     </div>
     <div class="card">
-      <h3>Dosificación y materiales</h3>
+      <h3>Precios de materiales</h3>
       <div class="formgrid">
-        <div class="field full"><label>Dosificación</label>
+        <div class="field full"><label>Dosificación / Mezcla</label>
           <select id="hDosificacion">
-            <option value="300">Hormigón H-21 aproximado</option>
-            <option value="350">Hormigón H-25 aproximado</option>
-            <option value="250">Mezcla tradicional</option>
+            <option value="300">Hormigón / Mezcla estándar</option>
+            <option value="350">Hormigón H-25 reforzado</option>
+            <option value="250">Mortero tradicional</option>
           </select>
         </div>
         <div class="field"><label>Precio cemento ($/bolsa)</label><input id="hCemento" type="number" min="0" placeholder="0"></div>
         <div class="field"><label>Precio arena ($/m³)</label><input id="hArena" type="number" min="0" placeholder="0"></div>
         <div class="field"><label>Precio piedra ($/m³)</label><input id="hPiedra" type="number" min="0" placeholder="0"></div>
-        <div class="field"><label>Precio agua / adicionales ($)</label><input id="hAgua" type="number" min="0" placeholder="0"></div>
+        <div class="field"><label>Precio ladrillo/bloque ($/u)</label><input id="hLadrilloPrecio" type="number" min="0" placeholder="0"></div>
+        <div class="field"><label>Precio agua / aditivos ($)</label><input id="hAgua" type="number" min="0" placeholder="0"></div>
       </div>
-      <div class="notice">Los resultados son estimaciones orientativas. La dosificación definitiva debe verificarse según el proyecto, resistencia requerida y condiciones de obra.</div>
+      <div class="notice">Cómputo métrico adaptado para pisos, contrapisos, carpetas y muros de ladrillos o bloques.</div>
     </div>
   </div>
 </section>
@@ -272,756 +260,4 @@ td strong{font-weight:800}
         <div class="field"><label>Largo del ambiente (m)</label><input id="cLargo" type="number" min="0" step="0.1" placeholder="0"></div>
         <div class="field"><label>Ancho del ambiente (m)</label><input id="cAncho" type="number" min="0" step="0.1" placeholder="0"></div>
         <div class="field"><label>Altura (m)</label><input id="cAlto" type="number" min="0" step="0.1" value="2.7"></div>
-        <div class="field"><label>Personas habituales</label><input id="cPersonas" type="number" min="1" value="2"></div>
-        <div class="field"><label>Orientación / exposición</label>
-          <select id="cSol"><option value="1">Normal</option><option value="1.1">Sol moderado</option><option value="1.2">Mucho sol</option></select>
-        </div>
-        <div class="field"><label>Equipos eléctricos</label>
-          <select id="cEquipos"><option value="1">Pocos</option><option value="1.08">Medios</option><option value="1.15">Muchos</option></select>
-        </div>
-      </div>
-      <div class="actions"><button class="btn primary" onclick="calcularFrigorias()">Calcular equipo recomendado</button></div>
-      <div id="cResultado" class="result hidden"></div>
-    </div>
-    <div class="card">
-      <h3>Registro de instalación</h3>
-      <div class="formgrid">
-        <div class="field"><label>Cliente</label><input id="cCliente" placeholder="Nombre del cliente"></div>
-        <div class="field"><label>Teléfono</label><input id="cTelefono" placeholder="Teléfono"></div>
-        <div class="field full"><label>Dirección</label><input id="cDireccion" placeholder="Dirección del trabajo"></div>
-        <div class="field"><label>Equipo</label><select id="cEquipo"><option>Split</option><option>Ventana</option><option>Inverter</option><option>Piso techo</option><option>Otro</option></select></div>
-        <div class="field"><label>Capacidad</label><select id="cCapacidad"><option>2500 frigorías</option><option>3000 frigorías</option><option>4500 frigorías</option><option>5500 frigorías</option><option>6000 frigorías</option><option>Otro</option></select></div>
-        <div class="field full"><label>Trabajo realizado</label><textarea id="cTrabajo" placeholder="Instalación, mantenimiento, reparación..."></textarea></div>
-        <div class="field"><label>Precio materiales ($)</label><input id="cMateriales" type="number" min="0" placeholder="0"></div>
-        <div class="field"><label>Mano de obra ($) (Opcional)</label><input id="cMano" type="number" min="0" placeholder="0"></div>
-      </div>
-      <div class="actions"><button class="btn primary" onclick="guardarClimatizacion()">Guardar instalación</button></div>
-    </div>
-  </div>
-  <div class="card"><h3>Instalaciones registradas</h3><div id="listaClimatizacion" class="empty">Todavía no hay instalaciones registradas.</div></div>
-</section>
-
-<section class="page" id="obras">
-  <div class="pagehead"><div><h2>Gestión de obras</h2><p>Registrá clientes, trabajos, avances y estados</p></div></div>
-  <div class="card">
-    <h3>Nueva obra</h3>
-    <div class="formgrid">
-      <div class="field"><label>Nombre de la obra</label><input id="oNombre" placeholder="Nombre o descripción"></div>
-      <div class="field"><label>Cliente</label><input id="oCliente" placeholder="Nombre del cliente"></div>
-      <div class="field"><label>Teléfono</label><input id="oTelefono" placeholder="Teléfono"></div>
-      <div class="field"><label>Fecha de inicio</label><input id="oFecha" type="date"></div>
-      <div class="field full"><label>Dirección</label><input id="oDireccion" placeholder="Ubicación de la obra"></div>
-      <div class="field"><label>Presupuesto ($)</label><input id="oPresupuesto" type="number" min="0" placeholder="0"></div>
-      <div class="field"><label>Estado</label><select id="oEstado"><option>En planificación</option><option>En ejecución</option><option>Pausada</option><option>Finalizada</option></select></div>
-      <div class="field full"><label>Descripción y observaciones</label><textarea id="oDetalle" placeholder="Detalles del trabajo, avances y observaciones"></textarea></div>
-    </div>
-    <div class="actions"><button class="btn primary" onclick="guardarObra()">Guardar obra</button></div>
-  </div>
-  <div class="card"><h3>Obras registradas</h3><div id="listaObras" class="empty">Todavía no hay obras registradas.</div></div>
-</section>
-
-<section class="page" id="recibos">
-  <div class="pagehead"><div><h2>Recibos</h2><p>Comprobantes de cobros y pagos</p></div></div>
-  <div class="card">
-    <h3>Generar recibo</h3>
-    <div class="formgrid">
-      <div class="field"><label>Cliente / persona</label><input id="rCliente" placeholder="Nombre y apellido"></div>
-      <div class="field"><label>Fecha</label><input id="rFecha" type="date"></div>
-      <div class="field"><label>Concepto</label><input id="rConcepto" placeholder="Concepto del pago"></div>
-      <div class="field"><label>Importe ($)</label><input id="rImporte" type="number" min="0" step="0.01" placeholder="0"></div>
-      <div class="field"><label>Forma de pago</label><select id="rMetodo"><option>Efectivo</option><option>Transferencia</option><option>Débito</option><option>Otro</option></select></div>
-      <div class="field"><label>Tipo</label><select id="rTipo"><option value="ingreso">Recibí de (cobro)</option><option value="egreso">Entregué a (pago)</option></select></div>
-      <div class="field full"><label>Observaciones</label><textarea id="rNotas" placeholder="Detalle adicional"></textarea></div>
-    </div>
-    <div class="actions"><button class="btn primary" onclick="guardarRecibo()">Guardar recibo</button><button class="btn" onclick="imprimirRecibo()">Imprimir último recibo</button></div>
-    <div id="rVista" class="result hidden"></div>
-  </div>
-  <div class="card"><h3>Historial de recibos</h3><div id="listaRecibos" class="empty">Todavía no hay recibos.</div></div>
-</section>
-
-<section class="page" id="stock">
-  <div class="pagehead"><div><h2>Materiales y stock</h2><p>Control de insumos, cantidades y costos</p></div></div>
-  <div class="cards">
-    <div class="metric"><div class="label">Productos</div><div class="value" id="sTotal">0</div></div>
-    <div class="metric gold"><div class="label">Unidades disponibles</div><div class="value" id="sUnidades">0</div></div>
-    <div class="metric red"><div class="label">Stock bajo</div><div class="value" id="sBajo">0</div></div>
-    <div class="metric green"><div class="label">Valor del inventario</div><div class="value" id="sValor">$0</div></div>
-  </div>
-  <div class="card">
-    <h3>Agregar material</h3>
-    <div class="formgrid">
-      <div class="field"><label>Material / producto</label><input id="sNombre" placeholder="Ej. Cemento"></div>
-      <div class="field"><label>Categoría</label><select id="sCategoria"><option>Construcción</option><option>Electricidad</option><option>Plomería</option><option>Climatización</option><option>Herramientas</option><option>Otros</option></select></div>
-      <div class="field"><label>Unidad</label><select id="sUnidad"><option>Unidad</option><option>Bolsa</option><option>Metro</option><option>m²</option><option>m³</option><option>Litro</option><option>Kg</option><option>Rollo</option></select></div>
-      <div class="field"><label>Cantidad</label><input id="sCantidad" type="number" min="0" step="0.01" placeholder="0"></div>
-      <div class="field"><label>Costo unitario ($)</label><input id="sCosto" type="number" min="0" step="0.01" placeholder="0"></div>
-      <div class="field"><label>Stock mínimo</label><input id="sMinimo" type="number" min="0" value="1"></div>
-      <div class="field"><label>Proveedor</label><input id="sProveedor" placeholder="Proveedor"></div>
-      <div class="field"><label>Ubicación</label><input id="sUbicacion" placeholder="Depósito, obra, etc."></div>
-    </div>
-    <div class="actions"><button class="btn primary" onclick="guardarStock()">Guardar material</button></div>
-  </div>
-  <div class="card">
-    <h3>Inventario</h3>
-    <div class="field"><label>Buscar material</label><input id="sBuscar" placeholder="Escribí para filtrar..." oninput="renderStock()"></div>
-    <div id="listaStock" class="empty">Todavía no hay materiales registrados.</div>
-  </div>
-</section>
-
-<section class="page" id="finanzas">
-  <div class="pagehead"><div><h2>Caja y finanzas</h2><p>Control de ingresos, gastos y saldo</p></div></div>
-  <div class="cards">
-    <div class="metric green"><div class="label">Ingresos</div><div class="value" id="fIngresos">$0</div></div>
-    <div class="metric red"><div class="label">Gastos</div><div class="value" id="fGastos">$0</div></div>
-    <div class="metric gold"><div class="label">Saldo neto</div><div class="value" id="fSaldo">$0</div></div>
-    <div class="metric"><div class="label">Movimientos</div><div class="value" id="fMovimientos">0</div></div>
-  </div>
-  <div class="card">
-    <h3>Registrar movimiento</h3>
-    <div class="formgrid">
-      <div class="field"><label>Tipo</label><select id="fTipo"><option value="ingreso">🟢 Ingreso / Cobro</option><option value="gasto">🔻 Gasto</option></select></div>
-      <div class="field"><label>Fecha</label><input id="fFecha" type="date"></div>
-      <div class="field"><label>Concepto</label><input id="fConcepto" placeholder="Ej. Cobro a cliente, compra materiales"></div>
-      <div class="field"><label>Importe ($)</label><input id="fImporte" type="number" min="0" step="0.01" placeholder="0"></div>
-      <div class="field"><label>Forma de pago / Caja</label><select id="fMetodo"><option>Efectivo</option><option>Transferencia</option><option>Débito</option><option>Otro</option></select></div>
-      <div class="field full"><label>Observaciones</label><textarea id="fNotas" placeholder="Notas adicionales"></textarea></div>
-    </div>
-    <div class="actions"><button class="btn primary" onclick="guardarMovimiento()">Registrar operación</button></div>
-  </div>
-  <div class="card"><h3>Historial de caja</h3><div id="listaFinanzas" class="empty">Todavía no hay movimientos.</div></div>
-</section>
-
-<section class="page" id="personal">
-  <div class="pagehead"><div><h2>Personal</h2><p>Registro de trabajadores y pagos</p></div></div>
-  <div class="card">
-    <h3>Agregar trabajador</h3>
-    <div class="formgrid">
-      <div class="field"><label>Nombre completo</label><input id="peNombre" placeholder="Nombre y apellido"></div>
-      <div class="field"><label>Teléfono</label><input id="peTelefono" placeholder="Teléfono"></div>
-      <div class="field"><label>Especialidad</label><input id="peEspecialidad" placeholder="Albañil, electricista, etc."></div>
-      <div class="field"><label>Valor por día ($)</label><input id="peJornal" type="number" min="0" placeholder="0"></div>
-    </div>
-    <div class="actions"><button class="btn primary" onclick="guardarPersonal()">Guardar trabajador</button></div>
-  </div>
-  <div class="card"><h3>Personal registrado</h3><div id="listaPersonal" class="empty">Todavía no hay trabajadores.</div></div>
-</section>
-
-<section class="page" id="proveedores">
-  <div class="pagehead"><div><h2>Proveedores</h2><p>Agenda de contactos y compras</p></div></div>
-  <div class="card">
-    <h3>Agregar proveedor</h3>
-    <div class="formgrid">
-      <div class="field"><label>Empresa / proveedor</label><input id="prNombre" placeholder="Nombre comercial"></div>
-      <div class="field"><label>Contacto</label><input id="prContacto" placeholder="Nombre de contacto"></div>
-      <div class="field"><label>Teléfono</label><input id="prTelefono" placeholder="Teléfono"></div>
-      <div class="field"><label>Rubro</label><input id="prRubro" placeholder="Materiales, electricidad, etc."></div>
-      <div class="field full"><label>Dirección</label><input id="prDireccion" placeholder="Dirección del proveedor"></div>
-      <div class="field full"><label>Observaciones</label><textarea id="prNotas" placeholder="Horarios, condiciones, datos útiles..."></textarea></div>
-    </div>
-    <div class="actions"><button class="btn primary" onclick="guardarProveedor()">Guardar proveedor</button></div>
-  </div>
-  <div class="card"><h3>Agenda de proveedores</h3><div id="listaProveedores" class="empty">Todavía no hay proveedores registrados.</div></div>
-</section>
-
-</main>
-</div>
-
-<nav class="bottomnav">
-  <button class="active" onclick="irA('dashboard',this)"><span>▦</span>Inicio</button>
-  <button onclick="irA('presupuestos',this)"><span>▤</span>Presup.</button>
-  <button onclick="irA('hormigon',this)"><span>▧</span>Hormigón</button>
-  <button onclick="irA('climatizacion',this)"><span>❄</span>Aire</button>
-  <button onclick="irA('obras',this)"><span>⌂</span>Obras</button>
-  <button onclick="irA('stock',this)"><span>▤</span>Stock</button>
-  <button onclick="irA('finanzas',this)"><span>＄</span>Caja</button>
-</nav>
-<div class="footer-note">ObrasPro Total Premium · Gestión de obras y presupuestos</div>
-
-<script>
-let datos = {
-  presupuestos: [],
-  hormigon: [],
-  climatizacion: [],
-  obras: [],
-  recibos: [],
-  stock: [],
-  finanzas: [],
-  personal: [],
-  proveedores: [],
-  actividad: []
-};
-
-function nuevoEstado() {
-  return {
-    presupuestos: [],
-    hormigon: [],
-    climatizacion: [],
-    obras: [],
-    recibos: [],
-    stock: [],
-    finanzas: [],
-    personal: [],
-    proveedores: [],
-    actividad: []
-  };
-}
-
-let ultimoPresupuesto = null;
-let ultimoRecibo = null;
-
-function cargarDatos() {
-  try {
-    const guardado = localStorage.getItem("obraspro_total_data_v1");
-    if (guardado) {
-      const parsed = JSON.parse(guardado);
-      datos = Object.assign(nuevoEstado(), parsed);
-    }
-  } catch (e) {
-    console.error("Error al cargar datos", e);
-  }
-}
-
-function guardarDatos() {
-  try {
-    localStorage.setItem("obraspro_total_data_v1", JSON.stringify(datos));
-    actualizarDashboard();
-    return true;
-  } catch (e) {
-    alert("Error al guardar en el dispositivo.");
-    return false;
-  }
-}
-
-function fechaHoy() {
-  const d = new Date();
-  return d.toISOString().split("T")[0];
-}
-
-function numero(id) {
-  const el = document.getElementById(id);
-  if (!el) return 0;
-  const val = parseFloat(el.value);
-  return Number.isFinite(val) ? val : 0;
-}
-
-function valor(id) {
-  const el = document.getElementById(id);
-  return el ? el.value.trim() : "";
-}
-
-function mostrar(id, texto) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.textContent = texto;
-  el.classList.remove("hidden");
-}
-
-function dinero(val) {
-  return "$" + Number(val || 0).toLocaleString("es-AR", { minimumFractionDigits: 0, maximumFractionDigits: 2 });
-}
-
-function escapar(str) {
-  if (!str) return "";
-  return String(str).replace(/[&<>"']/g, function(m) {
-    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m];
-  });
-}
-
-function actividad(texto) {
-  datos.actividad.unshift({ texto, fecha: new Date().toLocaleTimeString() + " " + fechaHoy() });
-  if (datos.actividad.length > 20) datos.actividad.pop();
-}
-
-function irA(idPagina, btn) {
-  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-  document.querySelectorAll(".sidebar .navbtn, .bottomnav button").forEach(b => b.classList.remove("active"));
-  
-  const pagina = document.getElementById(idPagina);
-  if (pagina) pagina.classList.add("active");
-  
-  if (btn) {
-    btn.classList.add("active");
-  } else {
-    document.querySelectorAll(`.sidebar .navbtn`).forEach(b => {
-      if (b.getAttribute("onclick") && b.getAttribute("onclick").includes(idPagina)) b.classList.add("active");
-    });
-  }
-  window.scrollTo({ top: 0, behavior: "smooth" });
-  renderizarPagina(idPagina);
-}
-
-function renderizarPagina(id) {
-  if (id === "dashboard") actualizarDashboard();
-  if (id === "presupuestos") renderPresupuestos();
-  if (id === "hormigon") {}
-  if (id === "climatizacion") renderClimatizacion();
-  if (id === "obras") renderObras();
-  if (id === "recibos") renderRecibos();
-  if (id === "stock") renderStock();
-  if (id === "finanzas") renderFinanzas();
-  if (id === "personal") renderPersonal();
-  if (id === "proveedores") renderProveedores();
-}
-
-function actualizarDashboard() {
-  const poner = (id, v) => { const x = document.getElementById(id); if (x) x.textContent = v; };
-  poner("dashPresupuestos", datos.presupuestos.length);
-  poner("dashObras", datos.obras.filter(o => o.estado === "En ejecución").length);
-  
-  const ingresos = datos.finanzas.filter(m => m.tipo === "ingreso").reduce((a, m) => a + m.importe, 0);
-  poner("dashIngresos", dinero(ingresos));
-  poner("dashStock", datos.stock.reduce((a, s) => a + s.cantidad, 0).toLocaleString("es-AR"));
-
-  const act = document.getElementById("dashActividad");
-  if (act) {
-    act.innerHTML = datos.actividad.length ? datos.actividad.slice(0, 5).map(a => `<div style="padding:6px 0; border-bottom:1px solid var(--line); font-size:12px"><strong>${escapar(a.fecha)}</strong>: ${escapar(a.texto)}</div>`).join("") : '<div class="empty">Todavía no hay movimientos registrados.</div>';
-  }
-}
-
-function calcularPresupuesto() {
-  const materiales = numero("pCostoMat");
-  const mano = numero("pMano");
-  const desperdicio = numero("pDesperdicio");
-  const ganancia = numero("pGanancia");
-
-  const extra = materiales * desperdicio / 100;
-  const costo = materiales + extra + mano;
-  const utilidad = costo * ganancia / 100;
-  const total = costo + utilidad;
-
-  ultimoPresupuesto = {
-    cliente: valor("pCliente"),
-    telefono: valor("pTelefono"),
-    trabajo: valor("pTrabajo"),
-    direccion: valor("pDireccion"),
-    materiales,
-    mano,
-    desperdicio,
-    extra,
-    ganancia,
-    costo,
-    utilidad,
-    total,
-    detalleMat: valor("pDetalleMat"),
-    detalleMano: valor("pDetalleMano"),
-    notas: valor("pNotas"),
-    fecha: fechaHoy()
-  };
-
-  mostrar("pResultado",
-    `Costo de materiales: ${dinero(materiales)}
-Desperdicio: ${dinero(extra)}
-Mano de obra: ${dinero(mano)}
-Costo total: ${dinero(costo)}
-Ganancia: ${dinero(utilidad)}
-PRECIO FINAL: ${dinero(total)}`
-  );
-
-  const comp = document.getElementById("pComputo");
-  if (comp) comp.textContent =
-    `Materiales: ${dinero(materiales)}\n` +
-    `Desperdicio: ${dinero(extra)}\n` +
-    `Mano de obra: ${dinero(mano)}\n` +
-    `Ganancia: ${dinero(utilidad)}\n` +
-    `TOTAL: ${dinero(total)}`;
-
-  const doc = document.getElementById("pDocumento");
-  if (doc) doc.innerHTML = `
-    <div class="quote-document">
-      <div class="quote-head">
-        <div><div class="quote-brand">ObrasPro Total Premium</div><div class="quote-title">Presupuesto de obra</div></div>
-        <div class="quote-date">${escapar(fechaHoy())}</div>
-      </div>
-      <div class="quote-body">
-        <div class="quote-info">
-          <div class="quote-info-item"><small>Cliente</small><strong>${escapar(ultimoPresupuesto.cliente || "No indicado")}</strong></div>
-          <div class="quote-info-item"><small>Teléfono</small><strong>${escapar(ultimoPresupuesto.telefono || "No indicado")}</strong></div>
-          <div class="quote-info-item"><small>Trabajo</small><strong>${escapar(ultimoPresupuesto.trabajo || "No indicado")}</strong></div>
-          <div class="quote-info-item"><small>Dirección</small><strong>${escapar(ultimoPresupuesto.direccion || "No indicado")}</strong></div>
-        </div>
-        <div class="quote-section">Detalle de costos</div>
-        <div class="quote-money">
-          <div class="quote-money-row"><span>Materiales</span><strong>${dinero(materiales)}</strong></div>
-          <div class="quote-money-row"><span>Desperdicio</span><strong>${dinero(extra)}</strong></div>
-          <div class="quote-money-row"><span>Mano de obra</span><strong>${dinero(mano)}</strong></div>
-          <div class="quote-money-row"><span>Ganancia</span><strong>${dinero(utilidad)}</strong></div>
-        </div>
-        <div class="quote-total"><span>Total del presupuesto</span><strong>${dinero(total)}</strong></div>
-        <div class="quote-notes">${escapar(ultimoPresupuesto.detalleMat)}<br>${escapar(ultimoPresupuesto.detalleMano)}<br>${escapar(ultimoPresupuesto.notas)}</div>
-      </div>
-      <div class="quote-foot">Presupuesto orientativo sujeto a confirmación de medidas, materiales y condiciones de obra.</div>
-    </div>
-    <div class="actions"><button class="btn" onclick="compartirPresupuesto()">Compartir presupuesto</button><button class="btn" onclick="window.print()">Imprimir</button></div>`;
-}
-
-function guardarPresupuesto() {
-  if (!ultimoPresupuesto) calcularPresupuesto();
-  if (!ultimoPresupuesto || ultimoPresupuesto.total <= 0) {
-    alert("Ingresá los costos para calcular el presupuesto.");
-    return;
-  }
-  datos.presupuestos.unshift({ ...ultimoPresupuesto, id: Date.now() });
-  actividad("Presupuesto guardado para " + (ultimoPresupuesto.cliente || "cliente"));
-  guardarDatos();
-  alert("Presupuesto guardado.");
-}
-
-function renderPresupuestos() {
-  const el = document.getElementById("listaPresupuestos");
-  if (!el) return;
-  el.innerHTML = datos.presupuestos.length ? `<div class="tablewrap"><table>
-    <tr><th>Fecha</th><th>Cliente</th><th>Trabajo</th><th>Total</th></tr>
-    ${datos.presupuestos.map(p => `<tr><td>${escapar(p.fecha)}</td><td>${escapar(p.cliente)}</td><td>${escapar(p.trabajo)}</td><td><strong>${dinero(p.total)}</strong></td></tr>`).join("")}
-    </table></div>` : '<div class="empty">Todavía no hay presupuestos guardados.</div>';
-}
-
-function compartirPresupuesto() {
-  if (!ultimoPresupuesto) return alert("Primero calculá un presupuesto.");
-  const p = ultimoPresupuesto;
-  const mensaje = `OBRASPRO TOTAL PREMIUM\nPRESUPUESTO\nCliente: ${p.cliente}\nTrabajo: ${p.trabajo}\n\nMateriales: ${dinero(p.materiales)}\nDesperdicio: ${dinero(p.extra)}\nMano de obra: ${dinero(p.mano)}\nGanancia: ${dinero(p.utilidad)}\nTOTAL: ${dinero(p.total)}\n\nDetalle materiales: ${p.detalleMat}\nDetalle mano de obra: ${p.detalleMano}\nObservaciones: ${p.notas}`;
-
-  if (navigator.share) {
-    navigator.share({ title: "Presupuesto ObrasPro", text: mensaje }).catch(() => copiarTexto(mensaje));
-  } else {
-    copiarTexto(mensaje);
-  }
-}
-
-function copiarTexto(texto) {
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(texto).then(() => alert("Texto copiado. Ya podés pegarlo en WhatsApp."))
-      .catch(() => ventanaCopiar(texto));
-  } else {
-    ventanaCopiar(texto);
-  }
-}
-
-function ventanaCopiar(texto) {
-  const w = window.open("", "_blank");
-  if (!w) {
-    prompt("Copiá el texto:", texto);
-    return;
-  }
-  w.document.write("<textarea style='width:95%;height:80vh;font-size:16px'></textarea>");
-  w.document.close();
-  w.document.querySelector("textarea").value = texto;
-}
-
-function calcularHormigon() {
-  const largo = numero("hLargo");
-  const ancho = numero("hAncho");
-  const espesor = numero("hEspesor");
-  const desperdicio = numero("hDesperdicio");
-  const dosificacion = numero("hDosificacion") || 300;
-
-  if (!largo || !ancho || !espesor) {
-    alert("Completá largo, ancho y espesor.");
-    return;
-  }
-
-  const volumen = largo * ancho * espesor;
-  const volumenFinal = volumen * (1 + desperdicio / 100);
-  const cementoKg = volumenFinal * dosificacion;
-  const bolsas = cementoKg / 50;
-  const arena = volumenFinal * 0.50;
-  const piedra = volumenFinal * 0.80;
-  const costo = bolsas * numero("hCemento") +
-    arena * numero("hArena") +
-    piedra * numero("hPiedra") +
-    numero("hAgua");
-
-  mostrar("hResultado",
-    `Volumen geométrico: ${volumen.toFixed(2)} m³
-Volumen con desperdicio: ${volumenFinal.toFixed(2)} m³
-Cemento estimado: ${bolsas.toFixed(1)} bolsas de 50 kg
-Arena estimada: ${arena.toFixed(2)} m³
-Piedra estimada: ${piedra.toFixed(2)} m³
-Costo estimado con precios ingresados: ${dinero(costo)}
-
-IMPORTANTE: cálculo orientativo. La dosificación real debe definirla un profesional según el diseño estructural y los materiales disponibles.`
-  );
-}
-
-function calcularFrigorias() {
-  const largo = numero("cLargo");
-  const ancho = numero("cAncho");
-  const alto = numero("cAlto") || 2.7;
-  const personas = numero("cPersonas") || 1;
-  if (!largo || !ancho) return alert("Completá largo y ancho del ambiente.");
-
-  const volumen = largo * ancho * alto;
-  const base = volumen * 50 + Math.max(0, personas - 1) * 150;
-  const total = base * numero("cSol") * numero("cEquipos");
-  const opciones = [2250, 2500, 3000, 3500, 4500, 5000, 5500, 6000, 7000, 9000, 12000];
-  const elegido = opciones.find(x => x >= total) || 12000;
-
-  mostrar("cResultado",
-    `Superficie: ${(largo * ancho).toFixed(2)} m²
-Volumen: ${volumen.toFixed(2)} m³
-Demanda estimada: ${Math.ceil(total)} frigorías
-Equipo orientativo recomendado: ${elegido} frigorías
-
-La elección final debe considerar aislamiento, ventanas, orientación, clima y carga térmica real.`
-  );
-}
-
-function guardarClimatizacion() {
-  const cliente = valor("cCliente");
-  if (!cliente) return alert("Ingresá el nombre del cliente.");
-  datos.climatizacion.unshift({
-    id: Date.now(), cliente, telefono: valor("cTelefono"),
-    direccion: valor("cDireccion"), equipo: valor("cEquipo"),
-    capacidad: valor("cCapacidad"), trabajo: valor("cTrabajo"),
-    materiales: numero("cMateriales"), mano: numero("cMano"),
-    fecha: fechaHoy()
-  });
-  actividad("Instalación de climatización registrada: " + cliente);
-  guardarDatos();
-  alert("Instalación guardada.");
-}
-
-function renderClimatizacion() {
-  const el = document.getElementById("listaClimatizacion");
-  if (!el) return;
-  el.innerHTML = datos.climatizacion.length ? `<div class="tablewrap"><table>
-    <tr><th>Fecha</th><th>Cliente</th><th>Equipo</th><th>Trabajo</th><th>Total</th></tr>
-    ${datos.climatizacion.map(x => `<tr><td>${escapar(x.fecha)}</td><td>${escapar(x.cliente)}</td><td>${escapar(x.equipo)} ${escapar(x.capacidad)}</td><td>${escapar(x.trabajo)}</td><td>${dinero(x.materiales + x.mano)}</td></tr>`).join("")}
-    </table></div>` : '<div class="empty">Todavía no hay instalaciones registradas.</div>';
-}
-
-function guardarObra() {
-  if (!valor("oNombre")) return alert("Ingresá el nombre de la obra.");
-  datos.obras.unshift({
-    id: Date.now(), nombre: valor("oNombre"),
-    cliente: valor("oCliente"), telefono: valor("oTelefono"),
-    fecha: valor("oFecha") || fechaHoy(),
-    direccion: valor("oDireccion"),
-    presupuesto: numero("oPresupuesto"),
-    estado: valor("oEstado"), detalle: valor("oDetalle")
-  });
-  actividad("Obra registrada: " + valor("oNombre"));
-  guardarDatos();
-  alert("Obra guardada.");
-  ["oNombre","oCliente","oTelefono","oDireccion","oPresupuesto","oDetalle"].forEach(id => { const el = document.getElementById(id); if(el) el.value = ""; });
-}
-
-function renderObras() {
-  const el = document.getElementById("listaObras");
-  if (!el) return;
-  el.innerHTML = datos.obras.length ? `<div class="tablewrap"><table>
-    <tr><th>Obra</th><th>Cliente</th><th>Fecha</th><th>Presupuesto</th><th>Estado</th></tr>
-    ${datos.obras.map(o => `<tr><td><strong>${escapar(o.nombre)}</strong><br><small>${escapar(o.direccion)}</small></td><td>${escapar(o.cliente)}</td><td>${escapar(o.fecha)}</td><td>${dinero(o.presupuesto)}</td><td><span class="pill">${escapar(o.estado)}</span></td></tr>`).join("")}
-    </table></div>` : '<div class="empty">Todavía no hay obras registradas.</div>';
-}
-
-function guardarRecibo() {
-  const importe = numero("rImporte");
-  if (!valor("rCliente") || !importe) return alert("Completá cliente e importe.");
-  ultimoRecibo = {
-    id: Date.now(), cliente: valor("rCliente"),
-    fecha: valor("rFecha") || fechaHoy(),
-    concepto: valor("rConcepto"), importe,
-    metodo: valor("rMetodo"), tipo: valor("rTipo"),
-    notas: valor("rNotas")
-  };
-  datos.recibos.unshift(ultimoRecibo);
-  actividad("Recibo registrado: " + dinero(importe));
-  guardarDatos();
-  mostrar("rVista", `RECIBO\nFecha: ${ultimoRecibo.fecha}\nPersona: ${ultimoRecibo.cliente}\nConcepto: ${ultimoRecibo.concepto}\nImporte: ${dinero(importe)}\nForma de pago: ${ultimoRecibo.metodo}`);
-  alert("Recibo guardado.");
-}
-
-function imprimirRecibo() {
-  if (!ultimoRecibo) return alert("Primero guardá un recibo.");
-  window.print();
-}
-
-function renderRecibos() {
-  const el = document.getElementById("listaRecibos");
-  if (!el) return;
-  el.innerHTML = datos.recibos.length ? `<div class="tablewrap"><table>
-    <tr><th>Fecha</th><th>Persona</th><th>Concepto</th><th>Tipo</th><th>Importe</th></tr>
-    ${datos.recibos.map(r => `<tr><td>${escapar(r.fecha)}</td><td>${escapar(r.cliente)}</td><td>${escapar(r.concepto)}</td><td>${r.tipo === "ingreso" ? "Cobro" : "Pago"}</td><td>${dinero(r.importe)}</td></tr>`).join("")}
-    </table></div>` : '<div class="empty">Todavía no hay recibos.</div>';
-}
-
-function guardarStock() {
-  const nombre = valor("sNombre");
-  if (!nombre) return alert("Ingresá el nombre del material.");
-  datos.stock.unshift({
-    id: Date.now(), nombre, categoria: valor("sCategoria"),
-    unidad: valor("sUnidad"), cantidad: numero("sCantidad"),
-    costo: numero("sCosto"), minimo: numero("sMinimo"),
-    proveedor: valor("sProveedor"), ubicacion: valor("sUbicacion")
-  });
-  actividad("Material agregado al inventario: " + nombre);
-  guardarDatos();
-  alert("Material guardado.");
-  ["sNombre","sCantidad","sCosto","sProveedor","sUbicacion"].forEach(id => { const el = document.getElementById(id); if(el) el.value = ""; });
-}
-
-function renderStock() {
-  const el = document.getElementById("listaStock");
-  if (!el) return;
-  const busqueda = (valor("sBuscar") || "").toLowerCase();
-  const lista = datos.stock.filter(s => s.nombre.toLowerCase().includes(busqueda));
-  const poner = (id, v) => { const x = document.getElementById(id); if (x) x.textContent = v; };
-  poner("sTotal", datos.stock.length);
-  poner("sUnidades", datos.stock.reduce((a, s) => a + s.cantidad, 0).toLocaleString("es-AR"));
-  poner("sBajo", datos.stock.filter(s => s.cantidad <= s.minimo).length);
-  poner("sValor", dinero(datos.stock.reduce((a, s) => a + s.cantidad * s.costo, 0)));
-
-  el.innerHTML = lista.length ? `<div class="tablewrap"><table>
-    <tr><th>Material</th><th>Categoría</th><th>Disponible</th><th>Costo unitario</th><th>Valor</th><th>Acción</th></tr>
-    ${lista.map(s => `<tr>
-      <td><strong>${escapar(s.nombre)}</strong><br><small>${escapar(s.proveedor)}</small></td>
-      <td>${escapar(s.categoria)}</td>
-      <td>${s.cantidad} ${escapar(s.unidad)} ${s.cantidad <= s.minimo ? '<span class="pill bad">Stock bajo</span>' : ''}</td>
-      <td>${dinero(s.costo)}</td><td>${dinero(s.cantidad * s.costo)}</td>
-      <td><button class="btn small" onclick="ajustarStock(${s.id})">Ajustar</button></td>
-    </tr>`).join("")}
-    </table></div>` : '<div class="empty">No hay materiales que coincidan.</div>';
-}
-
-function ajustarStock(id) {
-  const item = datos.stock.find(s => s.id === id);
-  if (!item) return;
-  const nuevo = prompt("Cantidad actual de " + item.nombre, item.cantidad);
-  if (nuevo === null) return;
-  const cantidad = Number(nuevo);
-  if (!Number.isFinite(cantidad) || cantidad < 0) return alert("Cantidad inválida.");
-  item.cantidad = cantidad;
-  actividad("Stock actualizado: " + item.nombre);
-  guardarDatos();
-  renderStock();
-}
-
-function guardarMovimiento() {
-  const importe = numero("fImporte");
-  if (!valor("fConcepto") || !importe) return alert("Completá concepto e importe.");
-  datos.finanzas.unshift({
-    id: Date.now(), tipo: valor("fTipo"),
-    fecha: valor("fFecha") || fechaHoy(),
-    concepto: valor("fConcepto"), importe,
-    metodo: valor("fMetodo"), notas: valor("fNotas")
-  });
-  actividad("Movimiento financiero: " + valor("fConcepto"));
-  guardarDatos();
-  alert("Movimiento registrado.");
-  ["fConcepto","fImporte","fNotas"].forEach(id => { const el = document.getElementById(id); if(el) el.value = ""; });
-}
-
-function renderFinanzas() {
-  const el = document.getElementById("listaFinanzas");
-  if (!el) return;
-  const ingresos = datos.finanzas.filter(m => m.tipo === "ingreso").reduce((a, m) => a + m.importe, 0);
-  const gastos = datos.finanzas.filter(m => m.tipo === "gasto").reduce((a, m) => a + m.importe, 0);
-  const poner = (id, v) => { const x = document.getElementById(id); if (x) x.textContent = v; };
-  poner("fIngresos", dinero(ingresos));
-  poner("fGastos", dinero(gastos));
-  poner("fSaldo", dinero(ingresos - gastos));
-  poner("fMovimientos", datos.finanzas.length);
-
-  el.innerHTML = datos.finanzas.length ? `<div class="tablewrap"><table>
-    <tr><th>Fecha</th><th>Tipo</th><th>Concepto</th><th>Medio</th><th>Importe</th></tr>
-    ${datos.finanzas.map(m => `<tr><td>${escapar(m.fecha)}</td><td><span class="pill ${m.tipo === "ingreso" ? "ok" : "bad"}">${m.tipo === "ingreso" ? "Ingreso" : "Gasto"}</span></td><td>${escapar(m.concepto)}</td><td>${escapar(m.metodo)}</td><td>${dinero(m.importe)}</td></tr>`).join("")}
-    </table></div>` : '<div class="empty">Todavía no hay movimientos.</div>';
-}
-
-function guardarPersonal() {
-  const nombre = valor("peNombre");
-  if (!nombre) return alert("Ingresá el nombre del trabajador.");
-  datos.personal.unshift({
-    id: Date.now(), nombre, telefono: valor("peTelefono"),
-    especialidad: valor("peEspecialidad"), jornal: numero("peJornal")
-  });
-  actividad("Trabajador registrado: " + nombre);
-  guardarDatos();
-  alert("Trabajador guardado.");
-  ["peNombre","peTelefono","peEspecialidad","peJornal"].forEach(id => { const el = document.getElementById(id); if(el) el.value = ""; });
-}
-
-function renderPersonal() {
-  const el = document.getElementById("listaPersonal");
-  if (!el) return;
-  el.innerHTML = datos.personal.length ? `<div class="tablewrap"><table>
-    <tr><th>Nombre</th><th>Teléfono</th><th>Especialidad</th><th>Jornal</th></tr>
-    ${datos.personal.map(p => `<tr><td>${escapar(p.nombre)}</td><td>${escapar(p.telefono)}</td><td>${escapar(p.especialidad)}</td><td>${dinero(p.jornal)}</td></tr>`).join("")}
-    </table></div>` : '<div class="empty">Todavía no hay trabajadores.</div>';
-}
-
-function guardarProveedor() {
-  const nombre = valor("prNombre");
-  if (!nombre) return alert("Ingresá el nombre del proveedor.");
-  datos.proveedores.unshift({
-    id: Date.now(), nombre, contacto: valor("prContacto"),
-    telefono: valor("prTelefono"), rubro: valor("prRubro"),
-    direccion: valor("prDireccion"), notas: valor("prNotas")
-  });
-  actividad("Proveedor agregado: " + nombre);
-  guardarDatos();
-  alert("Proveedor guardado.");
-  ["prNombre","prContacto","prTelefono","prRubro","prDireccion","prNotas"].forEach(id => { const el = document.getElementById(id); if(el) el.value = ""; });
-}
-
-function renderProveedores() {
-  const el = document.getElementById("listaProveedores");
-  if (!el) return;
-  el.innerHTML = datos.proveedores.length ? `<div class="tablewrap"><table>
-    <tr><th>Proveedor</th><th>Contacto</th><th>Teléfono</th><th>Rubro</th><th>Dirección</th></tr>
-    ${datos.proveedores.map(p => `<tr><td><strong>${escapar(p.nombre)}</strong></td><td>${escapar(p.contacto)}</td><td>${escapar(p.telefono)}</td><td>${escapar(p.rubro)}</td><td>${escapar(p.direccion)}</td></tr>`).join("")}
-    </table></div>` : '<div class="empty">Todavía no hay proveedores registrados.</div>';
-}
-
-function exportarDatos() {
-  try {
-    const contenido = JSON.stringify(datos, null, 2);
-    const archivo = new Blob([contenido], { type: "application/json" });
-    const url = URL.createObjectURL(archivo);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "ObrasPro_respaldo_" + fechaHoy() + ".json";
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 1500);
-    alert("Se generó la copia de seguridad. Guardala en un lugar seguro.");
-  } catch (e) {
-    alert("No se pudo generar la copia de seguridad.");
-  }
-}
-
-function importarDatos(event) {
-  const archivo = event.target.files && event.target.files[0];
-  if (!archivo) return;
-  const lector = new FileReader();
-  lector.onload = () => {
-    try {
-      const importados = JSON.parse(lector.result);
-      if (!importados || typeof importados !== "object" ||
-          !Array.isArray(importados.presupuestos) ||
-          !Array.isArray(importados.obras)) {
-        throw new Error("Archivo no válido");
-      }
-      if (!confirm("Esto reemplazará los datos actuales de ObrasPro por los del respaldo. ¿Continuar?")) return;
-      datos = Object.assign(nuevoEstado(), importados);
-      if (guardarDatos()) {
-        alert("Respaldo restaurado correctamente.");
-        actualizarDashboard();
-      }
-    } catch (e) {
-      alert("No se pudo importar. Verificá que sea un respaldo válido de ObrasPro.");
-    } finally {
-      event.target.value = "";
-    }
-  };
-  lector.readAsText(archivo);
-}
-
-window.addEventListener("DOMContentLoaded", () => {
-  cargarDatos();
-  actualizarDashboard();
-});
-</script>
-</body>
-</html>
+      
